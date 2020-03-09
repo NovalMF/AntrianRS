@@ -52,11 +52,14 @@ class Login extends Component {
                         color={'#FFFFFF'}
                     />
                 </View>
-
+                
+                <View style={{ flexDirection: 'row', bottom: -75, left: 80}}>
+                    <Text style={{ color: '#FFFFFF', fontFamily: Fonts.type.regular, fontSize: 18}}  onPress={()=> this.props.navigation.navigate('')} >Lupa Password ? </Text>
+                    </View>
                 {/* Button Login */}
                 <View style={{ width: 250, paddingHorizontal: 30, bottom: -90}}>
                     <LinearGradient start={{x: 0, y: 0}} end={{x: 0.9, y: 0.5}} colors={['#0079EB', '#0079EB']} style={{elevation: 1, borderRadius: 20, marginVertical: 20, justifyContent: 'flex-end' }}>
-                        <TouchableOpacity style={{ alignItems:'center', justifyContent:'center', height:55}} onPress={()=> this.props.navigation.navigate('HomeNavigation')} >
+                        <TouchableOpacity style={{ alignItems:'center', justifyContent:'center', height:55}} onPress={()=> this.props.navigation.navigate('HomePage')} >
                             <Text style={{color: 'white', fontFamily: Fonts.type.regular, fontSize: 20}}> Login </Text>
                         </TouchableOpacity>
                     </LinearGradient>
@@ -107,9 +110,9 @@ const styles = StyleSheet.create({
     inputIcon:{
         width:50,
         height:50,
-        marginLeft:15,
+        marginLeft:10,
         justifyContent: 'center',
-        tintColor: '#00CCFF'
+        tintColor: '#0079EB'
     },
     inputs:{
         fontSize: 18,

@@ -119,9 +119,9 @@ const styles = StyleSheet.create({
     inputIcon:{
         width:50,
         height:50,
-        marginLeft:15,
+        marginLeft:10,
         justifyContent: 'center',
-        tintColor: '#00CCFF'
+        tintColor: '#0079EB'
     },
     inputs:{
         fontSize: 18,
