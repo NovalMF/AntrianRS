@@ -16,6 +16,8 @@ class Poli extends Component {
     super(props);
     this.state = {
       poli_list: [],
+      data: [],
+      dataBackup: [],
     };
   }
 

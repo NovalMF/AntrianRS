@@ -25,6 +25,7 @@
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.2.0",
+    "react-native-search-filter": "^0.1.5",
     "react-native-table-component": "^1.2.1",
     "react-native-touchable-scale": "^2.1.0",
     "react-native-ui-xg": "0.0.6",
