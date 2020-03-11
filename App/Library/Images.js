@@ -13,6 +13,17 @@ const Images = {
     iconHubungiKami: require ('../Assets/Icon/hubungikami.png'),
     iconProfil: require ('../Assets/Icon/profil2.png'), 
     iconNext: require ('../Assets/Icon/arrowrightputih.png'),
+    iconEmail1: require ('../Assets/Icon/email1.png'),
+    iconFacebook: require ('../Assets/Icon/facebook.png'),
+    iconInstagram: require ('../Assets/Icon/instagram.png'),
+    iconMaps: require ('../Assets/Icon/maps.png'),
+    iconTelephone1: require ('../Assets/Icon/telephone1.png'),
+    iconTwitter: require ('../Assets/Icon/twitter.png'),
+    iconWeb: require ('../Assets/Icon/www.png'),
+    iconYoutube: require ('../Assets/Icon/youtube.png'),
+    iconBack: require ('../Assets/Icon/arrowleft.png'),
+    iconPoliKandungan: require ('../Assets/Icon/polikandungan.png'),
+    dokterdummy1: require ('../Assets/Icon/Dr.Dummy2.png'),
 
     //Image
     background: require ('../Assets/Image/background.jpg'),

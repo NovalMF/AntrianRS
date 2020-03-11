@@ -10,13 +10,20 @@ import IconBack from 'react-native-vector-icons/Ionicons'
 import Login from '../Container/Login'
 import Register from '../Container/Register'
 import HomePage from '../Container/Homepage/HomePage'
-
+import HubungiKami from '../Container/HubungiKami'
+import Poli from '../Container/Poli'
+import Jadwaldokter from '../Container/Jadwaldokter'
+import ProfilDokter from '../Container/ProfilDokter'
 
 
 const MainNavigator = createStackNavigator({
     Login: { screen: Login, navigationOptions: { headerShown: false } },
     Register: { screen: Register, navigationOptions: { headerShown: false} },
     HomePage: { screen: HomePage, navigationOptions: {headerShown: false} },
+    HubungiKami: { screen: HubungiKami, navigationOptions: {headerShown: false} },
+    Poli: { screen: Poli, navigationOptions: {headerShown: false} },
+    Jadwaldokter: { screen: Jadwaldokter, navigationOptions: {headerShown: false} },
+    ProfilDokter: { screen: ProfilDokter, navigationOptions: {headerShown: false} },
 
 }, {
     headerMode: 'screen',
