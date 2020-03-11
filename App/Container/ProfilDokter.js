@@ -54,15 +54,42 @@ class ProfilDokter extends Component {
 
 
           <View style={{marginTop: -10}} >
+          <DatePicker
+                            style={{width: 200}}
+                            date={this.state.date}
+                            mode="date"
+                            placeholder="Silahkan Pilih Tanggal"
+                            format="DD-MM-YYYY"
+                            minDate="01-01-2017"
+                            maxDate="01-01-2023"
+                            confirmBtnText="OK"
+                            cancelBtnText="Cancel"
+                            customStyles={{
+                            dateIcon: {
+                                position: 'absolute',
+                                left: 160,
+                                top: 400,
+                                marginLeft: 0
+                            },
+                            dateInput: {
+                                marginLeft: 20,
+                                marginRight: -120,
+                                top: 400,
+                            }
+                            // ... You can check the source to find the other keys.
+                            }}
+                            onDateChange={(date) => {this.setState({date: date})}}
+                        />
           {
                 this.state.dokter1.map((data, index)=>(
                 <View  key={index}
                     style={{ backgroundColor: 'white', width: 330, height: 180, marginLeft: 16, marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 20 }}>
+                        
                       <Image source={Images.dokterdummy1} style={{width: 70, height: 70, marginLeft:10, marginTop: 15}}></Image>
                       <Text style={{paddingLeft: 90, marginTop: -70, fontSize:16}}>{data.dokter_nama}</Text>
                       <Text style={{paddingLeft: 90, color: '#848484', marginTop: 5, width: 250}}>{data.spesialis}</Text>
                       <Text style={{paddingLeft: 90, width: 320, marginTop: 5}}>{data.biografi}</Text>
-
+                    
                       <View style={{justifyContent:'center', alignItems:'center'}}>
                         <Text style={{fontSize: 18, marginTop:25}}>Biografi</Text>
                       </View>
@@ -89,32 +116,7 @@ class ProfilDokter extends Component {
                   
                   ))
                 }
-                        {/* <DatePicker
-                            style={{width: 200}}
-                            date={this.state.date}
-                            mode="date"
-                            placeholder="Silahkan Pilih Tanggal"
-                            format="DD-MM-YYYY"
-                            minDate="01-01-2017"
-                            maxDate="01-01-2023"
-                            confirmBtnText="OK"
-                            cancelBtnText="Cancel"
-                            customStyles={{
-                            dateIcon: {
-                                position: 'absolute',
-                                left: 160,
-                                top: 400,
-                                marginLeft: 0
-                            },
-                            dateInput: {
-                                marginLeft: 20,
-                                marginRight: -120,
-                                top: 400,
-                            }
-                            // ... You can check the source to find the other keys.
-                            }}
-                            onDateChange={(date) => {this.setState({date: date})}}
-                        /> */}
+                       
                         
                     
                 </View>

@@ -48,7 +48,8 @@ class Jadwaldokter extends Component {
             <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Dokter</Text>
           </View>
 
-          <ScrollView horizontal={true} style={{flexDirection: 'row', paddingLeft: 16, marginTop: -200}}>
+          <View>  
+          <ScrollView horizontal={true} style={{flexDirection: 'row', paddingLeft: 16}}>
              <View style={{marginRight: 16, alignItems: 'center', justifyContent:'space-between', flexDirection: 'row'}}>
                 <TouchableOpacity style={{backgroundColor:'white', width: 80, height: 35, borderRadius: 20, marginBottom: 18, justifyContent:'center', alignItems:'center', elevation:0, borderColor: '#0079EB', borderWidth: 1}}>
                  <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, textAlign:'center', color: '#0079EB'}}>Senin</Text>
@@ -75,12 +76,13 @@ class Jadwaldokter extends Component {
                 </TouchableOpacity>
               </View>
            </ScrollView>
+           </View>
 
-          <ScrollView style={{marginTop: -200}} >
+          <ScrollView style={{marginTop: 5}} >
             {
                 this.state.dokter_PoliList.map((data, index)=>(
                   <TouchableOpacity key={index} onPress={() => this.props.navigation.navigate('ProfilDokter', {dokter_id: data.dokter_id })}
-                    style={this.state.dokter_PoliList.length - 1 === index ? {  backgroundColor: 'white', width: 330, height: 90, marginLeft: 16, marginTop: 25, borderRadius: 10, elevation: 5, marginBottom: 20 } : {  backgroundColor: 'white', width: 330, height: 80, marginLeft: 16, marginTop: 10, borderRadius: 10, elevation: 5 }}>
+                    style={{ backgroundColor: 'white', width: 330, height: 90, marginLeft: 16, marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 20}}>
                       <Image source={{uri:data.avatar}} style={{width: 70, height: 70, marginLeft:10, marginTop: 8}}></Image>
                       <Text style={{paddingLeft: 90, marginTop: -70, fontSize:16}}>{data.dokter_nama}</Text>
                       <Text style={{paddingLeft: 90, color: '#848484'}}>{data.spesialis}</Text>
