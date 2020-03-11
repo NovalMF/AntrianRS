@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, Image, TextInput, StyleSheet, TouchableOpacity, PermissionsAndroid } from 'react-native'
+import { Text, Image, TextInput, StyleSheet, TouchableOpacity, PermissionsAndroid, ImageBackground } from 'react-native'
 import { View, Container, Icon, Thumbnail } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient'
 import Images from '../Library/Images';
@@ -18,7 +18,7 @@ class Login extends Component {
     render() {
         return (
             <View style={styles.containerStyle}>
-                <Image source={Images.background} style={styles.bgImageStyle}/>
+                <ImageBackground source={Images.background} style={{flex: 1, width: '100%', height: '100%', justifyContent: 'center',alignItems: 'center', position:'absolute'}}/>
                 <View style={styles.logoStyle}>
                     <Thumbnail square large source={Images.contohlogo}/>
                 </View>
@@ -78,14 +78,6 @@ const styles = StyleSheet.create({
         flex:1,
         alignItems: 'center',
         
-    },
-    bgImageStyle: {
-        flex:1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'absolute',
-        width: '100%',
-        height: '100%'
     },
     logoStyle: {
         marginTop: 100,
