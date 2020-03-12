@@ -25,6 +25,7 @@ const Images = {
     iconPoliKandungan: require ('../Assets/Icon/polikandungan.png'),
     dokterdummy2: require ('../Assets/Icon/Dr.Dummy2.png'),
     dokterdummy1: require ('../Assets/Icon/Dr.Dummy1.png'),
+    iconKalender: require ('../Assets/Icon/calendar.png'),
 
     //Image
     background: require ('../Assets/Image/background.jpg'),

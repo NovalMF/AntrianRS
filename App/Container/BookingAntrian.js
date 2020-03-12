@@ -110,14 +110,21 @@ render() {
                             minDate="01-01-1950"
                             confirmBtnText="OK"
                             cancelBtnText="Cancel"
+                            iconSource={Images.iconKalender} 
                             customStyles={{
                             dateIcon: {
                                 position: 'relative',
                                 left:   55,
                                 top: 5,
+                                width: 50,
+                                height: 50,
                             },
                             dateInput: {
-                                marginLeft: -5,
+                                borderBottomWidth: 1,
+                                borderWidth: 0,
+                                borderBottomColor: '#eaeaea',
+                                alignItems: "flex-start",
+                                marginLeft: 1,
                                 marginRight: -30,
                                 left: 20
                             }
@@ -172,6 +179,11 @@ render() {
 }
 
 const styles = StyleSheet.create({
+    containerStyle: {
+        flex:1,
+        alignItems: 'center',
+        
+    },
     inputContainer: {
         borderBottomWidth: 1,
         borderBottomColor: '#eaeaea',

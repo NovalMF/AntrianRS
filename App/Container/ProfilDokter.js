@@ -89,14 +89,21 @@ class ProfilDokter extends Component {
                             maxDate="01-01-2023"
                             confirmBtnText="OK"
                             cancelBtnText="Cancel"
+                            iconSource={Images.iconKalender} 
                             customStyles={{
                             dateIcon: {
                                 position: 'relative',
                                 left:   25,
                                 top: 5,
-                                marginLeft: 0
+                                marginLeft: 0,
+                                width: 50,
+                                height: 50,
                             },
                             dateInput: {
+                              borderWidth: 0,
+                              borderBottomWidth: 1,
+                              borderBottomColor: '#eaeaea',
+                              alignItems: "flex-start",
                                 marginLeft: -20,
                                 marginRight: -10,
                                 top: 5,
