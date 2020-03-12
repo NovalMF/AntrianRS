@@ -19,15 +19,15 @@ class Jadwaldokter extends Component {
   }
 
   componentDidMount(){
-    this.getListDokterPoli(this.props.navigation.getParam('poli_id'));
+    this.getdokter_PoliList(this.props.navigation.getParam('poli_id'));
     
     this._subscribe = this.props.navigation.addListener('didFocus', () => {
       //do you update if need
-      this.getListDokterPoli(this.props.navigation.getParam('poli_id')); 
+      this.getdokter_PoliList(this.props.navigation.getParam('poli_id')); 
     });
   }
     
-  getListDokterPoli = (poli_id) => {
+  getdokter_PoliList = (poli_id) => {
     const ApiUrl = `http://api-antrian.aviatapps.id/api/poli/dokter/${poli_id}`;
     axios.get(ApiUrl)
     .then(response => {

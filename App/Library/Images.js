@@ -23,7 +23,8 @@ const Images = {
     iconYoutube: require ('../Assets/Icon/youtube.png'),
     iconBack: require ('../Assets/Icon/arrowleft.png'),
     iconPoliKandungan: require ('../Assets/Icon/polikandungan.png'),
-    dokterdummy1: require ('../Assets/Icon/Dr.Dummy2.png'),
+    dokterdummy2: require ('../Assets/Icon/Dr.Dummy2.png'),
+    dokterdummy1: require ('../Assets/Icon/Dr.Dummy1.png'),
 
     //Image
     background: require ('../Assets/Image/background.jpg'),
