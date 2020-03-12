@@ -15,6 +15,8 @@ import Poli from '../Container/Poli'
 import Jadwaldokter from '../Container/Jadwaldokter'
 import ProfilDokter from '../Container/ProfilDokter'
 import BookingAntrian from '../Container/BookingAntrian'
+import ProfilUser from '../Container/ProfilUser'
+import UbahProfil from '../Container/UbahProfil'
 
 
 const MainNavigator = createStackNavigator({
@@ -26,6 +28,8 @@ const MainNavigator = createStackNavigator({
     Jadwaldokter: { screen: Jadwaldokter, navigationOptions: {headerShown: false} },
     ProfilDokter: { screen: ProfilDokter, navigationOptions: {headerShown: false} },
     BookingAntrian: { screen: BookingAntrian, navigationOptions: {headerShown: false} },
+    ProfilUser: { screen: ProfilUser, navigationOptions: {headerShown: false} },
+    UbahProfil: { screen: UbahProfil, navigationOptions: {headerShown: false} },
 
 
 }, {
