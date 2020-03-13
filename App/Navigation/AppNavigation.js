@@ -17,6 +17,7 @@ import ProfilDokter from '../Container/ProfilDokter'
 import BookingAntrian from '../Container/BookingAntrian'
 import ProfilUser from '../Container/ProfilUser'
 import UbahProfil from '../Container/UbahProfil'
+import WebView from '../Container/WebView'
 
 
 const MainNavigator = createStackNavigator({
@@ -30,6 +31,7 @@ const MainNavigator = createStackNavigator({
     BookingAntrian: { screen: BookingAntrian, navigationOptions: {headerShown: false} },
     ProfilUser: { screen: ProfilUser, navigationOptions: {headerShown: false} },
     UbahProfil: { screen: UbahProfil, navigationOptions: {headerShown: false} },
+    WebView: { screen: WebView, navigationOptions: {headerShown: false} },
 
 
 }, {

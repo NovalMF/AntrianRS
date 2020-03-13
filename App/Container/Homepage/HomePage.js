@@ -5,15 +5,33 @@ import { SliderBox } from 'react-native-image-slider-box';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Switch } from 'native-base';
 import { Fonts } from '../../Themes';
+import axios from 'axios';
+
 
 export default class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      images: [
-        Images.hospital1, Images.hospital2
-      ]
+      images: [Images.hospital1, Images.hospital2],
+      artikel: [],
     };
+  }
+
+  componentDidMount(){
+    this.getartikel();
+    this._subscribe = this.props.navigation.addListener('didFocus', () => {
+      //do you update if need
+      this.getartikel(); 
+    });
+  }
+    
+  getartikel = () => {
+    const ApiUrl = 'http://api-antrian.aviatapps.id/api/artikel/list';
+    axios.get(ApiUrl)
+    .then(response => {
+      this.setState({ artikel:response.data.data })      
+    })
+        
   }
 
   render() {
@@ -29,7 +47,7 @@ export default class HomePage extends Component {
         {/* Image Slider */}
         <SliderBox
           images={this.state.images}
-          sliderBoxHeight={300}
+          sliderBoxHeight={200}
           onCurrentImagePressed={index => console.warn(`image ${index} pressed`)}
           dotColor="#0079EB"
           inactiveDotColor="#FFFFFF"
@@ -122,7 +140,7 @@ export default class HomePage extends Component {
               </View>
               <View style={{marginRight: 16, alignItems: 'center', justifyContent:'space-between', flexDirection: 'row'}}>
                 <TouchableOpacity style={{backgroundColor:'white', width: 120, height: 35, borderRadius: 20, marginBottom: 18, justifyContent:'center', alignItems:'center', elevation:0, borderColor: '#0079EB', borderWidth: 1}}>
-                 <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, textAlign:'center', color: '#0079EB'}}>Makanan Sehat</Text>
+                 <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, textAlign:'center', color: '#0079EB'}}>Kesehatan</Text>
                 </TouchableOpacity>
               </View>
               <View style={{marginRight: 16, alignItems: 'center', justifyContent:'space-between', flexDirection: 'row'}}>
@@ -144,21 +162,17 @@ export default class HomePage extends Component {
           </View>
 
            {/* Isi Berita*/}
-           <TouchableOpacity>
-             <View style={{flexDirection:'row', marginBottom: 12, marginLeft: 16, marginTop: 19, borderRadius: 10}}>
-               <Image source={Images.berita1} style={{width: 130, height: 120}}></Image>
-               <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, top:30, left: 12, width: 200}}>Cara Menurunkan Kolesterol Tinggi dengan Lemon</Text>
-             </View>
+           <ScrollView>
+           {
+                this.state.artikel.map((data, index)=>(
+           <TouchableOpacity
+              key={index} onPress={() => this.props.navigation.navigate('WebView', {artikel: 'data.artikel_id' })} style={{flexDirection:'row', marginBottom: 12, marginLeft: 16, marginTop: 19}}>
+               <Image source={{uri:data.header_img}} style={{width: 130, height: 120}}></Image>
+               <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, top:30, left: 12, width: 200, borderRadius: 10}}>{data.judul}</Text>
              </TouchableOpacity>
-      
-             <View style={{borderBottomColor: '#E8E9ED', borderBottomWidth: 1, marginTop: 10, marginBottom: 20, marginHorizontal: 16 }}></View>
-             
-             <TouchableOpacity>
-             <View style={{flexDirection:'row', marginBottom: 12, marginLeft: 16, marginTop: 19, borderRadius: 10}}>
-               <Image source={Images.berita2} style={{width: 130, height: 120}}></Image>
-               <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, top:30, left: 12, width: 200}}>Pentingnya Perawatan Kulit di Malam Hari, Ini Tipsnya</Text>
-             </View>
-             </TouchableOpacity>
+             ))
+            }
+            </ScrollView>
       </ScrollView>
     );
   }

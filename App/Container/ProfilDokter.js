@@ -27,12 +27,12 @@ class ProfilDokter extends Component {
     this.getprofil_dokter();
     this._subscribe = this.props.navigation.addListener('didFocus', () => {
       //do you update if need
-      this.getprofil_dokter(); 
+      this.getprofil_dokter(this.props.navigation.getParam('dokter_id')); 
     });
   }
     
-  getprofil_dokter= () => {
-    const ApiUrl = 'http://api-antrian.aviatapps.id/api/dokter/DOK0004-1582';
+  getprofil_dokter= (id) => {
+    const ApiUrl = `http://api-antrian.aviatapps.id/api/dokter/${id}`;
     axios.post(ApiUrl)
     .then(response => {
       this.setState({ profil_dokter:response.data.data })      
@@ -58,7 +58,7 @@ class ProfilDokter extends Component {
                 <View  key={index}
                     style={{ backgroundColor: 'white', width: 330, height: 180, marginLeft: 16, marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 20 }}>
                         
-                      <Image source={Images.dokterdummy1} style={{width: 70, height: 70, marginLeft:10, marginTop: 15}}></Image>
+                      <Image source={{uri:data.avatar}} style={{width: 70, height: 70, marginLeft:10, marginTop: 15}}></Image>
                       <Text style={{paddingLeft: 90, marginTop: -70, fontSize:16}}>{data.dokter_nama}</Text>
                       <Text style={{paddingLeft: 90, color: '#848484', marginTop: 5, width: 250}}>{data.spesialis}</Text>
                       <Text style={{paddingLeft: 90, width: 320, marginTop: 5}}>{data.biografi}</Text>
