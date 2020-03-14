@@ -83,6 +83,7 @@ render() {
                             placeholder="Pilih Tanggal"
                             format="DD-MM-YYYY"
                             minDate="01-01-1950"
+                            maxDate="01-01-2030"
                             confirmBtnText="OK"
                             cancelBtnText="Cancel"
                             iconSource={Images.iconKalender} 

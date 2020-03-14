@@ -37,6 +37,7 @@ const Images = {
     promo3: require ('../Assets/Image/Promo3.png'),
     berita1: require ('../Assets/Image/berita1.jpg'),
     berita2: require ('../Assets/Image/berita2.jpg'),
+    qrcode: require ('../Assets/Image/qr.png'),
 
 }
 

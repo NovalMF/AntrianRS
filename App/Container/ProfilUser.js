@@ -50,7 +50,7 @@ class ProfilUser extends Component {
 
              <ScrollView horizontal={true} style={{flexDirection: 'row'}}>
              <View style={{marginRight: 16, alignItems: 'center', justifyContent:'space-between', flexDirection: 'row'}}>
-                <TouchableOpacity style={{marginLeft: 16, marginTop: 15, backgroundColor:'white', width: 180, height: 60, borderRadius: 50, marginBottom: 18, justifyContent:'center', alignItems:'center', elevation:5, borderWidth: 1, borderColor: 'white'}}>
+                <TouchableOpacity style={{marginLeft: 16, marginTop: 15, backgroundColor:'white', width: 180, height: 60, borderRadius: 50, marginBottom: 18, justifyContent:'center', alignItems:'center', elevation:5, borderWidth: 1, borderColor: 'white'}}  onPress={() => this.props.navigation.navigate('TambahKeluarga')} >
                  <Feather name='plus-circle' size={35} style={{color:'#0079eb', left:-60, top:7}}></Feather>
                  <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, marginLeft: 40, top: -20}}>Tambah Keluarga</Text>
                 </TouchableOpacity>

@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { Text, StatusBar, View } from 'native-base';
-import {  ScrollView, Image, StyleSheet, Picker } from 'react-native';
+import {  ScrollView, Image, StyleSheet, Picker, Button } from 'react-native';
 import Images from '../Library/Images';
 import LinearGradient from 'react-native-linear-gradient';
 import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
@@ -9,49 +9,61 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Fonts } from '../Themes';
 import DatePicker from 'react-native-datepicker';
+import Modal, { ModalContent, SlideAnimation } from 'react-native-modals'
+import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios';
 
 
 
-class BookingAntrian extends Component {
+class TambahKeluarga extends Component {
   constructor(props) {
     super(props);
     this.state = { 
         email   : '',
-        booking_antrian: [],
     
     };
   }
 
-  componentDidMount(){
-    this.getbooking_antrian();
-    this._subscribe = this.props.navigation.addListener('didFocus', () => {
-      //do you update if need
-      this.getbooking_antrian(); 
-    });
-  }
+//   componentDidMount(){
+//     this.getbooking_antrian();
+//     this._subscribe = this.props.navigation.addListener('didFocus', () => {
+//       //do you update if need
+//       this.getbooking_antrian(); 
+//     });
+//   }
     
-  getbooking_antrian= () => {
-    const ApiUrl = 'http://api-antrian.aviatapps.id/api/dokter/DOK0004-1582';
-    axios.post(ApiUrl)
-    .then(response => {
-      this.setState({ booking_antrian:response.data.data })      
-    })
+//   getbooking_antrian= () => {
+//     const ApiUrl = 'http://api-antrian.aviatapps.id/api/dokter/DOK0004-1582';
+//     axios.post(ApiUrl)
+//     .then(response => {
+//       this.setState({ booking_antrian:response.data.data })      
+//     })
         
-  }
+//   }
 
 render() {
     return (
+     
         <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
-          <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('ProfilDokter')}>
+
+          <Modal
+              visible={this.state.visible}
+              modalAnimation={new SlideAnimation({
+                slideFrom: 'bottom',
+              })}
+            >
+              <ModalContent>
+              </ModalContent>
+            </Modal>
+          <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('ProfilUser')}>
             <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
           </TouchableOpacity>
 
           <View style={{paddingLeft:60}}>
-            <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Booking Antrian</Text>
+            <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Tambah Keluarga</Text>
           </View>
 
-          <View style={{marginTop: 5}} >
+          {/* <View style={{marginTop: 5}} >
             {
                 this.state.booking_antrian.map((data, index)=>(
                   <View key={index} onPress={() => this.props.navigation.navigate('ProfilDokter', {dokter_id: data.dokter_id })}
@@ -63,10 +75,10 @@ render() {
                   
                   
                 ))
-              }
+              } */}
 
-              {/* Nama Pasien */}
-              <Text style={{paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>Nama Pasien</Text>
+              {/* Username */}
+              <Text style={{paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>Nama Lengkap</Text>
                 <View style={styles.inputContainer}> 
                     <TextInput 
                         style={styles.inputs}
@@ -75,28 +87,28 @@ render() {
                     />
                 </View>
 
-                {/* Email */}
-              <Text style={{marginTop:10, paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>Email</Text>
+                {/* Hubungan Keluarga */}
+              <Text style={{marginTop:10, paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>Hubungan Keluarga</Text>
                 <View style={styles.inputContainer}> 
-                    <TextInput 
-                        style={styles.inputs}
-                        placeholder="Ketik disini"
-                        keyboardType="email-address"
-                        underlineColorAndroid='transparent' 
-                        onChangeText={(email) => this.setState({email})}   
-                    />
-                </View>
 
-                 {/* No.Telepon */}
-              <Text style={{marginTop:10, paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>No.Telepon</Text>
-                <View style={styles.inputContainer}> 
-                    <TextInput 
-                        style={styles.inputs}
-                        placeholder="Ketik disini"
-                        keyboardType={'numeric'}  
-                        underlineColorAndroid='transparent' 
-                        onChangeText={(email) => this.setState({email})}   
-                    />
+                <Picker 
+                        placeholder={{label: 'Pilih salah satu', value: null}}
+                        selectedValue={this.state.hubungankeluarga}
+                        style={{ width: '90%', left: 3}}
+                        onValueChange={(itemValue, itemIndex) =>
+                            this.setState({hubungankeluarga: itemValue})
+                          }
+                    
+                    >
+                        <Picker.Item label="Ayah" value="ayah" />
+                        <Picker.Item label="Ibu" value="ibu" />
+                        <Picker.Item label="Suami" value="suami" />
+                        <Picker.Item label="Istri" value="istri" />
+                        <Picker.Item label="Anak Laki-laki" value="anak laki-laki" />
+                        <Picker.Item label="Anak Perempuan" value="anak perempuan" />
+                    
+ 
+                    </Picker>
                 </View>
 
                  {/* Tanggal Lahir */}
@@ -105,9 +117,10 @@ render() {
                             style={{width: 300}}
                             date={this.state.date}
                             mode="date"
-                            placeholder="Silahkan Pilih Tanggal"
+                            placeholder="Pilih Tanggal"
                             format="DD-MM-YYYY"
                             minDate="01-01-1950"
+                            maxDate="01-01-2030"
                             confirmBtnText="OK"
                             cancelBtnText="Cancel"
                             iconSource={Images.iconKalender} 
@@ -133,47 +146,35 @@ render() {
                             onDateChange={(date) => {this.setState({date: date})}}
                         />
 
-                        {/* Pembayaran */}
-              <Text style={{marginTop:10, paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>Pembayaran</Text>
-                <View style={styles.inputContainer}> 
-                <Picker
-                         placeholder={{label: 'Pilih Pembayaran', value: null}}
-                        selectedValue={this.state.pembayaran}
-                        style={{ width: '90%', left: 3}}
-                        onValueChange={(itemValue, itemIndex) =>
-                            this.setState({pembayaran: itemValue})
-                          }
-                    
-                    >
-                        <Picker.Item label="Pembayaran1" value="pembayaran1" />
-                        <Picker.Item label="Pembayaran2" value="pembayaran2" />
-                        <Picker.Item label="Pembayaran3" value="pembayaran3" />
-                    
- 
-                    </Picker>
-                </View>
 
-                 {/* Catatan */}
-              <Text style={{marginTop: 10, paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>Catatan (jika ada)</Text>
+                      {/* Jenis Kelamin */}
+              <Text style={{marginTop:10, paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>Jenis Kelamin</Text>
+
+
+
+
+              {/* No.Telepon */}
+              <Text style={{marginTop:10, paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>No.Telepon</Text>
                 <View style={styles.inputContainer}> 
                     <TextInput 
                         style={styles.inputs}
-                        placeholder="Tulis catatan anda..."
-                        underlineColorAndroid='transparent'    
+                        placeholder="Ketik disini"
+                        keyboardType={'numeric'}  
+                        underlineColorAndroid='transparent' 
+                        onChangeText={(email) => this.setState({email})}   
                     />
                 </View>
 
-                 {/* Button Lanjut */}
-                 <View style={{ width: 360, bottom: 10, marginTop:10}}>
+                {/* Button Simpan */}
+                <View style={{ width: 360, bottom: 10, marginTop:175}}>
                     <LinearGradient start={{x: 0, y: 0}} end={{x: 0.9, y: 0.5}} colors={['#0079EB', '#0079EB']} style={{elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
-                        <TouchableOpacity style={{ alignItems:'center', justifyContent:'center', height:55}} onPress={()=> this.props.navigation.navigate('History')} >
-                            <Text style={{color: 'white', fontFamily: Fonts.type.regular, fontSize: 20}}> Lanjut </Text>
+                        <TouchableOpacity style={{ alignItems:'center', justifyContent:'center', height:55}} onPress={()=> this.props.navigation.navigate('')} >
+                            <Text style={{color: 'white', fontFamily: Fonts.type.regular, fontSize: 20}}> Simpan</Text>
                         </TouchableOpacity>
                     </LinearGradient>
                 </View>
+          </View>
 
-          </View>
-          </View>
 
 )
 }
@@ -210,4 +211,4 @@ const styles = StyleSheet.create({
   
   })
 
-export default BookingAntrian;
+export default TambahKeluarga;
