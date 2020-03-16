@@ -33,7 +33,7 @@ class ProfilUser extends Component {
 
             <TouchableOpacity style={{marginTop: -10}} onPress={() => this.props.navigation.navigate('UbahProfil')} >
                 <View style={{ justifyContent:'space-between',backgroundColor: 'white', width: '100%', height: 110, marginTop: 5, elevation: 3, marginBottom: 20 }}>
-                      <Image source={Images.dokterdummy1} style={{width: 70, height: 70, marginLeft:16, top:10}}></Image>
+                      <Image source={Images.iconAccount} style={{width: 70, height: 70, marginLeft:16, top:10}}></Image>
                       <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 18, marginLeft: 105 }}>Budi Aja</Text>
                       <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 16, marginLeft: 105, color: '#848484' }}>+6288102938746</Text>
                       <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 16, marginLeft: 105, color: '#848484' }}>budiaja123@gmail.com</Text>
