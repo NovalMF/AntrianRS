@@ -68,9 +68,9 @@ export default class HomePage extends Component {
             </View>
 
             <View style={{ width: '30%', alignItems: 'center'}}>
-            <TouchableOpacity style={{ backgroundColor: 'white', width: '100%', height: 100, justifyContent:'center', alignItems:'center', borderRadius: 10, elevation:2 }} onPress={() => this.props.navigation.navigate('Profile')}>
+            <TouchableOpacity style={{ backgroundColor: 'white', width: '100%', height: 100, justifyContent:'center', alignItems:'center', borderRadius: 10, elevation:2 }} onPress={() => this.props.navigation.navigate('AntrianSaya')}>
                 <Image source={Images.iconAntrian} style={{ width: 55, height: 55, resizeMode: 'contain', alignSelf: 'center' }} />
-                  <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, textAlign: 'center'}} onPress={() => this.props.navigation.navigate('Profile')}>Antrian Saya</Text>
+                  <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, textAlign: 'center'}} onPress={() => this.props.navigation.navigate('AntrianSaya')}>Antrian Saya</Text>
                 </TouchableOpacity>
             </View>
 

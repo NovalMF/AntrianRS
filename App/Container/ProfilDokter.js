@@ -64,23 +64,26 @@ class ProfilDokter extends Component {
                       <Text style={{paddingLeft: 90, width: 320, marginTop: 5}}>{data.biografi}</Text>
                     
                       <View style={{justifyContent:'center', alignItems:'center'}}>
-                        <Text style={{fontSize: 18, marginTop:120}}>Biografi</Text>
-                        
+                          <Text style={{fontSize: 18, marginTop:30}}>Biografi</Text>
                         <View style={{ backgroundColor: 'white', width: 330, height: 130, marginTop: 10, borderRadius: 10, elevation: 5, marginBottom: 20 }} > 
-                        <Text style={{paddingLeft: 10, width: 320, marginTop: 5}}>{data.pendidikan}</Text>
-                        <Text style={{paddingLeft: 10, width: 320, marginTop: 5}}>{data.email}</Text>
+                          <Text style={{paddingLeft: 10, width: 320, marginTop: 5}}>{data.pendidikan}</Text>
+                          <Text style={{paddingLeft: 10, width: 320, marginTop: 5}}>{data.email}</Text>
                         </View>
+                      </View>
                         
-                        <Text style={{fontSize: 18, marginTop:-10}}>Jadwal Praktik</Text>
+                        <View>
+                        <Text style={{fontSize: 18, marginTop:10,alignSelf:'center'}}>Jadwal Praktik</Text>
                         <View style={{ backgroundColor: 'white', width: 330, height: 100, marginTop: 15, borderRadius: 10, elevation: 5, marginBottom: 20 }} > 
                         <Text style={{}}>{data.jadwal}</Text>
                         <Text style={{}}>{data.mulai}</Text>
                         <Text style={{}}>{data.selesai}</Text>
                         </View>
+                        </View>
 
-                        <Text style={{fontSize: 18, marginTop:-5}}>Pilih Tanggal</Text>
+                        <View>
+                        <Text style={{fontSize: 18, marginTop:-5, alignSelf:'center'}}>Pilih Tanggal</Text>
                         <DatePicker
-                            style={{width: 300}}
+                            style={{width: 350}}
                             date={this.state.date}
                             mode="date"
                             placeholder="Silahkan Pilih Tanggal"
@@ -93,7 +96,6 @@ class ProfilDokter extends Component {
                             customStyles={{
                             dateIcon: {
                                 position: 'relative',
-                                left:   25,
                                 top: 5,
                                 marginLeft: 0,
                                 width: 50,
@@ -104,8 +106,8 @@ class ProfilDokter extends Component {
                               borderBottomWidth: 1,
                               borderBottomColor: '#eaeaea',
                               alignItems: "flex-start",
-                                marginLeft: -20,
-                                marginRight: -10,
+                                marginLeft: -10,
+                                marginRight: 20,
                                 top: 5,
                                 left: 10
                             }
@@ -113,26 +115,7 @@ class ProfilDokter extends Component {
                             }}
                             onDateChange={(date) => {this.setState({date: date})}}
                         />
-              
-                      </View>
-                
-                    {/* <View 
-                    style={{ backgroundColor: 'white', width: 330, height: 130, marginTop: 15, borderRadius: 10, elevation: 5, marginBottom: 20 }}>
-                        <Text style={{paddingLeft: 10,}}>{data.pendidikan}</Text>
-                    </View>  
-                    
-                    <View style={{justifyContent:'center', alignItems:'center'}}>
-                         <Text style={{fontSize: 18, marginTop:-10}}>Jadwal Praktik</Text>
-                    </View>
-
-                    <View 
-                    style={{ backgroundColor: 'white', width: 330, height: 90, marginTop: 10, borderRadius: 10, elevation: 5, marginBottom: 20 }}>
-                        <Text style={{paddingLeft: 10,}}>{data.jadwal}</Text>
-                    </View> 
-
-                    <View style={{justifyContent:'center', alignItems:'center'}}>
-                         <Text style={{fontSize: 18, marginTop:-10}}>Pilih Tanggal</Text>
-                    </View> */}
+                        </View>
                     
                   </View>
                   

@@ -20,6 +20,7 @@ import UbahProfil from '../Container/UbahProfil'
 import WebView from '../Container/WebView'
 import History from '../Container/History'
 import TambahKeluarga from '../Container/TambahKeluarga'
+import AntrianSaya from '../Container/AntrianSaya'
 
 
 const MainNavigator = createStackNavigator({
@@ -36,6 +37,7 @@ const MainNavigator = createStackNavigator({
     WebView: { screen: WebView, navigationOptions: {headerShown: false} },
     History: { screen: History, navigationOptions: {headerShown: false} },
     TambahKeluarga: { screen: TambahKeluarga, navigationOptions: {headerShown: false} },
+    AntrianSaya: { screen: AntrianSaya, navigationOptions: {headerShown: false} },
 
 
 }, {

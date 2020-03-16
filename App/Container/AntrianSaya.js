@@ -1,28 +1,39 @@
 
+
 import React, { Component } from 'react';
 import { Text, StatusBar, View } from 'native-base';
-import {  ScrollView, Image, StyleSheet, Picker } from 'react-native';
+import {  ScrollView, Image, StyleSheet, Picker, TouchableHighlight, Animated } from 'react-native';
 import Images from '../Library/Images';
 import LinearGradient from 'react-native-linear-gradient';
-import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
+import { TouchableOpacity, TextInput, BorderlessButton } from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Fonts } from '../Themes';
 import DatePicker from 'react-native-datepicker';
+import CollapsibleList from 'react-native-collapsible-list'
 import axios from 'axios';
 
 
 
-class History extends Component {
+class AntrianSaya extends Component {
   constructor(props) {
     super(props);
+    this.icons = {
+      'up'    : require ('../Assets/Icon/arrowup.png'),
+      'down'  : require ('../Assets/Icon/arrowdown.png')
+    };
     this.state = { 
+        title   : props.title,
+        expand  : true, 
         email   : '',
         history_booking: [],
     
     };
   }
 
+ toogle(){
+
+ }
 //   componentDidMount(){
 //     this.getbooking_antrian();
 //     this._subscribe = this.props.navigation.addListener('didFocus', () => {
@@ -41,35 +52,29 @@ class History extends Component {
 //   }
 
 render() {
+  let icon = this.icons['down'];
+
+  if(this.state.expanded) {
+    icon = this.icons['up'];
+  }
     return (
-        <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
+        <ScrollView style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
           <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('HomePage')}>
             <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
           </TouchableOpacity>
 
           <View style={{paddingLeft:60}}>
-            <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>History</Text>
+            <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Antrian Saya</Text>
           </View>
 
           <View style={{marginTop: 5}} >
-                  <View  
-                    style={{ backgroundColor: 'white', width: 330, height: 250, marginLeft: 16, marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 20}}>
-                      <Text style={{ marginTop: 20, fontSize:16, alignSelf:'center'}}>Scan QR Code</Text>
-                      <Image source={Images.qrcode} style={{width:250, height: 250, marginTop:-25, alignSelf: 'center'}}></Image>
-                  </View>
-
-                  <View  
-                    style={{ backgroundColor: 'white', width: 330, height: 280, marginLeft: 16, marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 20}}>
-                      <Text style={{ marginTop: 20, fontSize:16, alignSelf:'center'}}>No. Antrian</Text>
-                      <View style={{borderBottomColor: '#E8E9ED', borderBottomWidth: 1, marginTop: 60, marginBottom: 20, marginHorizontal: 16 }}></View>
-                      <Text style={{ fontSize:16, alignSelf:'flex-start', marginLeft: 16}}>Nama Pasien</Text>
-                      <Text style={{ fontSize:16, alignSelf:'flex-start', marginLeft: 16, marginTop:30}}>Poli</Text>
-                      <Text style={{ fontSize:16, alignSelf:'flex-start', marginLeft: 16, marginTop:30}}>Nama Dokter</Text>
-                      <Text style={{ fontSize:16, alignSelf:'flex-end', marginRight: 16, marginTop:-114}}>Hari & Tanggal</Text>
-                      <Text style={{ fontSize:16, alignSelf:'flex-end', marginRight: 38, marginTop:30}}>Waktu</Text>
-                  </View>
+                  <TouchableOpacity  
+                    style={{ backgroundColor: 'white', width: '100%', height: 90, marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 20}}>
+                      <Text style={{ marginTop: 10, fontSize:18, marginLeft: 16,}}>Dr. Anastasia Lintang Maharani, Sp.OG</Text>
+                      <Text style={{ marginTop: 3, fontSize:16, marginLeft: 16, color:'grey'}}>Poli Kebidanan dan Kandungan</Text>
+                  </TouchableOpacity>
             </View>
-          </View>
+          </ScrollView>
 
 )
 }
@@ -106,4 +111,4 @@ const styles = StyleSheet.create({
   
   })
 
-export default History;
+export default AntrianSaya;
