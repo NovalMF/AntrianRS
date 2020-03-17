@@ -9,13 +9,41 @@ class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            email   : '',
+            usernameEmail   : '',
             password: '',
             icon: 'eye-off',
             isAuthenticated: false
         
         }
     }
+
+    handleSubmit = input => {
+        this.setState({ loading: true });
+        input.preventDefault();
+    
+        if (this.formisValid(this.state)) {
+          this.setState({ errors: [], loading: true });
+          axios.post('http://api-antrian.aviatapps.id/api/login', {
+        usernameEmail    : this.state.usernameEmail,
+      password : this.state.password
+    }).then( user => {
+    
+            this.setState({ 
+              initialState,
+              submit: true
+            });
+            this.setState({ loading: false});
+            console.log('User Login', user)
+    
+          }).catch((response) => {
+            // ? Show to user that request is failed
+            this.setState({ errors:[response ]})
+            this.setState({ loading: false });
+            console.log('request failed', response)
+          });
+        }
+      };
+
     render() {
         return (
             <View style={styles.containerStyle}>
@@ -31,7 +59,7 @@ class Login extends Component {
                         placeholder="Username/Email"
                         keyboardType="email-address"
                         underlineColorAndroid='transparent'
-                        onChangeText={(email) => this.setState({email})}
+                        onChangeText={(usernameEmail) => this.setState({usernameEmail})}
                     />
                 </View>
 
