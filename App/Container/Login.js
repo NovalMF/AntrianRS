@@ -11,8 +11,9 @@ class Login extends Component {
         this.state = {
             email   : '',
             password: '',
-            pass: true,
             icon: 'eye-off',
+            isAuthenticated: false
+        
         }
     }
     render() {

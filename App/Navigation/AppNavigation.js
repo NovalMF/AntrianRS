@@ -17,7 +17,7 @@ import ProfilDokter from '../Container/ProfilDokter'
 import BookingAntrian from '../Container/BookingAntrian'
 import ProfilUser from '../Container/ProfilUser'
 import UbahProfil from '../Container/UbahProfil'
-import WebView from '../Container/WebView'
+import WebViewArtikel from '../Container/WebViewArtikel'
 import History from '../Container/History'
 import TambahKeluarga from '../Container/TambahKeluarga'
 import AntrianSaya from '../Container/AntrianSaya'
@@ -34,7 +34,7 @@ const MainNavigator = createStackNavigator({
     BookingAntrian: { screen: BookingAntrian, navigationOptions: {headerShown: false} },
     ProfilUser: { screen: ProfilUser, navigationOptions: {headerShown: false} },
     UbahProfil: { screen: UbahProfil, navigationOptions: {headerShown: false} },
-    WebView: { screen: WebView, navigationOptions: {headerShown: false} },
+    WebViewArtikel: { screen: WebViewArtikel, navigationOptions: {headerShown: false} },
     History: { screen: History, navigationOptions: {headerShown: false} },
     TambahKeluarga: { screen: TambahKeluarga, navigationOptions: {headerShown: false} },
     AntrianSaya: { screen: AntrianSaya, navigationOptions: {headerShown: false} },

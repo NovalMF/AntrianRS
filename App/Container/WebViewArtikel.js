@@ -9,11 +9,12 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Fonts } from '../Themes';
 import DatePicker from 'react-native-datepicker';
+import WebView from 'react-native-webview';
 import axios from 'axios';
 
 
 
-class WebView extends Component {
+class WebViewArtikel extends Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -49,10 +50,14 @@ render() {
           <View style={{paddingLeft:60}}>
             <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Artikel</Text>
           </View>
+        
+          <WebView
+            source={{uri: 'https://github.com/facebook/react-native'}}
+            style={{marginTop: 20}}
+          />
 
-          <View style={{marginTop: 5}} >
-            {
-                this.state.isi_artikel.map((data, index)=>(
+          {/* <View style={{marginTop: 5}} >
+            
                   <View key={index} onPress={() => this.props.navigation.navigate('ProfilDokter', {isi_artikel: data.artikel_id})}
                     style={{ backgroundColor: 'white', width: 330, height: 90, marginLeft: 16, marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 20}}>
                       <Image source={{uri:data.header_img}} style={{width: 70, height: 70, marginLeft:10, marginTop: 8}}></Image>
@@ -64,7 +69,7 @@ render() {
                   
                 ))
               }
-          </View>
+          </View> */}
           </View>
 
 
@@ -103,4 +108,4 @@ const styles = StyleSheet.create({
   
   })
 
-export default WebView;
+export default WebViewArtikel;

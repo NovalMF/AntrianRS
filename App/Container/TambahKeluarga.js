@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { Text, StatusBar, View } from 'native-base';
-import {  ScrollView, Image, StyleSheet, Picker, Button } from 'react-native';
+import {  ScrollView, Image, StyleSheet, Picker, Button, Dimensions } from 'react-native';
 import Images from '../Library/Images';
 import LinearGradient from 'react-native-linear-gradient';
 import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
@@ -9,20 +9,43 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Fonts } from '../Themes';
 import DatePicker from 'react-native-datepicker';
-import Modal, { ModalContent, SlideAnimation } from 'react-native-modals'
+import Modal, { ModalContent, SlideAnimation } from 'react-native-modal'
 import RNPickerSelect from 'react-native-picker-select';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import axios from 'axios';
 
-
+var radio_props = [
+  {label: 'Laki-laki', value: 0},
+  {label: 'Perempuan', value: 1}
+];
 
 class TambahKeluarga extends Component {
   constructor(props) {
     super(props);
     this.state = { 
+      isModalVisible: false,
         email   : '',
     
     };
   }
+
+  openModal = () =>{
+    this.setState({
+    isModalVisible:true
+    })
+    }
+
+  toggleModal = () =>{
+    this.setState({
+    isModalVisible:!this.state.isModalVisible
+    })
+    }
+
+  closeModal = () =>{
+    this.setState({
+    isModalVisible:false
+    })
+    }
 
 //   componentDidMount(){
 //     this.getbooking_antrian();
@@ -45,16 +68,6 @@ render() {
     return (
      
         <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
-
-          <Modal
-              visible={this.state.visible}
-              modalAnimation={new SlideAnimation({
-                slideFrom: 'bottom',
-              })}
-            >
-              <ModalContent>
-              </ModalContent>
-            </Modal>
           <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('ProfilUser')}>
             <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
           </TouchableOpacity>
@@ -149,8 +162,15 @@ render() {
 
                       {/* Jenis Kelamin */}
               <Text style={{marginTop:10, paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>Jenis Kelamin</Text>
-
-
+              <View>
+                <RadioForm
+                  radio_props={radio_props}
+                  formHorizontal={true}
+                  animation={true}
+                  initial={0}
+                  onPress={(value) => {this.setState({value:value})}}
+                />
+              </View>
 
 
               {/* No.Telepon */}
@@ -166,12 +186,25 @@ render() {
                 </View>
 
                 {/* Button Simpan */}
-                <View style={{ width: 360, bottom: 10, marginTop:175}}>
+                <View style={{ width: 360, bottom: 10, marginTop:225}}>
                     <LinearGradient start={{x: 0, y: 0}} end={{x: 0.9, y: 0.5}} colors={['#0079EB', '#0079EB']} style={{elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
-                        <TouchableOpacity style={{ alignItems:'center', justifyContent:'center', height:55}} onPress={()=> this.props.navigation.navigate('')} >
+                        <TouchableOpacity style={{ alignItems:'center', justifyContent:'center', height:55}} onPress={()=> this.openModal ()} >
                             <Text style={{color: 'white', fontFamily: Fonts.type.regular, fontSize: 20}}> Simpan</Text>
                         </TouchableOpacity>
                     </LinearGradient>
+
+                    <Modal animationIn="slideInUp" animationOut="slideOutDown" onBackdropPress={()=>this.closeModal()} onSwipeComplete={()=>this.closeModal()} swipeDirection="right" isVisible={this.state.isModalVisible} style={{backgroundColor:'gray',maxHeight:Dimensions.get('window').height / 2}} isVisible={this.state.isModalVisible} style={{backgroundColor:'white'}}>
+                      <View style={{ flex: 1,justifyContent:'center'}}>
+                      <Text style={{textAlign:'center'}}>Anda berhasil menambahkan anggota Keluarga</Text>
+                      </View>
+                      <View style={{ flex: 1,justifyContent:'center',bottom:0}}>
+                      <View style={{}}>
+                      <TouchableOpacity style={{backgroundColor:'#0079eb',width: '100%', height: 60}} onPress={() => this.props.navigation.navigate('ProfilUser')}>
+                      <Text style={{color:'white',textAlign:'center', padding:10, marginTop: 10}}>Lihat Keluarga Anda</Text>
+                      </TouchableOpacity>
+                      </View>
+                      </View>
+                      </Modal>
                 </View>
           </View>
 
@@ -207,6 +240,11 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 13,
   },
+  Modal: {
+    maxHeight: 100,
+    justifyContent: 'center',
+    textAlign: 'center'
+  }
   
   
   })
