@@ -166,7 +166,7 @@ export default class HomePage extends Component {
            {
                 this.state.artikel.map((data, index)=>(
            <TouchableOpacity
-              key={index} onPress={() => this.props.navigation.navigate('WebView', {artikel: 'data.artikel_id' })} style={{flexDirection:'row', marginBottom: 12, marginLeft: 16, marginTop: 19}}>
+              key={index} onPress={() => this.props.navigation.navigate('WebViewArtikel', {artikel_id: data.artikel_id })} style={{flexDirection:'row', marginBottom: 12, marginLeft: 16, marginTop: 19}}>
                <Image source={{uri:data.header_img}} style={{width: 130, height: 120}}></Image>
                <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, top:30, left: 12, width: 200, borderRadius: 10}}>{data.judul}</Text>
              </TouchableOpacity>
