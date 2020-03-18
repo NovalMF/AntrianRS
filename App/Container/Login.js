@@ -4,12 +4,14 @@ import { View, Container, Icon, Thumbnail } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient'
 import Images from '../Library/Images';
 import Fonts from '../Themes/Fonts';
+import axios from 'axios';
 
 class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            usernameEmail   : '',
+            login: [],
+            username: '',
             password: '',
             icon: 'eye-off',
             isAuthenticated: false
@@ -17,43 +19,31 @@ class Login extends Component {
         }
     }
 
-    handleSubmit = input => {
-        this.setState({ loading: true });
-        input.preventDefault();
-    
-        if (this.formisValid(this.state)) {
-          this.setState({ errors: [], loading: true });
-          axios.post('http://api-antrian.aviatapps.id/api/login', {
-        usernameEmail    : this.state.usernameEmail,
-      password : this.state.password
-    }).then( user => {
-    
-            this.setState({ 
-              initialState,
-              submit: true
-            });
-            this.setState({ loading: false});
-            console.log('User Login', user)
-    
-          }).catch((response) => {
-            // ? Show to user that request is failed
-            this.setState({ errors:[response ]})
-            this.setState({ loading: false });
-            console.log('request failed', response)
-          });
-        }
-      };
+    componentDidMount(){
+        this.getlogin();
+        this._subscribe = this.props.navigation.addListener('didFocus', () => {
+          //do you update if need
+          this.getlogin(); 
+        });
+      }
+        
+      getlogin = () => {
+        const ApiUrl = 'http://api-antrian.aviatapps.id/api/login';
+        axios.post(ApiUrl)
+        .then(response => {
+          this.setState({ login:response.data.data })      
+        })
+            
+      }
 
     render() {
         return (
-            <View style={styles.containerStyle}>
-                <ImageBackground source={Images.background} style={{flex: 1, width: '100%', height: '100%', justifyContent: 'center',alignItems: 'center', position:'absolute'}}/>
-                <View style={styles.logoStyle}>
-                    <Thumbnail square large source={Images.contohlogo}/>
-                </View>
-
-                {/* Username/Email */}
-                <View style={styles.inputContainer}>
+           <ImageBackground source={Images.background} style={{ flex:1, position: 'relative'}}>
+               <View style={{ flex:1, justifyContent:'center', alignItems:'center'}}>
+               <Thumbnail square large source={Images.contohlogo}/>            
+                    <View></View>
+                    <View style={{padding: 80}}>
+                    <View style={styles.inputContainer}>
                     <Image style={styles.inputIcon} source={Images.iconAccount}/>
                     <TextInput style={styles.inputs}
                         placeholder="Username/Email"
@@ -61,10 +51,9 @@ class Login extends Component {
                         underlineColorAndroid='transparent'
                         onChangeText={(usernameEmail) => this.setState({usernameEmail})}
                     />
-                </View>
-
-                {/* Password */}
-                <View style={styles.inputContainer}>
+                    </View>
+                        
+                        <View style={styles.inputContainer}>
                     <Image style={styles.inputIcon} source={Images.iconPassword}/>
                     <TextInput 
                         style={styles.inputs}
@@ -73,31 +62,38 @@ class Login extends Component {
                         underlineColorAndroid='transparent'
                         onChangeText={(password) => this.setState({password})}
                     />
-                    <Icon 
-                        name={this.state.icon}
-                        style={{ marginRight: 20}} 
-                        onPress={()=> 
-                            this.setState({ pass: !this.state.pass, icon: this.state.icon === 'eye' ? 'eye-off' : 'eye' })} 
-                        color={'#FFFFFF'}
-                    />
-                </View>
-                
-                <View style={{ flexDirection: 'row', bottom: -75, left: 80}}>
-                    <Text style={{ color: '#FFFFFF', fontFamily: Fonts.type.regular, fontSize: 18}}  onPress={()=> this.props.navigation.navigate('')} >Lupa Password ? </Text>
                     </View>
-                {/* Button Login */}
-                <View style={{ width: 250, paddingHorizontal: 30, bottom: -90}}>
-                    <LinearGradient start={{x: 0, y: 0}} end={{x: 0.9, y: 0.5}} colors={['#0079EB', '#0079EB']} style={{elevation: 1, borderRadius: 20, marginVertical: 20, justifyContent: 'flex-end' }}>
-                        <TouchableOpacity style={{ alignItems:'center', justifyContent:'center', height:55}} onPress={()=> this.props.navigation.navigate('HomePage')} >
-                            <Text style={{color: 'white', fontFamily: Fonts.type.regular, fontSize: 20}}> Login </Text>
+
+                        <View style={{height: 60, marginTop: 20, marginLeft: 180}}>
+                        <Text style={{ color: '#FFFFFF', fontFamily: Fonts.type.regular, fontSize: 18}}  onPress={()=> this.props.navigation.navigate('')} >Lupa Password ? </Text>
+                        </View>
+                        
+                        <TouchableOpacity 
+                            style={{marginTop: -20, elevation: 1, borderRadius: 20, height: 55, width:250, alignSelf:'center', backgroundColor: '#0079eb', justifyContent:'center', alignItems:'center'}}
+                            onPress={() => {
+                                axios.post('http://api-antrian.aviatapps.id/api/login'), {
+                                    username: this.state.username,
+                                    password: this.state.password
+                                }.then(response => {
+                                    console.log(response.data);
+                                }).catch(error => {
+                                    console.log(error);
+                                })
+                                
+                            }}
+                            >
+                            <Text style={{color: 'white', fontFamily: Fonts.type.regular, fontSize: 20}}>
+                                Login
+                            </Text>
                         </TouchableOpacity>
-                    </LinearGradient>
-                </View>
-                <View style={{ flexDirection: 'row', bottom: -95}}>
+                        <View style={{ flexDirection: 'row', bottom: -20 , alignSelf:'center'}}>
                     <Text style={{ color: '#FFFFFF', fontFamily: Fonts.type.regular, fontSize: 18}}>Belum Punya Akun ? </Text>
                     <Text style={{ color: '#FFFFFF', fontFamily: Fonts.type.regular, fontSize: 18, textDecorationLine: 'underline'}} onPress={()=> this.props.navigation.navigate('Register')}>Registrasi</Text>
                 </View>
-            </View>
+                    </View>
+                    <View></View>
+               </View>
+               </ImageBackground>
         )
     }
 }
@@ -125,7 +121,7 @@ const styles = StyleSheet.create({
         marginBottom:30,
         flexDirection: 'row',
         alignItems:'center',
-        bottom: -80
+        bottom: -30
         
     },
     inputIcon:{
