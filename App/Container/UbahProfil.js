@@ -120,6 +120,7 @@ render() {
                   radio_props={radio_props}
                   initial={0}
                   formHorizontal={true}
+                  labelStyle={{marginRight:20}}
                   animation={true}
                   onPress={(value) => {this.setState({value:value})}}
                   style={{marginLeft: 16}}
