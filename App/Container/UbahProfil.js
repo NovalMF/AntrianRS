@@ -118,12 +118,14 @@ render() {
               <View>
                 <RadioForm
                   radio_props={radio_props}
+                  initial={0}
                   formHorizontal={true}
                   animation={true}
-                  initial={0}
                   onPress={(value) => {this.setState({value:value})}}
+                  style={{marginLeft: 16}}
                 />
               </View>
+
               {/* No.Telepon */}
               <Text style={{marginTop:10, paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>No.Telepon</Text>
                 <View style={styles.inputContainer}> 

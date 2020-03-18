@@ -165,10 +165,11 @@ render() {
               <View>
                 <RadioForm
                   radio_props={radio_props}
+                  initial={0}
                   formHorizontal={true}
                   animation={true}
-                  initial={0}
                   onPress={(value) => {this.setState({value:value})}}
+                  style={{marginLeft: 16}}
                 />
               </View>
 
