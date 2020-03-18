@@ -49,7 +49,7 @@ class Login extends Component {
                         placeholder="Username/Email"
                         keyboardType="email-address"
                         underlineColorAndroid='transparent'
-                        onChangeText={(usernameEmail) => this.setState({usernameEmail})}
+                        onChangeText={(text) => this.setState({username: text})}
                     />
                     </View>
                         
@@ -57,10 +57,10 @@ class Login extends Component {
                     <Image style={styles.inputIcon} source={Images.iconPassword}/>
                     <TextInput 
                         style={styles.inputs}
-                        secureTextEntry={this.state.pass}
+                        secureTextEntry={true}
                         placeholder="Password"
                         underlineColorAndroid='transparent'
-                        onChangeText={(password) => this.setState({password})}
+                        onChangeText={(text) => this.setState({password: text})}
                     />
                     </View>
 
@@ -71,10 +71,10 @@ class Login extends Component {
                         <TouchableOpacity 
                             style={{marginTop: -20, elevation: 1, borderRadius: 20, height: 55, width:250, alignSelf:'center', backgroundColor: '#0079eb', justifyContent:'center', alignItems:'center'}}
                             onPress={() => {
-                                axios.post('http://api-antrian.aviatapps.id/api/login'), {
-                                    username: this.state.username,
-                                    password: this.state.password
-                                }.then(response => {
+                                axios.post('http://api-antrian.aviatapps.id/api/login', {
+                                    username: 'admin123',
+                                    password: '123456'
+                                }).then(response => {
                                     console.log(response.data);
                                 }).catch(error => {
                                     console.log(error);
