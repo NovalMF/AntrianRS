@@ -21,6 +21,7 @@ import WebViewArtikel from '../Container/WebViewArtikel'
 import History from '../Container/History'
 import TambahKeluarga from '../Container/TambahKeluarga'
 import AntrianSaya from '../Container/AntrianSaya'
+import SplashScreen from '../Container/SplashScreen'
 
 
 const MainNavigator = createStackNavigator({
@@ -38,11 +39,11 @@ const MainNavigator = createStackNavigator({
     History: { screen: History, navigationOptions: {headerShown: false} },
     TambahKeluarga: { screen: TambahKeluarga, navigationOptions: {headerShown: false} },
     AntrianSaya: { screen: AntrianSaya, navigationOptions: {headerShown: false} },
-
+    SplashScreen: { screen: SplashScreen, navigationOptions: {headerShown: false} },
 
 }, {
     headerMode: 'screen',
-    initialRouteName: 'Login', 
+    initialRouteName: 'SplashScreen', 
     defaultNavigationOptions: {
         headerStyle,
         headerTitleStyle, 
