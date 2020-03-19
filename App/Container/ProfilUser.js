@@ -4,25 +4,72 @@ import {  ScrollView, Image, StyleSheet, impo, TouchableOpacity } from 'react-na
 import Images from '../Library/Images';
 import LinearGradient from 'react-native-linear-gradient';
 import { TextInput } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Fonts } from '../Themes';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import DatePicker from 'react-native-datepicker';
 import Feather from 'react-native-vector-icons/Feather';
+import Modal from 'react-native-modal';
+import { NavigationActions, StackActions } from 'react-navigation';
 import axios from 'axios';
 
 class ProfilUser extends Component {
     constructor(props) {
       super(props);
       this.state = { 
-          email   : '',
-          booking_antrian: [],
+          logout: [],
+          modalLogout: false,
       
       };
     }
+    
+    getlogout = () => {
+      const ApiUrl = 'http://api-antrian.aviatapps.id/api/logout';
+      axios.post(ApiUrl)
+          .then(response => {
+              this.setState({ logout: response.data.data })
+          })
+
+  }
+    navigateToLogin() {
+      AsyncStorage.clear(() => {
+          const navigation = this.props.navigation;
+          const resetAction = StackActions.reset({
+              index: 0,
+              actions: [NavigationActions.navigate({ routeName: 'Login' })],
+          });
+          navigation.dispatch(resetAction)
+      })
+  }
+
+
   
     render() {
         return (
             <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
+              <Modal
+                    onBackdropPress={() => this.setState({ modalLogout: false })}
+                    isVisible={this.state.modalLogout}
+                >
+                    <View style={{ height: 200, width: '100%', backgroundColor: 'white', paddingVertical: 15, paddingHorizontal: 20 }}>
+                        <Text style={{ alignSelf: 'center', fontSize: 24 }}>Logout</Text>
+                        <Text style={{ alignSelf: 'center', flexWrap: 'wrap', marginTop: 10 }}>Apakah kamu yakin akan keluar?</Text>
+                        <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1, paddingHorizontal: 40, paddingBottom: 30 }}>
+                            <TouchableOpacity style={{ height: 40, width: 70, borderRadius: 10, backgroundColor: '#f2f2f2', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.navigateToLogin() }>
+                                <View style={{ flex: 1, justifyContent: 'center' }}>
+                                    <Text style={{ alignSelf: 'center' }}>Yes</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{ height: 40, width: 70, borderRadius: 10, backgroundColor: '#f2f2f2', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.setState({ modalLogout: false })}>
+                                <View style={{ flex: 1, justifyContent: 'center' }}>
+                                    <Text style={{ alignSelf: 'center' }}>No</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+                
               <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('HomePage')}>
                 <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
               </TouchableOpacity>
@@ -58,6 +105,15 @@ class ProfilUser extends Component {
               </ScrollView>
 
             </View>
+
+            <View >
+                        {/* Logout */}
+                        <TouchableOpacity style={{ backgroundColor: 'white', width: '100%', height: 60, marginTop: 355, paddingVertical: 5, flexDirection: 'row', paddingHorizontal: 20, elevation:7 }} onPress={() => this.setState({ modalLogout: true })}>
+                            <Fontisto name='power' size={20} style={{ alignSelf: 'center' }} color={'gray'} />
+                            <Text style={{ alignSelf: 'center', marginLeft: 20, fontFamily: Fonts.type.medium }}>Logout</Text>
+                        </TouchableOpacity>
+
+                    </View>
             </View>
               )
     }

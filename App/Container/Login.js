@@ -18,11 +18,12 @@ class Login extends Component {
             username: '',
             password: '',
             errorMsg: '',
-            icon: 'eye-off',
+            icon: 'eye',
             isAuthenticated: false
 
         }
     }
+
 
     componentDidMount() {
         this._subscribe = this.props.navigation.addListener('didFocus', () => { 
@@ -108,11 +109,18 @@ class Login extends Component {
                             <Image style={styles.inputIcon} source={Images.iconPassword} />
                             <TextInput
                                 style={styles.inputs}
-                                secureTextEntry={true}
+                                secureTextEntry={this.state.pass}
                                 placeholder="Password"
                                 underlineColorAndroid='transparent'
                                 onChangeText={(text) => this.setState({ password: text })}
                             />
+                            <Icon 
+                        name={this.state.icon}
+                        style={{ marginRight: 17}} 
+                        onPress={()=> 
+                            this.setState({ pass: !this.state.pass, icon: this.state.icon === 'eye' ? 'eye-off' : 'eye' })} 
+                        color={'#FFFFFF'}
+                             />
                         </View>
 
                         <View style={{ height: 60, marginTop: 20, marginLeft: 180 }}>
