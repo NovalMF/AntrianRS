@@ -58,12 +58,12 @@ class ProfilUser extends Component {
                         <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1, paddingHorizontal: 40, paddingBottom: 30 }}>
                             <TouchableOpacity style={{ height: 40, width: 70, borderRadius: 10, backgroundColor: '#f2f2f2', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.navigateToLogin() }>
                                 <View style={{ flex: 1, justifyContent: 'center' }}>
-                                    <Text style={{ alignSelf: 'center' }}>Yes</Text>
+                                    <Text style={{ alignSelf: 'center' }}>Ya</Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity style={{ height: 40, width: 70, borderRadius: 10, backgroundColor: '#f2f2f2', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.setState({ modalLogout: false })}>
                                 <View style={{ flex: 1, justifyContent: 'center' }}>
-                                    <Text style={{ alignSelf: 'center' }}>No</Text>
+                                    <Text style={{ alignSelf: 'center' }}>Tidak</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
