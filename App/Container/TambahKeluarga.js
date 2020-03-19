@@ -9,7 +9,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Fonts } from '../Themes';
 import DatePicker from 'react-native-datepicker';
-import Modal, { ModalContent, SlideAnimation } from 'react-native-modal'
+import Modal from 'react-native-modal'
 import RNPickerSelect from 'react-native-picker-select';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import axios from 'axios';
@@ -23,29 +23,11 @@ class TambahKeluarga extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      isModalVisible: false,
+      modalTambahKeluarga: false,
         email   : '',
     
     };
   }
-
-  openModal = () =>{
-    this.setState({
-    isModalVisible:true
-    })
-    }
-
-  toggleModal = () =>{
-    this.setState({
-    isModalVisible:!this.state.isModalVisible
-    })
-    }
-
-  closeModal = () =>{
-    this.setState({
-    isModalVisible:false
-    })
-    }
 
 //   componentDidMount(){
 //     this.getbooking_antrian();
@@ -68,6 +50,24 @@ render() {
     return (
      
         <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
+
+                <Modal
+                    onBackdropPress={() => this.setState({ modalTambahKeluarga: false })}
+                    isVisible={this.state.modalTambahKeluarga}
+                >
+                    <View style={{ height: 300, width: '100%', backgroundColor: 'white', paddingVertical: 15, paddingHorizontal: 20 }}>
+                        <Image source={Images.keluarga} style={{width: 180, height: 180, alignSelf: 'center'}}></Image>
+                        <Text style={{ alignSelf: 'center', marginTop: 10, marginBottom: 20 }}>Anda berhasil menambahkan anggota keluarga</Text>
+                        <View style={{ flex: 1, paddingHorizontal: 40 }}>
+                            <TouchableOpacity style={{alignSelf: 'center', height: 50, width: 180, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.props.navigation.navigate ('ProfilUser') }>
+                                <View style={{ flex: 1, justifyContent: 'center' }}>
+                                    <Text style={{ alignSelf: 'center', color: 'white' }}>Lihat Keluarga Anda</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+
           <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('ProfilUser')}>
             <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
           </TouchableOpacity>
@@ -190,23 +190,11 @@ render() {
                 {/* Button Simpan */}
                 <View style={{ width: 360, bottom: 10, marginTop:225}}>
                     <LinearGradient start={{x: 0, y: 0}} end={{x: 0.9, y: 0.5}} colors={['#0079EB', '#0079EB']} style={{elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
-                        <TouchableOpacity style={{ alignItems:'center', justifyContent:'center', height:55}} onPress={()=> this.openModal ()} >
+                        <TouchableOpacity style={{ alignItems:'center', justifyContent:'center', height:55}} onPress={() => this.setState({ modalTambahKeluarga: true })} >
                             <Text style={{color: 'white', fontFamily: Fonts.type.regular, fontSize: 20}}> Simpan</Text>
                         </TouchableOpacity>
                     </LinearGradient>
 
-                    <Modal animationIn="slideInUp" animationOut="slideOutDown" onBackdropPress={()=>this.closeModal()} onSwipeComplete={()=>this.closeModal()} swipeDirection="right" isVisible={this.state.isModalVisible} style={{backgroundColor:'gray',maxHeight:Dimensions.get('window').height / 2}} isVisible={this.state.isModalVisible} style={{backgroundColor:'white'}}>
-                      <View style={{ flex: 1,justifyContent:'center'}}>
-                      <Text style={{textAlign:'center'}}>Anda berhasil menambahkan anggota Keluarga</Text>
-                      </View>
-                      <View style={{ flex: 1,justifyContent:'center',bottom:0}}>
-                      <View style={{}}>
-                      <TouchableOpacity style={{backgroundColor:'#0079eb',width: '100%', height: 60}} onPress={() => this.props.navigation.navigate('ProfilUser')}>
-                      <Text style={{color:'white',textAlign:'center', padding:10, marginTop: 10}}>Lihat Keluarga Anda</Text>
-                      </TouchableOpacity>
-                      </View>
-                      </View>
-                      </Modal>
                 </View>
           </View>
 
@@ -242,12 +230,6 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 13,
   },
-  Modal: {
-    maxHeight: 100,
-    justifyContent: 'center',
-    textAlign: 'center'
-  }
-  
   
   })
 
