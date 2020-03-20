@@ -28,48 +28,48 @@ class Register extends Component {
     }
     
     componentDidMount(){
-        this.getregister();
-        this._subscribe = this.props.navigation.addListener('didFocus', () => {
+        // this.getregister();
+        // this._subscribe = this.props.navigation.addListener('didFocus', () => {
           //do you update if need
-          this.getData(); 
-        });
+        //   this.getData(); 
+        // });
       }
 
-      async getData() {
-        var Token = await AsyncStorage.getItem(Constant.TOKEN) 
-        if (Token == null || Token == 'TOKEN' || Token == '') {
-            null
-        } else {
-          this.navigateToRegister()
-        }
-      }
+    //   async getData() {
+    //     var Token = await AsyncStorage.getItem(Constant.TOKEN) 
+    //     if (Token == null || Token == 'TOKEN' || Token == '') {
+    //         null
+    //     } else {
+    //       this.navigateToRegister()
+    //     }
+    //   }
 
-      getregister = () => {
-        const ApiUrl = 'http://api-antrian.aviatapps.id/api/register';
-        axios.post(ApiUrl)
-            .then(response => {
-                this.setState({ register: response.data.data })
-            })
+    //   getregister = () => {
+    //     const ApiUrl = 'http://api-antrian.aviatapps.id/api/register';
+    //     axios.post(ApiUrl)
+    //         .then(response => {
+    //             this.setState({ register: response.data.data })
+    //         })
 
-    }
+    // }
 
       handleregister = () => {
         Api.create().register({
-            username: this.state.username,
+            name: this.state.username,
             email: this.state.email,
             password: this.state.password,
-            confpassword: this.state.confpassword
+            confirm_password: this.state.confpassword
         }).then((response) => {
-            // alert(JSON.stringify(Response.data))
-            if (response.data.success == true) {
-                this.getDataUser(
-                    response.data.access_token,
-                    response.data.expires_at,
-                )
-                this.navigateToRegister()
-            } else {
-                this.setState({ errorMsg: response.data.message }) 
-            }
+            alert(JSON.stringify(Response))
+            // if (response.data.success == true) {
+            //     this.getDataUser(
+            //         response.data.access_token,
+            //         response.data.expires_at,
+            //     )
+            //     this.navigateToRegister()
+            // } else {
+            //     this.setState({ errorMsg: response.data.message }) 
+            // }
         })
       }
 

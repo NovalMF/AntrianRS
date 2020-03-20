@@ -5,6 +5,7 @@ const Constant = {
     //USER
     TOKEN: 'TOKEN',
     TOKEN_EXPR: 'TOKEN_EXPR',
+    NAMA: 'NAMA'
 }
 
 export default Constant;

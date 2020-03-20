@@ -20,13 +20,13 @@ export default class HubungiKami extends Component {
   render() {
     return (
       <Container>
-        <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('HomePage')}>
+        {/* <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('HomePage')}>
           <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
         </TouchableOpacity>
 
         <View style={{paddingLeft:60}}>
         <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Hubungi Kami</Text>
-        </View>
+        </View> */}
         <Content>
           <List>
             <ListItem itemHeader style={{ marginLeft: 16, marginBottom: -30}}>

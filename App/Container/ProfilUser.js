@@ -70,13 +70,13 @@ class ProfilUser extends Component {
                     </View>
                 </Modal>
                 
-              <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('HomePage')}>
+              {/* <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('HomePage')}>
                 <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
               </TouchableOpacity>
     
               <View style={{paddingLeft:60}}>
                 <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Profil User</Text>
-              </View>
+              </View> */}
 
             <TouchableOpacity style={{marginTop: -10}} onPress={() => this.props.navigation.navigate('UbahProfil')} >
                 <View style={{ justifyContent:'space-between',backgroundColor: 'white', width: '100%', height: 110, marginTop: 5, elevation: 3, marginBottom: 20 }}>
