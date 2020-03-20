@@ -3,18 +3,97 @@ import { Text, Image, TextInput, StyleSheet, TouchableOpacity, PermissionsAndroi
 import { View, Container, Icon, Thumbnail } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient'
 import Images from '../Library/Images';
+import axios from 'axios';
+import Api from '../Services/Api';
+import AsyncStorage from '@react-native-community/async-storage';
+import { NavigationActions, StackActions } from 'react-navigation';
 import Fonts from '../Themes/Fonts';
 
 class Register extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            email   : '',
+            authCode: '',
+            register: [],
+            username: '',
+            email: '',
             password: '',
+            confpassword: '',
+            notelepon: '',
             pass: true,
-            icon: 'eye-off',
+            errorMsg: '',
+            icon: 'eye',
+            isAuthenticated: false
         }
     }
+    
+    componentDidMount(){
+        this.getregister();
+        this._subscribe = this.props.navigation.addListener('didFocus', () => {
+          //do you update if need
+          this.getData(); 
+        });
+      }
+
+      async getData() {
+        var Token = await AsyncStorage.getItem(Constant.TOKEN) 
+        if (Token == null || Token == 'TOKEN' || Token == '') {
+            null
+        } else {
+          this.navigateToRegister()
+        }
+      }
+
+      getregister = () => {
+        const ApiUrl = 'http://api-antrian.aviatapps.id/api/register';
+        axios.post(ApiUrl)
+            .then(response => {
+                this.setState({ register: response.data.data })
+            })
+
+    }
+
+      handleregister = () => {
+        Api.create().register({
+            username: this.state.username,
+            email: this.state.email,
+            password: this.state.password,
+            confpassword: this.state.confpassword
+        }).then((response) => {
+            // alert(JSON.stringify(Response.data))
+            if (response.data.success == true) {
+                this.getDataUser(
+                    response.data.access_token,
+                    response.data.expires_at,
+                )
+                this.navigateToHomepage()
+            } else {
+                this.setState({ errorMsg: response.data.message }) 
+            }
+        })
+      }
+
+      navigateToRegister() { 
+        const navigation = this.props.navigation;
+        const resetAction = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'HomePage' })],
+        });
+        navigation.dispatch(resetAction) 
+    }
+
+    async getDataUser(token, token_expr) {
+        console.log(token, token_expr)
+        try {
+            AsyncStorage.setItem(Constant.TOKEN, token)
+            AsyncStorage.setItem(Constant.TOKEN_EXPR, token_expr)
+        } catch {
+            AsyncStorage.setItem(Constant.TOKEN, '')
+            AsyncStorage.setItem(Constant.TOKEN_EXPR, '')
+        }
+    }
+
+
     render() {
         return (
             <View style={styles.containerStyle}>
@@ -27,7 +106,7 @@ class Register extends Component {
                     <TextInput style={styles.inputs}
                         placeholder="Username"
                         underlineColorAndroid='transparent'
-                        onChangeText={(email) => this.setState({email})}
+                        onChangeText={(text) => this.setState({username: text})}
                     />
                 </View>
 
@@ -38,20 +117,20 @@ class Register extends Component {
                         placeholder="Email"
                         keyboardType="email-address"
                         underlineColorAndroid='transparent'
-                        onChangeText={(email) => this.setState({email})}
+                        onChangeText={(text) => this.setState({email : text})}
                     />
                 </View>
 
                  {/* No.Telepon */}
-                 <View style={styles.inputContainer}>
+                 {/* <View style={styles.inputContainer}>
                     <Image style={styles.inputIcon} source={Images.iconTelepon}/>
                     <TextInput style={styles.inputs}
                         placeholder="No. Telepon"
                         keyboardType={'numeric'}    
                         underlineColorAndroid='transparent'
-                        onChangeText={(email) => this.setState({email})}
+                        onChangeText={(text) => this.setState({notelepon: text})}
                     />
-                </View>
+                </View> */}
 
                 {/* Password */}
                 <View style={styles.inputContainer}>
@@ -61,21 +140,35 @@ class Register extends Component {
                         secureTextEntry={this.state.pass}
                         placeholder="Password"
                         underlineColorAndroid='transparent'
-                        onChangeText={(password) => this.setState({password})}
+                        onChangeText={(text) => this.setState({password: text})}
+                    />
+                </View>
+
+                {/* Confirm Password */}
+                <View style={styles.inputContainer}>
+                    <Image style={styles.inputIcon} source={Images.iconPassword}/>
+                    <TextInput 
+                        style={styles.inputs}
+                        secureTextEntry={this.state.pass}
+                        placeholder="Confirm Password"
+                        underlineColorAndroid='transparent'
+                        onChangeText={(text) => this.setState({confpassword: text})}
                     />
                 </View>
 
                 {/* Button Login */}
                 <View style={{ width: 250, paddingHorizontal: 30, bottom: -70}}>
                     <LinearGradient start={{x: 0, y: 0}} end={{x: 0.9, y: 0.5}} colors={['#0079EB', '#0079EB']} style={{elevation: 1, borderRadius: 20, marginVertical: 20, justifyContent: 'flex-end' }}>
-                        <TouchableOpacity style={{ alignItems:'center', justifyContent:'center', height:55}} onPress={()=> this.props.navigation.navigate('Login')} >
+                        <TouchableOpacity style={{ alignItems:'center', justifyContent:'center', height:55}} 
+                        onPress={() => this.handleregister()} >
                             <Text style={{color: 'white', fontFamily: Fonts.type.regular, fontSize: 20}}> Registrasi </Text>
                         </TouchableOpacity>
                     </LinearGradient>
                 </View>
                 <View style={{ flexDirection: 'row', bottom: -75}}>
                     <Text style={{ color: '#FFFFFF', fontFamily: Fonts.type.regular, fontSize: 18}}>Sudah Punya Akun ? </Text>
-                    <Text style={{ color: '#FFFFFF', fontFamily: Fonts.type.regular, fontSize: 18, textDecorationLine: 'underline'}} onPress={()=> this.props.navigation.navigate('Login')}>Login</Text>
+                    <Text style={{ color: '#FFFFFF', fontFamily: Fonts.type.regular, fontSize: 18, textDecorationLine: 'underline'}} 
+                    onPress={() => this.props.navigation.navigate('Login')}>Login</Text>
                 </View>
             </View>
         )

@@ -36,11 +36,13 @@ const create = () => {
 
     const login = (value) => POST('login', value)
     const getAritkel = (value) => POST('artikel/list', value)
+    const register = (value) => POST ('register', value)
 
 
     return {
         login,
-        getAritkel
+        getAritkel,
+        register
     }
 }
 
