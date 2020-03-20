@@ -66,7 +66,7 @@ class Register extends Component {
                     response.data.access_token,
                     response.data.expires_at,
                 )
-                this.navigateToHomepage()
+                this.navigateToRegister()
             } else {
                 this.setState({ errorMsg: response.data.message }) 
             }
