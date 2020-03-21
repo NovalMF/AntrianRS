@@ -22,34 +22,37 @@ import History from '../Container/History'
 import TambahKeluarga from '../Container/TambahKeluarga'
 import AntrianSaya from '../Container/AntrianSaya'
 import SplashScreen from '../Container/SplashScreen'
+import Artikel from '../Container/Artikel'
 
 
 const MainNavigator = createStackNavigator({
     Login: { screen: Login, navigationOptions: { headerShown: false } },
     Register: { screen: Register, navigationOptions: { headerShown: false} },
     HomePage: { screen: HomePage, navigationOptions: {headerShown: false} },
-    HubungiKami: { screen: HubungiKami, navigationOptions: {headerShown: false} },
-    Poli: { screen: Poli, navigationOptions: {headerShown: false} },
+    HubungiKami: { screen: HubungiKami, navigationOptions: {title: 'Hubungi Kami'} },
+    Poli: { screen: Poli, navigationOptions: {title: 'Instalasi Rawat Jalan'} },
     Jadwaldokter: { screen: Jadwaldokter, navigationOptions: {headerShown: false} },
     ProfilDokter: { screen: ProfilDokter, navigationOptions: {headerShown: false} },
     BookingAntrian: { screen: BookingAntrian, navigationOptions: {headerShown: false} },
-    ProfilUser: { screen: ProfilUser, navigationOptions: {headerShown: false} },
-    UbahProfil: { screen: UbahProfil, navigationOptions: {headerShown: false} },
+    ProfilUser: { screen: ProfilUser, navigationOptions: {title: 'Profil User'} },
+    UbahProfil: { screen: UbahProfil, navigationOptions: {title: 'Ubah Profil'} },
     WebViewArtikel: { screen: WebViewArtikel, navigationOptions: {headerShown: false} },
     History: { screen: History, navigationOptions: {headerShown: false} },
     TambahKeluarga: { screen: TambahKeluarga, navigationOptions: {headerShown: false} },
-    AntrianSaya: { screen: AntrianSaya, navigationOptions: {headerShown: false} },
+    AntrianSaya: { screen: AntrianSaya, navigationOptions: {title: 'Antrian Saya'} },
     SplashScreen: { screen: SplashScreen, navigationOptions: {headerShown: false} },
+    Artikel: { screen: Artikel, navigationOptions: {title: 'Artikel'} },
 
 }, {
     headerMode: 'screen',
     initialRouteName: 'SplashScreen', 
     defaultNavigationOptions: {
         headerStyle,
+        headerBgStyle,
         headerTitleStyle, 
         headerTintColor: 'white',
         headerBackImage: ( 
-            <IconBack name='arrow-back' size={30} color={'white'} />
+            <IconBack name='ios-arrow-back' size={30} color={'white'} />
         )
     }
 });

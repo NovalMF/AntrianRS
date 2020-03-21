@@ -55,13 +55,13 @@ changeLayout = () => {
 render() {
     return (
         <ScrollView style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
-          <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('HomePage')}>
+          {/* <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('HomePage')}>
             <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
           </TouchableOpacity>
 
           <View style={{paddingLeft:60}}>
             <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Antrian Saya</Text>
-          </View>
+          </View> */}
 
           <View style={styles.container}>
               <View style={styles.btnTextHolder}>
@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    marginTop: 20,
     paddingHorizontal: 10,
     justifyContent: 'center',
     paddingTop: (Platform.OS === 'ios') ? 20 : 0

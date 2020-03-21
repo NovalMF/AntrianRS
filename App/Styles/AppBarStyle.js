@@ -3,10 +3,9 @@ import { Platform } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 
 export const headerStyle = {
-    backgroundColor: Colors.primary,
+    backgroundColor: '#0079EB',
     shadowRadius: 0,
     elevation: 0,
-    marginTop: DeviceInfo.hasNotch() ? 20 : 20,
     borderBottomWidth: 0,
 }
 

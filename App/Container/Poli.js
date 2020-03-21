@@ -42,7 +42,7 @@ class Poli extends Component {
   render() {
     return (
         <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
-          <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('HomePage')}>
+          {/* <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('HomePage')}>
             <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
           </TouchableOpacity>
 
@@ -52,7 +52,7 @@ class Poli extends Component {
 
           <View style={{paddingLeft:16}}>
             <Text style={{ top: -5, fontFamily: Fonts.type.regular, fontSize: 16, color: '#848484'}}>Silahkan pilih poli yang tersedia</Text>
-          </View>
+          </View> */}
           
           <View style={styles.inputContainer}>
           <TextInput style={styles.inputs}
