@@ -55,7 +55,7 @@ class ProfilDokter extends Component {
                       <Text style={{paddingLeft: 90, color: '#848484', marginTop: 5, width: 250}}>{data.spesialis}</Text>
                       <Text style={{paddingLeft: 90, width: 320, marginTop: 5}}>{data.biografi}</Text>
                     
-                      {/* <View style={{justifyContent:'center', alignItems:'center'}}>
+                      <View style={{justifyContent:'center', alignItems:'center'}}>
                           <Text style={{fontSize: 18, marginTop:30}}>Biografi</Text>
                         <View style={{ backgroundColor: 'white', width: 330, height: 130, marginTop: 10, borderRadius: 10, elevation: 5, marginBottom: 20 }} > 
                           <Text style={{paddingLeft: 10, width: 320, marginTop: 5}}>{data.pendidikan}</Text>
@@ -107,7 +107,7 @@ class ProfilDokter extends Component {
                             }}
                             onDateChange={(date) => {this.setState({date: date})}}
                         />
-                        </View> */}
+                        </View>
                     
                   </View>
                   
