@@ -42,17 +42,9 @@ class Poli extends Component {
   render() {
     return (
         <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
-          {/* <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('HomePage')}>
-            <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
-          </TouchableOpacity>
-
-          <View style={{paddingLeft:60}}>
-            <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Instalasi Rawat Jalan</Text>
-          </View>
-
           <View style={{paddingLeft:16}}>
-            <Text style={{ top: -5, fontFamily: Fonts.type.regular, fontSize: 16, color: '#848484'}}>Silahkan pilih poli yang tersedia</Text>
-          </View> */}
+            <Text style={{ paddingTop:5, fontFamily: Fonts.type.regular, fontSize: 16, color: '#848484'}}>Silahkan pilih poli yang tersedia</Text>
+          </View>
           
           <View style={styles.inputContainer}>
           <TextInput style={styles.inputs}

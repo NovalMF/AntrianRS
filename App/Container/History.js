@@ -43,14 +43,6 @@ class History extends Component {
 render() {
     return (
         <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
-          <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('HomePage')}>
-            <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
-          </TouchableOpacity>
-
-          <View style={{paddingLeft:60}}>
-            <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>History</Text>
-          </View>
-
           <View style={{marginTop: 5}} >
                   <View  
                     style={{ backgroundColor: 'white', width: 330, height: 250, marginLeft: 16, marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 20}}>

@@ -15,10 +15,10 @@ class Register extends Component {
         this.state = {
             authCode: '',
             register: [],
-            username: '',
+            name: '',
             email: '',
             password: '',
-            confpassword: '',
+            confirm_password: '',
             notelepon: '',
             pass: true,
             errorMsg: '',
@@ -55,21 +55,21 @@ class Register extends Component {
 
       handleregister = () => {
         Api.create().register({
-            name: this.state.username,
+            name: this.state.name,
             email: this.state.email,
             password: this.state.password,
-            confirm_password: this.state.confpassword
+            confirm_password: this.state.confirm_password
         }).then((response) => {
-            alert(JSON.stringify(Response))
-            // if (response.data.success == true) {
-            //     this.getDataUser(
-            //         response.data.access_token,
-            //         response.data.expires_at,
-            //     )
-            //     this.navigateToRegister()
-            // } else {
-            //     this.setState({ errorMsg: response.data.message }) 
-            // }
+            alert(JSON.stringify(response))
+            if (response.data.success == true) {
+                this.getDataUser(
+                    response.data.success,
+                    response.data.message,
+                )
+                this.navigateToRegister()
+            } else {
+                this.setState({ errorMsg: response.data.message }) 
+            }
         })
       }
 
@@ -106,7 +106,7 @@ class Register extends Component {
                     <TextInput style={styles.inputs}
                         placeholder="Username"
                         underlineColorAndroid='transparent'
-                        onChangeText={(text) => this.setState({username: text})}
+                        onChangeText={(text) => this.setState({name: text})}
                     />
                 </View>
 
@@ -152,7 +152,7 @@ class Register extends Component {
                         secureTextEntry={this.state.pass}
                         placeholder="Confirm Password"
                         underlineColorAndroid='transparent'
-                        onChangeText={(text) => this.setState({confpassword: text})}
+                        onChangeText={(text) => this.setState({confirm_password: text})}
                     />
                 </View>
 

@@ -3,7 +3,7 @@ import { Platform } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 
 export const headerStyle = {
-    backgroundColor: '#0079EB',
+    backgroundColor: 'white',
     shadowRadius: 0,
     elevation: 0,
     borderBottomWidth: 0,
@@ -11,7 +11,8 @@ export const headerStyle = {
 
 export const headerTitleStyle = {
     flex: 1,
-    fontSize: 18,
+    fontSize: 20,
+    color: 'black',
     fontWeight: '600',
 }
 

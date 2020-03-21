@@ -47,27 +47,6 @@ class UbahProfil extends Component {
   render() {
     return (
       <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20 }}>
-        {/* <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('ProfilUser')}>
-            <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
-          </TouchableOpacity>
-
-          <View style={{paddingLeft:60}}>
-            <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Ubah Profil</Text>
-          </View> */}
-
-        {/* <View style={{marginTop: 5}} >
-            {
-                this.state.booking_antrian.map((data, index)=>(
-                  <View key={index} onPress={() => this.props.navigation.navigate('ProfilDokter', {dokter_id: data.dokter_id })}
-                    style={{ backgroundColor: 'white', width: 330, height: 90, marginLeft: 16, marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 20}}>
-                      <Image source={{uri:data.avatar}} style={{width: 70, height: 70, marginLeft:10, marginTop: 8}}></Image>
-                      <Text style={{paddingLeft: 90, marginTop: -70, fontSize:16}}>{data.dokter_nama}</Text>
-                      <Text style={{paddingLeft: 90, color: '#848484'}}>{data.spesialis}</Text>
-                  </View>
-                  
-                  
-                ))
-              } */}
 
         {/* Username */}
         <View>

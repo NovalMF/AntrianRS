@@ -55,14 +55,6 @@ changeLayout = () => {
 render() {
     return (
         <ScrollView style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
-          {/* <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('HomePage')}>
-            <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
-          </TouchableOpacity>
-
-          <View style={{paddingLeft:60}}>
-            <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Antrian Saya</Text>
-          </View> */}
-
           <View style={styles.container}>
               <View style={styles.btnTextHolder}>
                 <TouchableOpacity activeOpacity={0.8} onPress={this.changeLayout} style={styles.Btn}>
@@ -140,7 +132,7 @@ const styles = StyleSheet.create({
 
   btnText: {
     color: 'black',
-    fontSize: 20,
+    fontSize: 18,
     marginLeft: 5
 
   },

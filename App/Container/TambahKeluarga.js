@@ -49,7 +49,7 @@ class TambahKeluarga extends Component {
 render() {
     return (
      
-        <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
+        <View style={{backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20}}>
 
                 <Modal
                     onBackdropPress={() => this.setState({ modalTambahKeluarga: false })}
@@ -68,14 +68,6 @@ render() {
                     </View>
                 </Modal>
 
-          <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('ProfilUser')}>
-            <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
-          </TouchableOpacity>
-
-          <View style={{paddingLeft:60}}>
-            <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Tambah Keluarga</Text>
-          </View>
-
           {/* <View style={{marginTop: 5}} >
             {
                 this.state.booking_antrian.map((data, index)=>(
@@ -91,7 +83,7 @@ render() {
               } */}
 
               {/* Username */}
-              <Text style={{paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>Nama Lengkap</Text>
+              <Text style={{paddingBottom:5, fontFamily: Fonts.type.regular, color: 'black'}}>Nama Lengkap</Text>
                 <View style={styles.inputContainer}> 
                     <TextInput 
                         style={styles.inputs}
@@ -101,13 +93,13 @@ render() {
                 </View>
 
                 {/* Hubungan Keluarga */}
-              <Text style={{marginTop:10, paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>Hubungan Keluarga</Text>
+              <Text style={{marginTop:10, paddingBottom:5, fontFamily: Fonts.type.regular, color: 'black'}}>Hubungan Keluarga</Text>
                 <View style={styles.inputContainer}> 
 
                 <Picker 
                         placeholder={{label: 'Pilih salah satu', value: null}}
                         selectedValue={this.state.hubungankeluarga}
-                        style={{ width: '90%', left: 3}}
+                        style={{ width: '90%'}}
                         onValueChange={(itemValue, itemIndex) =>
                             this.setState({hubungankeluarga: itemValue})
                           }
@@ -125,7 +117,7 @@ render() {
                 </View>
 
                  {/* Tanggal Lahir */}
-              <Text style={{marginTop:10, paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>Tanggal Lahir</Text>
+              <Text style={{marginTop:10, paddingBottom:5, fontFamily: Fonts.type.regular, color: 'black'}}>Tanggal Lahir</Text>
                     <DatePicker
                             style={{width: 300}}
                             date={this.state.date}
@@ -140,7 +132,7 @@ render() {
                             customStyles={{
                             dateIcon: {
                                 position: 'relative',
-                                left:   55,
+                                left:   20,
                                 top: 5,
                                 width: 50,
                                 height: 50,
@@ -151,8 +143,7 @@ render() {
                                 borderBottomColor: '#eaeaea',
                                 alignItems: "flex-start",
                                 marginLeft: 1,
-                                marginRight: -30,
-                                left: 20
+                                // left: 10
                             }
                             // ... You can check the source to find the other keys.
                             }}
@@ -161,7 +152,7 @@ render() {
 
 
                       {/* Jenis Kelamin */}
-              <Text style={{marginTop:10, paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>Jenis Kelamin</Text>
+              <Text style={{marginTop:10, paddingBottom:5, fontFamily: Fonts.type.regular, color: 'black'}}>Jenis Kelamin</Text>
               <View>
                 <RadioForm
                   radio_props={radio_props}
@@ -170,13 +161,13 @@ render() {
                   labelStyle={{marginRight:20}}
                   animation={true}
                   onPress={(value) => {this.setState({value:value})}}
-                  style={{marginLeft: 16}}
+                  
                 />
               </View>
 
 
               {/* No.Telepon */}
-              <Text style={{marginTop:10, paddingBottom:5, paddingLeft:20, fontFamily: Fonts.type.regular, color: 'black'}}>No.Telepon</Text>
+              <Text style={{marginTop:10, paddingBottom:5, fontFamily: Fonts.type.regular, color: 'black'}}>No.Telepon</Text>
                 <View style={styles.inputContainer}> 
                     <TextInput 
                         style={styles.inputs}
@@ -218,7 +209,6 @@ const styles = StyleSheet.create({
         borderRadius: 0,
         width: 350,
         height: 50,
-        marginLeft: 20,
         flexDirection: 'row',
         alignItems: 'center'
   },

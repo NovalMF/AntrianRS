@@ -24,15 +24,15 @@ class BookingAntrian extends Component {
   }
 
   componentDidMount(){
-    this.getbooking_antrian();
+    this.getbooking_antrian(this.props.navigation.getParam('dokter_id'));
     this._subscribe = this.props.navigation.addListener('didFocus', () => {
       //do you update if need
-      this.getbooking_antrian(); 
+      this.getbooking_antrian(this.props.navigation.getParam('dokter_id')); 
     });
   }
     
-  getbooking_antrian= () => {
-    const ApiUrl = 'http://api-antrian.aviatapps.id/api/dokter/DOK0004-1582';
+  getbooking_antrian= (dokter_id) => {
+    const ApiUrl = `http://api-antrian.aviatapps.id/api/dokter/${dokter_id}`;
     axios.post(ApiUrl)
     .then(response => {
       this.setState({ booking_antrian:response.data.data })      
@@ -43,14 +43,6 @@ class BookingAntrian extends Component {
 render() {
     return (
         <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
-          <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('ProfilDokter')}>
-            <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
-          </TouchableOpacity>
-
-          <View style={{paddingLeft:60}}>
-            <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Booking Antrian</Text>
-          </View>
-
           <View style={{marginTop: 5}} >
             {
                 this.state.booking_antrian.map((data, index)=>(

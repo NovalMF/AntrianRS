@@ -47,7 +47,7 @@ class ProfilUser extends Component {
   
     render() {
         return (
-            <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
+            <View style={{backgroundColor: 'white', flex: 1, justifyContent: 'space-between'}}>
               <Modal
                     onBackdropPress={() => this.setState({ modalLogout: false })}
                     isVisible={this.state.modalLogout}
@@ -69,17 +69,9 @@ class ProfilUser extends Component {
                         </View>
                     </View>
                 </Modal>
-                
-              {/* <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('HomePage')}>
-                <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
-              </TouchableOpacity>
-    
-              <View style={{paddingLeft:60}}>
-                <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Profil User</Text>
-              </View> */}
 
-            <TouchableOpacity style={{marginTop: -10}} onPress={() => this.props.navigation.navigate('UbahProfil')} >
-                <View style={{ justifyContent:'space-between',backgroundColor: 'white', width: '100%', height: 110, marginTop: 5, elevation: 3, marginBottom: 20 }}>
+            <TouchableOpacity style={{marginTop: 10}} onPress={() => this.props.navigation.navigate('UbahProfil')} >
+                <View style={{ justifyContent:'space-between',backgroundColor: 'white', width: '100%', height: 110, elevation: 3, marginBottom: 20 }}>
                       <Image source={Images.iconAccount} style={{width: 70, height: 70, marginLeft:16, top:10}}></Image>
                       <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 18, marginLeft: 105 }}>Budi Aja</Text>
                       <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 16, marginLeft: 105, color: '#848484' }}>+6288102938746</Text>
@@ -92,10 +84,10 @@ class ProfilUser extends Component {
                 {/* Anggota Keluarga*/}
            <View>
              <View style={{flexDirection:'row', marginBottom: 12, marginLeft: 16}}>
-               <Text style={{fontFamily: Fonts.type.regular, fontSize: 20, top:7}}>Anggota Keluarga</Text>
+               <Text style={{fontFamily: Fonts.type.regular, fontSize: 20, top:-150}}>Anggota Keluarga</Text>
              </View>
 
-             <ScrollView horizontal={true} style={{flexDirection: 'row'}}>
+             <ScrollView horizontal={true} style={{flexDirection: 'row', top: -150}}>
              <View style={{marginRight: 16, alignItems: 'center', justifyContent:'space-between', flexDirection: 'row'}}>
                 <TouchableOpacity style={{marginLeft: 16, marginTop: 15, backgroundColor:'white', width: 180, height: 60, borderRadius: 50, marginBottom: 18, justifyContent:'center', alignItems:'center', elevation:5, borderWidth: 1, borderColor: 'white'}}  onPress={() => this.props.navigation.navigate('TambahKeluarga')} >
                  <Feather name='plus-circle' size={35} style={{color:'#0079eb', left:-60, top:7}}></Feather>
@@ -103,19 +95,19 @@ class ProfilUser extends Component {
                 </TouchableOpacity>
               </View>
               </ScrollView>
-
             </View>
 
-            <View >
-                        {/* Logout */}
-                        <TouchableOpacity style={{ backgroundColor: 'white', width: '100%', height: 60, marginTop: 355, paddingVertical: 5, flexDirection: 'row', paddingHorizontal: 20, elevation:7 }} onPress={() => this.setState({ modalLogout: true })}>
-                            <Fontisto name='power' size={20} style={{ alignSelf: 'center' }} color={'#0079eb'} />
-                            <Text style={{ alignSelf: 'center', marginLeft: 20, fontFamily: Fonts.type.medium }}>Logout</Text>
-                        </TouchableOpacity>
+            <View>
+              {/* Logout */}
+              <TouchableOpacity style={{ backgroundColor: 'white', width: '100%', height: 60, borderRadius: 5, marginTop: 10, paddingVertical: 5, flexDirection: 'row', paddingHorizontal: 20, elevation:5 }} onPress={() => this.setState({ modalLogout: true })}>
+                  <Fontisto name='power' size={20} style={{ alignSelf: 'center' }} color={'#0079eb'} />
+                  <Text style={{ alignSelf: 'center', marginLeft: 20, fontFamily: Fonts.type.medium, fontSize: 18 }}>Logout</Text>
+              </TouchableOpacity>
 
-                    </View>
-            </View>
-              )
+          </View>
+        </View>
+    )
+            
     }
     }
 

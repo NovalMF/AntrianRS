@@ -15,6 +15,15 @@ class Jadwaldokter extends Component {
     super(props);
     this.state = {
     dokter_PoliList: [],
+    infoHari: [
+      { item: 'Senin' },
+      { item: 'Selasa' },
+      { item: 'Rabu' },
+      { item: 'Kamis' },
+      { item: 'Jumat' },
+      { item: 'Sabtu' },
+      { item: 'Minggu' },
+    ]
     };
   }
 
@@ -40,45 +49,19 @@ class Jadwaldokter extends Component {
   render() {
     return (
         <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
-          <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('Poli')}>
-            <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
-          </TouchableOpacity>
+          <ScrollView horizontal={true} style={{ flexDirection: 'row', paddingLeft: 16, top: -170 }} showsHorizontalScrollIndicator={false} >
+              {this.state.infoHari.map((item, index) => {
+                return (
+                  <View style={{ marginRight: 16, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
+                    <TouchableOpacity style={{ backgroundColor: 'white', padding:10, height: 35, borderRadius: 20, marginBottom: 18, justifyContent: 'center', alignItems: 'center', elevation: 0, borderColor: '#0079EB', borderWidth: 1 }}>
+                      <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, textAlign: 'center', color: '#0079EB' }}>{item.item}</Text>
+                    </TouchableOpacity>
+                  </View>
+                )
+              })}
+            </ScrollView>
 
-          <View style={{paddingLeft:60}}>
-            <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}>Dokter</Text>
-          </View>
-
-          <View>  
-          <ScrollView horizontal={true} style={{flexDirection: 'row', paddingLeft: 16}}>
-             <View style={{marginRight: 16, alignItems: 'center', justifyContent:'space-between', flexDirection: 'row'}}>
-                <TouchableOpacity style={{backgroundColor:'white', width: 80, height: 35, borderRadius: 20, marginBottom: 18, justifyContent:'center', alignItems:'center', elevation:0, borderColor: '#0079EB', borderWidth: 1}}>
-                 <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, textAlign:'center', color: '#0079EB'}}>Senin</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{marginRight: 16, alignItems: 'center', justifyContent:'space-between', flexDirection: 'row'}}>
-                <TouchableOpacity style={{backgroundColor:'white', width: 80, height: 35, borderRadius: 20, marginBottom: 18, justifyContent:'center', alignItems:'center', elevation:0, borderColor: '#0079EB', borderWidth: 1}}>
-                 <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, textAlign:'center', color: '#0079EB'}}>Selasa</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{marginRight: 16, alignItems: 'center', justifyContent:'space-between', flexDirection: 'row'}}>
-                <TouchableOpacity style={{backgroundColor:'white', width: 80, height: 35, borderRadius: 20, marginBottom: 18, justifyContent:'center', alignItems:'center', elevation:0, borderColor: '#0079EB', borderWidth: 1}}>
-                 <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, textAlign:'center', color: '#0079EB'}}>Rabu</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{marginRight: 16, alignItems: 'center', justifyContent:'space-between', flexDirection: 'row'}}>
-                <TouchableOpacity style={{backgroundColor:'white', width: 80, height: 35, borderRadius: 20, marginBottom: 18, justifyContent:'center', alignItems:'center', elevation:0, borderColor: '#0079EB', borderWidth: 1}}>
-                 <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, textAlign:'center', color: '#0079EB'}}>Kamis</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{marginRight: 16, alignItems: 'center', justifyContent:'space-between', flexDirection: 'row'}}>
-                <TouchableOpacity style={{backgroundColor:'white', width: 80, height: 35, borderRadius: 20, marginBottom: 18, justifyContent:'center', alignItems:'center', elevation:0, borderColor: '#0079EB', borderWidth: 1}}>
-                 <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, textAlign:'center', color: '#0079EB'}}>Jumat</Text>
-                </TouchableOpacity>
-              </View>
-           </ScrollView>
-           </View>
-
-          <ScrollView style={{marginTop: 5}} >
+          <ScrollView style={{marginTop: -350}} >
             {
                 this.state.dokter_PoliList.map((data, index)=>(
                   <TouchableOpacity key={index} onPress={() => this.props.navigation.navigate('ProfilDokter', {dokter_id: data.dokter_id })}

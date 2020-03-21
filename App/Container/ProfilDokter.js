@@ -43,27 +43,19 @@ class ProfilDokter extends Component {
 
   render() {
     return (
-        <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
-          <TouchableOpacity style={{marginTop: 20,paddingLeft: 12}} onPress={() => this.props.navigation.navigate('Jadwaldokter')}>
-            <AntDesign name='left' size={25} color={'#0079EB'}></AntDesign>
-          </TouchableOpacity>
-
-          <View style={{paddingLeft:60}}>
-            <Text style={{ top: -25, fontFamily: Fonts.type.regular, fontSize: 22}}> Profil Dokter</Text>
-          </View>
-
+        <View style={{backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20}}>
           <View style={{marginTop: -10}} >
           {
                 this.state.profil_dokter.map((data, index)=>(
                 <View  key={index}
-                    style={{ backgroundColor: 'white', width: 330, height: 180, marginLeft: 16, marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 20 }}>
+                    style={{ backgroundColor: 'white', width: 330, height: 180, marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 20 }}>
                         
                       <Image source={{uri:data.avatar}} style={{width: 70, height: 70, marginLeft:10, marginTop: 15}}></Image>
                       <Text style={{paddingLeft: 90, marginTop: -70, fontSize:16}}>{data.dokter_nama}</Text>
                       <Text style={{paddingLeft: 90, color: '#848484', marginTop: 5, width: 250}}>{data.spesialis}</Text>
                       <Text style={{paddingLeft: 90, width: 320, marginTop: 5}}>{data.biografi}</Text>
                     
-                      <View style={{justifyContent:'center', alignItems:'center'}}>
+                      {/* <View style={{justifyContent:'center', alignItems:'center'}}>
                           <Text style={{fontSize: 18, marginTop:30}}>Biografi</Text>
                         <View style={{ backgroundColor: 'white', width: 330, height: 130, marginTop: 10, borderRadius: 10, elevation: 5, marginBottom: 20 }} > 
                           <Text style={{paddingLeft: 10, width: 320, marginTop: 5}}>{data.pendidikan}</Text>
@@ -115,25 +107,23 @@ class ProfilDokter extends Component {
                             }}
                             onDateChange={(date) => {this.setState({date: date})}}
                         />
-                        </View>
+                        </View> */}
                     
                   </View>
                   
                   ))
                 }
               
-                       <View style={{marginTop:180}}>
-                         
-                        </View>
 
-                     {/* Button Booking */}
-                <View style={{ width: 360, bottom: -90, marginTop:130}}>
-                    <LinearGradient start={{x: 0, y: 0}} end={{x: 0.9, y: 0.5}} colors={['#0079EB', '#0079EB']} style={{elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
-                        <TouchableOpacity style={{ alignItems:'center', justifyContent:'center', height:55}} onPress={()=> this.props.navigation.navigate('BookingAntrian')} >
-                            <Text style={{color: 'white', fontFamily: Fonts.type.regular, fontSize: 20}}> Booking </Text>
-                        </TouchableOpacity>
-                    </LinearGradient>
-                </View>
+                  {/* Button Booking */}
+        <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center'}}>
+          <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 0.5 }} colors={['#0079EB', '#0079EB']} style={{ elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.props.navigation.navigate('BookingAntrian')} >
+              <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Booking</Text>
+            </TouchableOpacity>
+          </LinearGradient>
+        </View>
+
               </View>  
         </View>
         
