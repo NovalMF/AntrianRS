@@ -17,7 +17,7 @@ export default class SplashScreen extends Component {
 
     async getData() {
         var Token = await AsyncStorage.getItem(Constant.TOKEN)
-        // alert(Token)
+        console.log('Token', Token)
         if (Token == null || Token == 'TOKEN' || Token == '') {
             setTimeout(() => { this.navigateToLogin() }, 2500)
         } else {

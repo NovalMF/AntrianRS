@@ -82,7 +82,7 @@ class Login extends Component {
         console.log(token, token_expr)
         try {
             AsyncStorage.setItem(Constant.TOKEN, token)
-            AsyncStorage.setItem(Constant.NAMA, nama)
+            // AsyncStorage.setItem(Constant.NAMA, nama)
             AsyncStorage.setItem(Constant.TOKEN_EXPR, token_expr)
         } catch {
             AsyncStorage.setItem(Constant.TOKEN, '')

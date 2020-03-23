@@ -30,6 +30,7 @@ export default class HomePage extends Component {
   }
 
   componentDidMount() {
+    console.log(AsyncStorage.getItem(Constant.TOKEN))
     this.getartikel();
     this._subscribe = this.props.navigation.addListener('didFocus', () => {
       //do you update if need
@@ -40,8 +41,8 @@ export default class HomePage extends Component {
 
 
   async getData() {
-    var nama = await AsyncStorage.getItem(Constant.NAMA)
-    this.setState({ nama })
+    // var nama = await AsyncStorage.getItem(Constant.NAMA)
+    // this.setState({ nama })
   }
   // CARA LAMA
   getartikel = () => {
