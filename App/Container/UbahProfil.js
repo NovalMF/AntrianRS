@@ -1,11 +1,12 @@
 
 import React, { Component } from 'react';
 import { Text, StatusBar, View } from 'native-base';
-import { ScrollView, Image, StyleSheet, Picker } from 'react-native';
+import { ScrollView, Image, StyleSheet, Picker, Alert } from 'react-native';
 import Images from '../Library/Images';
 import LinearGradient from 'react-native-linear-gradient';
 import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import AsyncStorage from '@react-native-community/async-storage';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Fonts } from '../Themes';
 import DatePicker from 'react-native-datepicker';
@@ -20,31 +21,43 @@ var radio_props = [
 class UbahProfil extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
+      updateProfil: [],
+      name: '',
       email: '',
-
+      jenis_kelamin: '',
+      date: '',
+      noTelepon: '',
+      password: '',
+      value: '',
     };
   }
 
-  //   componentDidMount(){
-  //     this.getbooking_antrian();
-  //     this._subscribe = this.props.navigation.addListener('didFocus', () => {
-  //       //do you update if need
-  //       this.getbooking_antrian(); 
-  //     });
-  //   }
+    componentDidMount(){
+      AsyncStorage.getItem('name').then((value) => this.setState({ 'name': value }));
+      AsyncStorage.getItem('email').then((value) => this.setState({ 'email': value }));
+      AsyncStorage.getItem('noTelepon').then((value) => this.setState({ 'noTelepon': value }));
+    }
 
-  //   getbooking_antrian= () => {
-  //     const ApiUrl = 'http://api-antrian.aviatapps.id/api/dokter/DOK0004-1582';
-  //     axios.post(ApiUrl)
-  //     .then(response => {
-  //       this.setState({ booking_antrian:response.data.data })      
-  //     })
+    saveUbahProfil = () => {
+      Alert.alert("Data berhasil di update");
+      this.props.navigation.navigate('ProfilUser')
+    }
 
-  //   }
+    setname = (value) => {
+      AsyncStorage.setItem('name', value);
+      this.setState({'name': value});
+    }
+    setemail = (value) => {
+      AsyncStorage.setItem('email', value);
+      this.setState({'email': value});
+    }
+    setnoTelepon = (value) => {
+      AsyncStorage.setItem('noTelepon', value);
+      this.setState({'noTelepon': value});
+    }
 
-  render() {
+ render() {
     return (
       <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20 }}>
 
@@ -56,6 +69,8 @@ class UbahProfil extends Component {
               style={styles.inputs}
               placeholder="Ketik disini"
               underlineColorAndroid='transparent'
+              value={this.state.name}
+              onChangeText={this.setname}
             />
           </View>
 
@@ -101,7 +116,7 @@ class UbahProfil extends Component {
               formHorizontal={true}
               labelStyle={{ marginRight: 20 }}
               animation={true}
-              onPress={(value) => { this.setState({ value: value }) }}
+              onPress={(text) => { this.setState({ jenis_kelamin: value }) }}
             />
           </View>
 
@@ -113,7 +128,8 @@ class UbahProfil extends Component {
               placeholder="Ketik disini"
               keyboardType={'numeric'}
               underlineColorAndroid='transparent'
-              onChangeText={(email) => this.setState({ email })}
+              value={this.state.noTelepon}
+              onChangeText={this.setnoTelepon}
             />
           </View>
 
@@ -125,7 +141,8 @@ class UbahProfil extends Component {
               placeholder="Ketik disini"
               keyboardType="email-address"
               underlineColorAndroid='transparent'
-              onChangeText={(email) => this.setState({ email })}
+              value={this.state.email}
+              onChangeText={this.setemail}
             />
           </View>
 
@@ -137,7 +154,7 @@ class UbahProfil extends Component {
               secureTextEntry={this.state.pass}
               placeholder="Ketik disini"
               underlineColorAndroid='transparent'
-              onChangeText={(password) => this.setState({ password })}
+              onChangeText={(text) => this.setState({ password: text })}
             />
           </View>
         </View>
@@ -146,7 +163,7 @@ class UbahProfil extends Component {
         {/* Button Simpan */}
         <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center'}}>
           <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 0.5 }} colors={['#0079EB', '#0079EB']} style={{ elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.props.navigation.navigate('')} >
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={this.saveUbahProfil} >
               <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Simpan</Text>
             </TouchableOpacity>
           </LinearGradient>
