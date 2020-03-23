@@ -56,14 +56,14 @@ class ProfilUser extends Component {
                         <Text style={{ alignSelf: 'center', fontSize: 24 }}>Logout</Text>
                         <Text style={{ alignSelf: 'center', flexWrap: 'wrap', marginTop: 10 }}>Apakah kamu yakin akan keluar?</Text>
                         <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1, paddingHorizontal: 40, paddingBottom: 30 }}>
-                            <TouchableOpacity style={{ height: 40, width: 70, borderRadius: 10, backgroundColor: '#f2f2f2', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.navigateToLogin() }>
+                            <TouchableOpacity style={{ height: 50, width: 90, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.navigateToLogin() }>
                                 <View style={{ flex: 1, justifyContent: 'center' }}>
-                                    <Text style={{ alignSelf: 'center' }}>Ya</Text>
+                                    <Text style={{ alignSelf: 'center', color: 'white' }}>Ya</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ height: 40, width: 70, borderRadius: 10, backgroundColor: '#f2f2f2', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.setState({ modalLogout: false })}>
+                            <TouchableOpacity style={{ height: 50, width: 90, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.setState({ modalLogout: false })}>
                                 <View style={{ flex: 1, justifyContent: 'center' }}>
-                                    <Text style={{ alignSelf: 'center' }}>Tidak</Text>
+                                    <Text style={{ alignSelf: 'center', color: 'white' }}>Tidak</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
