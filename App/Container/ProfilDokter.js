@@ -31,8 +31,8 @@ class ProfilDokter extends Component {
     });
   }
     
-  getprofil_dokter= (id) => {
-    const ApiUrl = `http://api-antrian.aviatapps.id/api/dokter/${id}`;
+  getprofil_dokter= (dokter_id) => {
+    const ApiUrl = `http://api-antrian.aviatapps.id/api/dokter/${dokter_id}`;
     axios.post(ApiUrl)
     .then(response => {
       this.setState({ profil_dokter:response.data.data })      
@@ -44,35 +44,33 @@ class ProfilDokter extends Component {
   render() {
     return (
         <View style={{backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20}}>
+          
           <View style={{marginTop: -10}} >
           {
                 this.state.profil_dokter.map((data, index)=>(
                 <View  key={index}
                     style={{ backgroundColor: 'white', width: 330, height: 180, marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 20 }}>
-                        
                       <Image source={{uri:data.avatar}} style={{width: 70, height: 70, marginLeft:10, marginTop: 15}}></Image>
                       <Text style={{paddingLeft: 90, marginTop: -70, fontSize:16}}>{data.dokter_nama}</Text>
                       <Text style={{paddingLeft: 90, color: '#848484', marginTop: 5, width: 250}}>{data.spesialis}</Text>
                       <Text style={{paddingLeft: 90, width: 320, marginTop: 5}}>{data.biografi}</Text>
-                    
-                      <View style={{justifyContent:'center', alignItems:'center'}}>
-                          <Text style={{fontSize: 18, marginTop:30}}>Biografi</Text>
+
+                      {/* Biografi */}
+                      <Text style={{fontSize: 18, marginTop:30, alignSelf:'center'}}>Biografi</Text>
                         <View style={{ backgroundColor: 'white', width: 330, height: 130, marginTop: 10, borderRadius: 10, elevation: 5, marginBottom: 20 }} > 
                           <Text style={{paddingLeft: 10, width: 320, marginTop: 5}}>{data.pendidikan}</Text>
                           <Text style={{paddingLeft: 10, width: 320, marginTop: 5}}>{data.email}</Text>
                         </View>
-                      </View>
                         
-                        <View>
+                        {/* Jadwal Praktik */}
                         <Text style={{fontSize: 18, marginTop:10,alignSelf:'center'}}>Jadwal Praktik</Text>
                         <View style={{ backgroundColor: 'white', width: 330, height: 100, marginTop: 15, borderRadius: 10, elevation: 5, marginBottom: 20 }} > 
                         <Text style={{}}>{data.jadwal}</Text>
                         <Text style={{}}>{data.mulai}</Text>
                         <Text style={{}}>{data.selesai}</Text>
                         </View>
-                        </View>
 
-                        <View>
+                        {/* Pilih Tanggal */}
                         <Text style={{fontSize: 18, marginTop:-5, alignSelf:'center'}}>Pilih Tanggal</Text>
                         <DatePicker
                             style={{width: 350}}
@@ -106,14 +104,13 @@ class ProfilDokter extends Component {
                             // ... You can check the source to find the other keys.
                             }}
                             onDateChange={(date) => {this.setState({date: date})}}
-                        />
-                        </View>
-                    
+                        />   
                   </View>
                   
                   ))
                 }
               
+              </View> 
 
                   {/* Button Booking */}
         <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center'}}>
@@ -122,9 +119,7 @@ class ProfilDokter extends Component {
               <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Booking</Text>
             </TouchableOpacity>
           </LinearGradient>
-        </View>
-
-              </View>  
+        </View> 
         </View>
         
 
