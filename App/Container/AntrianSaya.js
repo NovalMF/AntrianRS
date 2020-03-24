@@ -1,7 +1,7 @@
 
 
 import React, { Component } from 'react';
-import { Text, StatusBar, View } from 'native-base';
+import { Text, StatusBar, View, Button } from 'native-base';
 import {  ScrollView, Image, StyleSheet, Picker, TouchableHighlight, Animated, LayoutAnimation, Platform, UIManager } from 'react-native';
 import Images from '../Library/Images';
 import LinearGradient from 'react-native-linear-gradient';
@@ -60,19 +60,27 @@ render() {
                 <TouchableOpacity activeOpacity={0.8} onPress={this.changeLayout} style={styles.Btn}>
                     <Text style={styles.btnText}>Dr. Anastasia Lintang Maharani, Sp.OG</Text>
                     <Text style={{ marginTop: 3, fontSize:16, marginLeft: 5, color:'grey'}}>Poli Kebidanan dan Kandungan</Text>
+                    <Text style={{ marginTop: 3, fontSize:16, marginLeft: 5}}>30 Maret 2020, 09:00 - 11:00</Text>
                 </TouchableOpacity>
 
-          <View style={{ height: this.state.expanded ? null : 0, overflow: 'hidden' }}>
-            <Text style={styles.text}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-              when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-              It has survived not only five centuries, but also the leap into electronic typesetting,
-              remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop publishing software
-              like Aldus PageMaker including versions of Lorem Ipsum.
-            </Text>
+        <View style={{ height: this.state.expanded ? null : 0, overflow: 'hidden' }}>
+          <View style={{justifyContent: 'center', flexDirection:'row'}}>
+          <Text style={{left: 35, paddingTop: 10,}}>QR Code</Text>
+            <Image source ={Images.qrcode} style={{width: 120, height: 120, marginTop: 30, left: -50, }}></Image>
+            <Text style={{left: 15, paddingTop: 10,}}>No. Antrian</Text>
+            <Text style={{color:'#0079eb', left:-40, marginTop: 50, fontSize: 50}}>02</Text>
           </View>
+          <View style={{borderBottomColor: '#E8E9ED', borderBottomWidth: 1, marginTop: 10, marginBottom: 20, marginHorizontal: 0 }}></View>
+            <View style={{justifyContent: 'center', flexDirection:'row'}}>
+            <Image source={Images.iconKalender} style={{width:65, height: 65, left: -35, top: -10}}></Image>
+            <Text style={{left:-40, top:5}}> Senin, 30 Maret 2020 </Text>
+            <Text style={{left:-165, top:25}}>09:00 - 11:00</Text>
+            </View>
+          <Button style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <Text> Batalkan Janji </Text>
+          </Button>
+            
+        </View>
         </View>
       </View>
 
@@ -127,7 +135,8 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 17,
     color: 'black',
-    padding: 10
+    padding: -60,
+    paddingTop: 10,
   },
 
   btnText: {

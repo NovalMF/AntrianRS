@@ -61,6 +61,15 @@ render() {
                       <Text style={{ fontSize:16, alignSelf:'flex-end', marginRight: 38, marginTop:30}}>Waktu</Text>
                   </View>
             </View>
+
+             {/* Button Lihat Antrian */}
+        <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center'}}>
+          <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 0.5 }} colors={['#0079EB', '#0079EB']} style={{ elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.props.navigation.navigate('History')} >
+              <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Lihat Antrian </Text>
+            </TouchableOpacity>
+          </LinearGradient>
+        </View> 
           </View>
 
 )
