@@ -95,10 +95,10 @@ class ProfilUser extends Component {
                     <TouchableOpacity style={{marginTop: 10, flex: 1}} onPress={() => this.props.navigation.navigate('UbahProfil')} >
                 <View style={{ justifyContent:'space-between',backgroundColor: 'white', width: '100%', height: 110, elevation: 3, marginBottom: 20 }}>
                       <Image source={Images.iconAccount} style={{width: 70, height: 70, marginLeft:16, top:10}}></Image>
-                <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 18, marginLeft: 105 }}>{this.state.name}</Text>
-        <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 16, marginLeft: 105, color: '#848484' }}>{this.state.noTelepon}</Text>
-        <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 16, marginLeft: 105, color: '#848484' }}>{this.state.email}</Text>
-                      <Image source={Images.iconEdit} style={{width: 40, height: 40,alignSelf:'flex-end', top:-122, right:10}}></Image>
+                <Text style={{ fontFamily: Fonts.type.bold, top: -50, fontSize: 18, marginLeft: 105 }}>{this.state.name}</Text>
+        {/* <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 16, marginLeft: 105, color: '#848484' }}>{this.state.noTelepon}</Text> */}
+        <Text style={{ fontFamily: Fonts.type.bold, top: -50, fontSize: 16, marginLeft: 105, color: '#848484' }}>{this.state.email}</Text>
+                      <Image source={Images.iconEdit} style={{width: 40, height: 40,alignSelf:'flex-end', top:-100, right:10}}></Image>
                 </View>
                 
             </TouchableOpacity>
