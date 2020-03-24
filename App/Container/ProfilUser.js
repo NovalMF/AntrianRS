@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, StatusBar, View } from 'native-base';
-import {  ScrollView, Image, StyleSheet, impo, TouchableOpacity } from 'react-native';
+import { ScrollView, Image, StyleSheet, impo, TouchableOpacity } from 'react-native';
 import Images from '../Library/Images';
 import LinearGradient from 'react-native-linear-gradient';
 import { TextInput } from 'react-native-gesture-handler';
@@ -14,58 +14,63 @@ import Modal from 'react-native-modal';
 import { NavigationActions, StackActions } from 'react-navigation';
 import axios from 'axios';
 import Constant from '../Library/constants';
+import Api from '../Services/Api';
 
 class ProfilUser extends Component {
     constructor(props) {
-      super(props);
-      this.state = { 
-          detailUser: [],
-          logout: [],
-          modalLogout: false,
-          name: '',
-          email: '',
-          noTelepon: '',      
-      };
+        super(props);
+        this.state = {
+            detailUser: [],
+            logout: [],
+            modalLogout: false,
+            name: '',
+            email: '',
+            noTelepon: '',
+        };
     }
-    componentDidMount(){
-        AsyncStorage.getItem('name').then((value) => this.setState({ 'name': value }));
-        AsyncStorage.getItem('email').then((value) => this.setState({ 'email': value }));
-        AsyncStorage.getItem('noTelepon').then((value) => this.setState({ 'noTelepon': value }));
-      }
+    componentDidMount() {
+        this.getdetailUser()
+        // AsyncStorage.getItem('name').then((value) => this.setState({ 'name': value }));
+        // AsyncStorage.getItem('email').then((value) => this.setState({ 'email': value }));
+        // AsyncStorage.getItem('noTelepon').then((value) => this.setState({ 'noTelepon': value }));
+    }
 
-    getdetailUser = () => {
-        const ApiUrl = ' http://api-antrian.aviatapps.id/api/user/data';
-        axios.post(ApiUrl)
-            .then(response => {
-                this.setState({ detailUser: response.data.data })
-            })
-  
+    getdetailUser() {
+        Api.create().getProfil().then((response) => {
+            alert(JSON.stringify(response.data))
+            if (response.data.success == true) {
+                this.setState({
+                    name: response.data.data.name,
+                    email: response.data.data.email
+                })
+            }
+        })
     }
 
     getlogout = () => {
-      const ApiUrl = 'http://api-antrian.aviatapps.id/api/logout';
-      axios.post(ApiUrl)
-          .then(response => {
-              this.setState({ logout: response.data.data })
-          })
+        const ApiUrl = 'http://api-antrian.aviatapps.id/api/logout';
+        axios.post(ApiUrl)
+            .then(response => {
+                this.setState({ logout: response.data.data })
+            })
 
-  }
+    }
 
     navigateToLogin() {
-      AsyncStorage.clear(() => {
-          const navigation = this.props.navigation;
-          const resetAction = StackActions.reset({
-              index: 0,
-              actions: [NavigationActions.navigate({ routeName: 'Login' })],
-          });
-          navigation.dispatch(resetAction)
-      })
-  }
+        AsyncStorage.clear(() => {
+            const navigation = this.props.navigation;
+            const resetAction = StackActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({ routeName: 'Login' })],
+            });
+            navigation.dispatch(resetAction)
+        })
+    }
 
     render() {
         return (
-            <View style={{backgroundColor: 'white', flex: 1, justifyContent: 'space-between'}}>
-              <Modal
+            <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'space-between' }}>
+                <Modal
                     onBackdropPress={() => this.setState({ modalLogout: false })}
                     isVisible={this.state.modalLogout}
                 >
@@ -73,7 +78,7 @@ class ProfilUser extends Component {
                         <Text style={{ alignSelf: 'center', fontSize: 24 }}>Logout</Text>
                         <Text style={{ alignSelf: 'center', flexWrap: 'wrap', marginTop: 10 }}>Apakah kamu yakin akan keluar?</Text>
                         <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1, paddingHorizontal: 40, paddingBottom: 30 }}>
-                            <TouchableOpacity style={{ height: 50, width: 90, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.navigateToLogin() }>
+                            <TouchableOpacity style={{ height: 50, width: 90, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.navigateToLogin()}>
                                 <View style={{ flex: 1, justifyContent: 'center' }}>
                                     <Text style={{ alignSelf: 'center', color: 'white' }}>Ya</Text>
                                 </View>
@@ -86,47 +91,53 @@ class ProfilUser extends Component {
                         </View>
                     </View>
                 </Modal>
-            
-                    <TouchableOpacity style={{marginTop: 10}} onPress={() => this.props.navigation.navigate('UbahProfil')} >
-                <View style={{ justifyContent:'space-between',backgroundColor: 'white', width: '100%', height: 110, elevation: 3, marginBottom: 20 }}>
-                      <Image source={Images.iconAccount} style={{width: 70, height: 70, marginLeft:16, top:10}}></Image>
-                <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 18, marginLeft: 105 }}>{this.state.name}</Text>
-        <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 16, marginLeft: 105, color: '#848484' }}>{this.state.noTelepon}</Text>
-        <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 16, marginLeft: 105, color: '#848484' }}>{this.state.email}</Text>
-                      <Image source={Images.iconEdit} style={{width: 40, height: 40,alignSelf:'flex-end', top:-122, right:10}}></Image>
+                <View>
+                    <TouchableOpacity style={{ marginTop: 10 }} onPress={() => this.props.navigation.navigate('UbahProfil')} >
+                        <View style={{ backgroundColor: 'white', width: '100%', elevation: 3, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style={{ width: '20%', justifyContent: 'center', alignItems: 'center' }}>
+                                <Image source={Images.iconAccount} style={{ width: 70, height: 70 }}></Image>
+                            </View>
+                            <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '70%' }}>
+                                <Text style={{ fontFamily: Fonts.type.bold, fontSize: 18, }}>{this.state.name}</Text>
+                                <Text style={{ fontFamily: Fonts.type.bold, fontSize: 16, color: '#848484' }}>{this.state.email}</Text>
+                            </View>
+                            <View style={{ width: '10%' }}>
+                                <Image source={Images.iconEdit} style={{ width: 40, height: 40 }}></Image>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+
+                    {/* Anggota Keluarga*/}
+                    <View style={{ marginTop: 20 }}>
+                        <View style={{ paddingHorizontal: 20}}>
+                            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 20 }}>Anggota Keluarga</Text>
+                        </View>
+
+                        <ScrollView horizontal={true} style={{ paddingHorizontal: 10 }}>
+                            <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
+                                <TouchableOpacity style={{ marginTop: 15, margin: 5, backgroundColor: 'white', height: 60, flexDirection: 'row', borderRadius: 50, marginBottom: 18, justifyContent: 'space-between', elevation: 5, borderWidth: 1, borderColor: 'white', paddingHorizontal: 10 }} onPress={() => this.props.navigation.navigate('TambahKeluarga')} >
+                                    <Feather name='plus-circle' size={35} style={{ color: '#0079eb', alignSelf: 'center' }}></Feather>
+                                    <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center' }}>Tambah Keluarga</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </ScrollView>
+                    </View>
                 </View>
-                
-            </TouchableOpacity>
-            
-                {/* Anggota Keluarga*/}
-           <View>
-             <View style={{flexDirection:'row', marginBottom: 12, marginLeft: 16}}>
-               <Text style={{fontFamily: Fonts.type.regular, fontSize: 20, top:-150}}>Anggota Keluarga</Text>
-             </View>
 
-             <ScrollView horizontal={true} style={{flexDirection: 'row', top: -150}}>
-             <View style={{marginRight: 16, alignItems: 'center', justifyContent:'space-between', flexDirection: 'row'}}>
-                <TouchableOpacity style={{marginLeft: 16, marginTop: 15, backgroundColor:'white', width: 180, height: 60, borderRadius: 50, marginBottom: 18, justifyContent:'center', alignItems:'center', elevation:5, borderWidth: 1, borderColor: 'white'}}  onPress={() => this.props.navigation.navigate('TambahKeluarga')} >
-                 <Feather name='plus-circle' size={35} style={{color:'#0079eb', left:-60, top:7}}></Feather>
-                 <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, marginLeft: 40, top: -20}}>Tambah Keluarga</Text>
-                </TouchableOpacity>
-              </View>
-              </ScrollView>
+
+                <View>
+
+                    {/* Logout */}
+                    <TouchableOpacity style={{ backgroundColor: 'white', width: '100%', height: 60, borderRadius: 5, marginTop: 10, paddingVertical: 5, flexDirection: 'row', paddingHorizontal: 20, elevation: 5 }} onPress={() => this.setState({ modalLogout: true })}>
+                        <Fontisto name='power' size={20} style={{ alignSelf: 'center' }} color={'#0079eb'} />
+                        <Text style={{ alignSelf: 'center', marginLeft: 20, fontFamily: Fonts.type.medium, fontSize: 18 }}>Logout</Text>
+                    </TouchableOpacity>
+
+                </View>
             </View>
+        )
 
-            <View>
-
-              {/* Logout */}
-              <TouchableOpacity style={{ backgroundColor: 'white', width: '100%', height: 60, borderRadius: 5, marginTop: 10, paddingVertical: 5, flexDirection: 'row', paddingHorizontal: 20, elevation:5 }} onPress={() => this.setState({ modalLogout: true })}>
-                  <Fontisto name='power' size={20} style={{ alignSelf: 'center' }} color={'#0079eb'} />
-                  <Text style={{ alignSelf: 'center', marginLeft: 20, fontFamily: Fonts.type.medium, fontSize: 18 }}>Logout</Text>
-              </TouchableOpacity>
-
-          </View>
-        </View>
-    )
-            
     }
-    }
+}
 
 export default ProfilUser;

@@ -25,7 +25,7 @@ const create = () => {
             }
         } catch (error) { 
         }
-        request.headers['token'] = token 
+        request.headers['Authorization'] = 'Bearer ' + token 
     })
 
     //Inisialisasi
@@ -36,13 +36,15 @@ const create = () => {
 
     const login = (value) => POST('login', value)
     const getAritkel = (value) => POST('artikel/list', value)
-    const register = (value) => POST ('register', value)
+    const register = (value) => POST('register', value)
+    const getProfil = () => GET('user/data')
 
 
     return {
         login,
         getAritkel,
-        register
+        register,
+        getProfil
     }
 }
 
