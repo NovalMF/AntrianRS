@@ -116,7 +116,7 @@ class UbahProfil extends Component {
               formHorizontal={true}
               labelStyle={{ marginRight: 20 }}
               animation={true}
-              onPress={(text) => { this.setState({ jenis_kelamin: value }) }}
+              onPress={(value) => { this.setState({ jenis_kelamin: value }) }}
             />
           </View>
 

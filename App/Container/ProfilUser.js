@@ -91,39 +91,33 @@ class ProfilUser extends Component {
                         </View>
                     </View>
                 </Modal>
-                <View>
-                    <TouchableOpacity style={{ marginTop: 10 }} onPress={() => this.props.navigation.navigate('UbahProfil')} >
-                        <View style={{ backgroundColor: 'white', width: '100%', elevation: 3, flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <View style={{ width: '20%', justifyContent: 'center', alignItems: 'center' }}>
-                                <Image source={Images.iconAccount} style={{ width: 70, height: 70 }}></Image>
-                            </View>
-                            <View style={{ justifyContent: 'center', alignItems: 'flex-start', width: '70%' }}>
-                                <Text style={{ fontFamily: Fonts.type.bold, fontSize: 18, }}>{this.state.name}</Text>
-                                <Text style={{ fontFamily: Fonts.type.bold, fontSize: 16, color: '#848484' }}>{this.state.email}</Text>
-                            </View>
-                            <View style={{ width: '10%' }}>
-                                <Image source={Images.iconEdit} style={{ width: 40, height: 40 }}></Image>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-
-                    {/* Anggota Keluarga*/}
-                    <View style={{ marginTop: 20 }}>
-                        <View style={{ paddingHorizontal: 20}}>
-                            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 20 }}>Anggota Keluarga</Text>
-                        </View>
-
-                        <ScrollView horizontal={true} style={{ paddingHorizontal: 10 }}>
-                            <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
-                                <TouchableOpacity style={{ marginTop: 15, margin: 5, backgroundColor: 'white', height: 60, flexDirection: 'row', borderRadius: 50, marginBottom: 18, justifyContent: 'space-between', elevation: 5, borderWidth: 1, borderColor: 'white', paddingHorizontal: 10 }} onPress={() => this.props.navigation.navigate('TambahKeluarga')} >
-                                    <Feather name='plus-circle' size={35} style={{ color: '#0079eb', alignSelf: 'center' }}></Feather>
-                                    <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center' }}>Tambah Keluarga</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </ScrollView>
-                    </View>
+            
+                    <TouchableOpacity style={{marginTop: 10, flex: 1}} onPress={() => this.props.navigation.navigate('UbahProfil')} >
+                <View style={{ justifyContent:'space-between',backgroundColor: 'white', width: '100%', height: 110, elevation: 3, marginBottom: 20 }}>
+                      <Image source={Images.iconAccount} style={{width: 70, height: 70, marginLeft:16, top:10}}></Image>
+                <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 18, marginLeft: 105 }}>{this.state.name}</Text>
+        <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 16, marginLeft: 105, color: '#848484' }}>{this.state.noTelepon}</Text>
+        <Text style={{ fontFamily: Fonts.type.bold, top: -60, fontSize: 16, marginLeft: 105, color: '#848484' }}>{this.state.email}</Text>
+                      <Image source={Images.iconEdit} style={{width: 40, height: 40,alignSelf:'flex-end', top:-122, right:10}}></Image>
                 </View>
+                
+            </TouchableOpacity>
+            
+                {/* Anggota Keluarga*/}
+           <View>
+             <View style={{flexDirection:'row', marginBottom: 12, marginLeft: 16}}>
+               <Text style={{fontFamily: Fonts.type.regular, fontSize: 20, top:-330}}>Anggota Keluarga</Text>
+             </View>
 
+             <ScrollView horizontal={true} style={{flexDirection: 'row', top: -330}}>
+             <View style={{marginRight: 16, alignItems: 'center', justifyContent:'space-between', flexDirection: 'row'}}>
+                <TouchableOpacity style={{marginLeft: 16, marginTop: 15, backgroundColor:'white', width: 180, height: 60, borderRadius: 50, marginBottom: 18, justifyContent:'center', alignItems:'center', elevation:5, borderWidth: 1, borderColor: 'white'}}  onPress={() => this.props.navigation.navigate('TambahKeluarga')} >
+                 <Feather name='plus-circle' size={35} style={{color:'#0079eb', left:-60, top:7}}></Feather>
+                 <Text style={{fontFamily: Fonts.type.regular, fontSize: 16, marginLeft: 40, top: -20}}>Tambah Keluarga</Text>
+                </TouchableOpacity>
+              </View>
+              </ScrollView>
+            </View>
 
                 <View>
 
