@@ -12,6 +12,7 @@ import { Fonts } from '../Themes';
 import DatePicker from 'react-native-datepicker';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import axios from 'axios';
+import Api from '../Services/Api';
 
 var radio_props = [
   { label: 'Laki-laki', value: 0 },
@@ -22,41 +23,54 @@ class UbahProfil extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      updateProfil: [],
+      UpdateProfil: [],
       name: '',
-      email: '',
+      tempat_lahir: '',
       jenis_kelamin: '',
-      date: '',
-      noTelepon: '',
-      password: '',
-      value: '',
+      tanggal_lahir: '',
+      nik: '',
+      alamat: '',
     };
   }
 
     componentDidMount(){
-      AsyncStorage.getItem('name').then((value) => this.setState({ 'name': value }));
-      AsyncStorage.getItem('email').then((value) => this.setState({ 'email': value }));
-      AsyncStorage.getItem('noTelepon').then((value) => this.setState({ 'noTelepon': value }));
+      this.getUpdateProfil()
+      // AsyncStorage.getItem('name').then((value) => this.setState({ 'name': value }));
+      // AsyncStorage.getItem('email').then((value) => this.setState({ 'email': value }));
+      // AsyncStorage.getItem('noTelepon').then((value) => this.setState({ 'noTelepon': value }));
     }
 
-    saveUbahProfil = () => {
-      Alert.alert("Data berhasil di update");
-      this.props.navigation.navigate('ProfilUser')
+    getUpdateProfil = () => {
+      Api.create().UpdateProfil({
+          name: this.state.name,
+          jenis_kelamin: this.state.jenis_kelamin,
+          tempat_lahir: this.state.tempat_lahir,
+          tanggal_lahir: this.state.tanggal_lahir,
+          nik: this.state.nik,
+          alamat: this.state.alamat
+      }).then((response) => {
+          alert(JSON.stringify(response))
+          if (response.data.success == true) {
+              this.getDataUser(
+                  response.data.success,
+                  response.data.message,
+              )
+              this.navigateToProfilUser()
+          } else {
+              this.setState({ errorMsg: response.data.message }) 
+          }
+      })
     }
 
-    setname = (value) => {
-      AsyncStorage.setItem('name', value);
-      this.setState({'name': value});
-    }
-    setemail = (value) => {
-      AsyncStorage.setItem('email', value);
-      this.setState({'email': value});
-    }
-    setnoTelepon = (value) => {
-      AsyncStorage.setItem('noTelepon', value);
-      this.setState({'noTelepon': value});
-    }
-
+    navigateToProfilUser() { 
+      const navigation = this.props.navigation;
+      const resetAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: 'ProfilUser' })],
+      });
+      navigation.dispatch(resetAction) 
+  }
+  
  render() {
     return (
       <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20 }}>
@@ -69,8 +83,31 @@ class UbahProfil extends Component {
               style={styles.inputs}
               placeholder="Ketik disini"
               underlineColorAndroid='transparent'
-              value={this.state.name}
-              onChangeText={this.setname}
+              onChangeText={(text) => this.setState({name: text})}
+            />
+          </View>
+
+          {/* Jenis Kelamin */}
+          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Jenis Kelamin</Text>
+          <View>
+            <RadioForm
+              radio_props={radio_props}
+              initial={0}
+              formHorizontal={true}
+              labelStyle={{ marginRight: 20 }}
+              animation={true}
+              onPress={(value) => { this.setState({ jenis_kelamin: value }) }}
+            />
+          </View>
+
+          {/* Tempat Lahir */}
+          <Text style={{ paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Tempat Lahir</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputs}
+              placeholder="Ketik disini"
+              underlineColorAndroid='transparent'
+              onChangeText={(text) => this.setState({tempat_lahir: text})}
             />
           </View>
 
@@ -105,23 +142,35 @@ class UbahProfil extends Component {
               }
               // ... You can check the source to find the other keys.
             }}
-            onDateChange={(date) => { this.setState({ date: date }) }}
+            onDateChange={(date) => { this.setState({ tanggal_lahir: date }) }}
           />
-          {/* Jenis Kelamin */}
-          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Jenis Kelamin</Text>
-          <View>
-            <RadioForm
-              radio_props={radio_props}
-              initial={0}
-              formHorizontal={true}
-              labelStyle={{ marginRight: 20 }}
-              animation={true}
-              onPress={(value) => { this.setState({ jenis_kelamin: value }) }}
+          
+           {/* NIK */}
+          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>NIK</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputs}
+              placeholder="Ketik disini"
+              keyboardType={'numeric'}
+              underlineColorAndroid='transparent'
+              onChangeText={(text) => this.setState({nik: text})}
+            />
+          </View>
+
+          {/* Alamat */}
+          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Alamat</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputs}
+              placeholder="Ketik disini"
+              keyboardType={'numeric'}
+              underlineColorAndroid='transparent'
+              onChangeText={(text) => this.setState({alamat: text})}
             />
           </View>
 
           {/* No.Telepon */}
-          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>No.Telepon</Text>
+          {/* <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>No.Telepon</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputs}
@@ -131,10 +180,10 @@ class UbahProfil extends Component {
               value={this.state.noTelepon}
               onChangeText={this.setnoTelepon}
             />
-          </View>
+          </View> */}
 
           {/* Email */}
-          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Email</Text>
+          {/* <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Email</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputs}
@@ -144,10 +193,10 @@ class UbahProfil extends Component {
               value={this.state.email}
               onChangeText={this.setemail}
             />
-          </View>
+          </View> */}
 
           {/* Password */}
-          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Password</Text>
+          {/* <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Password</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputs}
@@ -157,13 +206,13 @@ class UbahProfil extends Component {
               onChangeText={(text) => this.setState({ password: text })}
             />
           </View>
-        </View>
-
+        </View> */}
+  </View>
 
         {/* Button Simpan */}
         <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center'}}>
           <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 0.5 }} colors={['#0079EB', '#0079EB']} style={{ elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={this.saveUbahProfil} >
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={this.getUpdateProfil()} >
               <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Simpan</Text>
             </TouchableOpacity>
           </LinearGradient>

@@ -38,13 +38,15 @@ const create = () => {
     const getAritkel = (value) => POST('artikel/list', value)
     const register = (value) => POST('register', value)
     const getProfil = () => GET('user/data')
+    const UpdateProfil = () => POST('update', value)
 
 
     return {
         login,
         getAritkel,
         register,
-        getProfil
+        getProfil,
+        UpdateProfil
     }
 }
 
