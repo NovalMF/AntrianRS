@@ -19,13 +19,13 @@ const create = () => {
             const res = await AsyncStorage.getItem(Constant.TOKEN)
             const url = await AsyncStorage.getItem(Constant.BASE_URL)
             if (res != null) {
-                token = res 
+                token = res
             } else {
-                token = res 
+                token = res
             }
-        } catch (error) { 
+        } catch (error) {
         }
-        request.headers['Authorization'] = 'Bearer ' + token 
+        request.headers['Authorization'] = 'Bearer ' + token
     })
 
     //Inisialisasi
@@ -38,7 +38,7 @@ const create = () => {
     const getAritkel = (value) => POST('artikel/list', value)
     const register = (value) => POST('register', value)
     const getProfil = () => GET('user/data')
-    const updateProfil = () => POST('update', value)
+    const updateProfil = (value) => POST('update/88abc6f3-133e-49ec-b095-e63e62679272', value)
     const tambahkeluarga = () => POST('tambah', value)
 
 
