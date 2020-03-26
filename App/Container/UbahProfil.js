@@ -1,14 +1,14 @@
 
 import React, { Component } from 'react';
 import { Text, StatusBar, View } from 'native-base';
-import { ScrollView, Image, StyleSheet, Picker, Alert } from 'react-native';
+import { ScrollView, Image, StyleSheet, Picker } from 'react-native';
 import Images from '../Library/Images';
 import LinearGradient from 'react-native-linear-gradient';
 import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import AsyncStorage from '@react-native-community/async-storage';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Fonts } from '../Themes';
+import Modal from 'react-native-modal';
 import DatePicker from 'react-native-datepicker';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import axios from 'axios';
@@ -23,25 +23,34 @@ class UbahProfil extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      UpdateProfil: [],
-      name: '',
-      tempat_lahir: '',
+      updateProfil: [],
+      nama_lengkap: '',
       jenis_kelamin: '',
+      tempat_lahir: '',
       tanggal_lahir: '',
       nik: '',
+      relasi: '',
       alamat: '',
+
     };
   }
 
     componentDidMount(){
-      this.getUpdateProfil()
-      // AsyncStorage.getItem('name').then((value) => this.setState({ 'name': value }));
-      // AsyncStorage.getItem('email').then((value) => this.setState({ 'email': value }));
-      // AsyncStorage.getItem('noTelepon').then((value) => this.setState({ 'noTelepon': value }));
+      this.getupdateProfil();
+    
     }
 
-    getUpdateProfil = () => {
-      Api.create().UpdateProfil({
+    getupdateProfil = () => {
+      const ApiUrl = 'http://api-antrian.aviatapps.id/api/member';
+      axios.post(ApiUrl)
+          .then(response => {
+              this.setState({ tambahkeluarga: response.data.data })
+          })
+
+  }
+
+    handleupdateProfil = () => {
+      Api.create().updateProfil({
           name: this.state.name,
           jenis_kelamin: this.state.jenis_kelamin,
           tempat_lahir: this.state.tempat_lahir,
@@ -55,14 +64,14 @@ class UbahProfil extends Component {
                   response.data.success,
                   response.data.message,
               )
-              this.navigateToProfilUser()
+              this.navigateToProfil()
           } else {
               this.setState({ errorMsg: response.data.message }) 
           }
       })
     }
 
-    navigateToProfilUser() { 
+    navigateToProfil() { 
       const navigation = this.props.navigation;
       const resetAction = StackActions.reset({
           index: 0,
@@ -70,12 +79,12 @@ class UbahProfil extends Component {
       });
       navigation.dispatch(resetAction) 
   }
-  
- render() {
+
+  render() {
     return (
       <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20 }}>
 
-        {/* Username */}
+        {/* Nama Lengkap */}
         <View>
           <Text style={{ paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Nama Lengkap</Text>
           <View style={styles.inputContainer}>
@@ -83,7 +92,7 @@ class UbahProfil extends Component {
               style={styles.inputs}
               placeholder="Ketik disini"
               underlineColorAndroid='transparent'
-              onChangeText={(text) => this.setState({name: text})}
+              onChangeText={(text) => this.setState({nama_lengkap: text})}
             />
           </View>
 
@@ -144,8 +153,8 @@ class UbahProfil extends Component {
             }}
             onDateChange={(date) => { this.setState({ tanggal_lahir: date }) }}
           />
-          
-           {/* NIK */}
+
+          {/* NIK */}
           <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>NIK</Text>
           <View style={styles.inputContainer}>
             <TextInput
@@ -157,13 +166,13 @@ class UbahProfil extends Component {
             />
           </View>
 
+
           {/* Alamat */}
           <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Alamat</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputs}
               placeholder="Ketik disini"
-              keyboardType={'numeric'}
               underlineColorAndroid='transparent'
               onChangeText={(text) => this.setState({alamat: text})}
             />
@@ -177,8 +186,7 @@ class UbahProfil extends Component {
               placeholder="Ketik disini"
               keyboardType={'numeric'}
               underlineColorAndroid='transparent'
-              value={this.state.noTelepon}
-              onChangeText={this.setnoTelepon}
+              onChangeText={(email) => this.setState({ email })}
             />
           </View> */}
 
@@ -190,29 +198,16 @@ class UbahProfil extends Component {
               placeholder="Ketik disini"
               keyboardType="email-address"
               underlineColorAndroid='transparent'
-              value={this.state.email}
-              onChangeText={this.setemail}
+              onChangeText={(email) => this.setState({ email })}
             />
           </View> */}
+        </View>
 
-          {/* Password */}
-          {/* <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Password</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputs}
-              secureTextEntry={this.state.pass}
-              placeholder="Ketik disini"
-              underlineColorAndroid='transparent'
-              onChangeText={(text) => this.setState({ password: text })}
-            />
-          </View>
-        </View> */}
-  </View>
 
         {/* Button Simpan */}
         <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center'}}>
           <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 0.5 }} colors={['#0079EB', '#0079EB']} style={{ elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={this.getUpdateProfil()} >
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.handleupdateProfil()}>
               <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Simpan</Text>
             </TouchableOpacity>
           </LinearGradient>

@@ -12,6 +12,7 @@ import Modal from 'react-native-modal';
 import DatePicker from 'react-native-datepicker';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import axios from 'axios';
+import Api from '../Services/Api';
 
 var radio_props = [
   { label: 'Laki-laki', value: 0 },
@@ -22,30 +23,63 @@ class TambahKeluarga extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hubungankeluarga: '',
       modalTambahKeluarga: false,
       tambahkeluarga: [],
-      email: '',
+      nama_lengkap: '',
+      jenis_kelamin: '',
+      tempat_lahir: '',
+      tanggal_lahir: '',
+      nik: '',
+      relasi: '',
+      alamat: '',
 
     };
   }
 
-  //   componentDidMount(){
-  //     this.getbooking_antrian();
-  //     this._subscribe = this.props.navigation.addListener('didFocus', () => {
-  //       //do you update if need
-  //       this.getbooking_antrian(); 
-  //     });
-  //   }
+    componentDidMount(){
+      this.gettambahkeluarga();
+    
+    }
 
-  //   getbooking_antrian= () => {
-  //     const ApiUrl = 'http://api-antrian.aviatapps.id/api/dokter/DOK0004-1582';
-  //     axios.post(ApiUrl)
-  //     .then(response => {
-  //       this.setState({ booking_antrian:response.data.data })      
-  //     })
+    gettambahkeluarga = () => {
+      const ApiUrl = 'http://api-antrian.aviatapps.id/api/member';
+      axios.post(ApiUrl)
+          .then(response => {
+              this.setState({ tambahkeluarga: response.data.data })
+          })
 
-  //   }
+  }
+
+    handletambahkeluarga = () => {
+      Api.create().tambahkeluarga({
+          name: this.state.name,
+          jenis_kelamin: this.state.jenis_kelamin,
+          tempat_lahir: this.state.tempat_lahir,
+          tanggal_lahir: this.state.tanggal_lahir,
+          nik: this.state.nik,
+          alamat: this.state.alamat
+      }).then((response) => {
+          alert(JSON.stringify(response))
+          if (response.data.success == true) {
+              this.getDataUser(
+                  response.data.success,
+                  response.data.message,
+              )
+              this.navigateToProfil()
+          } else {
+              this.setState({ errorMsg: response.data.message }) 
+          }
+      })
+    }
+
+    navigateToProfil() { 
+      const navigation = this.props.navigation;
+      const resetAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: 'ProfilUser' })],
+      });
+      navigation.dispatch(resetAction) 
+  }
 
   render() {
     return (
@@ -58,7 +92,7 @@ class TambahKeluarga extends Component {
               <Image source={Images.keluarga} style={{width: 180, height: 180, alignSelf: 'center'}}></Image>
               <Text style={{ alignSelf: 'center', marginTop: 10, marginBottom: 20 }}>Anda berhasil menambahkan anggota keluarga</Text>
               <View style={{ flex: 1, paddingHorizontal: 40 }}>
-                  <TouchableOpacity style={{alignSelf: 'center', height: 50, width: 180, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.props.navigation.navigate ('ProfilUser') }>
+                  <TouchableOpacity style={{alignSelf: 'center', height: 50, width: 180, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.handletambahkeluarga() }>
                       <View style={{ flex: 1, justifyContent: 'center' }}>
                           <Text style={{ alignSelf: 'center', color: 'white' }}>Lihat Keluarga Anda</Text>
                       </View>
@@ -67,7 +101,7 @@ class TambahKeluarga extends Component {
           </View>
       </Modal>
 
-        {/* Username */}
+        {/* Nama Lengkap */}
         <View>
           <Text style={{ paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Nama Lengkap</Text>
           <View style={styles.inputContainer}>
@@ -75,29 +109,32 @@ class TambahKeluarga extends Component {
               style={styles.inputs}
               placeholder="Ketik disini"
               underlineColorAndroid='transparent'
+              onChangeText={(text) => this.setState({nama_lengkap: text})}
             />
           </View>
 
-        {/* Hubungan Keluarga */}
-        <Text style={{marginTop:10, paddingBottom:5, fontFamily: Fonts.type.regular, color: 'black'}}>Hubungan Keluarga</Text>
-          <View style={styles.inputContainer}> 
+          {/* Jenis Kelamin */}
+          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Jenis Kelamin</Text>
+          <View>
+            <RadioForm
+              radio_props={radio_props}
+              initial={0}
+              formHorizontal={true}
+              labelStyle={{ marginRight: 20 }}
+              animation={true}
+              onPress={(value) => { this.setState({ jenis_kelamin: value }) }}
+            />
+          </View>
 
-          <Picker 
-            placeholder={{label: 'Pilih salah satu', value: null}}
-            selectedValue={this.state.hubungankeluarga}
-            style={{ width: '90%'}}
-            onValueChange={(itemValue, itemIndex) =>
-                this.setState({hubungankeluarga: itemValue})
-              }
-        
-        >
-            <Picker.Item label="Ayah" value="ayah" />
-            <Picker.Item label="Ibu" value="ibu" />
-            <Picker.Item label="Suami" value="suami" />
-            <Picker.Item label="Istri" value="istri" />
-            <Picker.Item label="Anak Laki-laki" value="anak laki-laki" />
-            <Picker.Item label="Anak Perempuan" value="anak perempuan" />
-              </Picker>
+          {/* Tempat Lahir */}
+          <Text style={{ paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Tempat Lahir</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputs}
+              placeholder="Ketik disini"
+              underlineColorAndroid='transparent'
+              onChangeText={(text) => this.setState({tempat_lahir: text})}
+            />
           </View>
 
           {/* Tanggal Lahir */}
@@ -131,24 +168,55 @@ class TambahKeluarga extends Component {
               }
               // ... You can check the source to find the other keys.
             }}
-            onDateChange={(date) => { this.setState({ date: date }) }}
+            onDateChange={(date) => { this.setState({ tanggal_lahir: date }) }}
           />
 
-          {/* Jenis Kelamin */}
-          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Jenis Kelamin</Text>
-          <View>
-            <RadioForm
-              radio_props={radio_props}
-              initial={0}
-              formHorizontal={true}
-              labelStyle={{ marginRight: 20 }}
-              animation={true}
-              onPress={(value) => { this.setState({ value: value }) }}
+          {/* NIK */}
+          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>NIK</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputs}
+              placeholder="Ketik disini"
+              keyboardType={'numeric'}
+              underlineColorAndroid='transparent'
+              onChangeText={(text) => this.setState({nik: text})}
+            />
+          </View>
+
+        {/* Hubungan Keluarga / Relasi */}
+        <Text style={{marginTop:10, paddingBottom:5, fontFamily: Fonts.type.regular, color: 'black'}}>Hubungan Keluarga</Text>
+          <View style={styles.inputContainer}> 
+
+          <Picker 
+            placeholder={{label: 'Pilih salah satu', value: null}}
+            selectedValue={this.state.relasi}
+            style={{ width: '90%'}}
+            onValueChange={(itemValue, itemIndex) =>
+                this.setState({relasi: itemValue})
+              }
+        
+        >
+            <Picker.Item label="Ayah" value="ayah" />
+            <Picker.Item label="Ibu" value="ibu" />
+            <Picker.Item label="Suami" value="suami" />
+            <Picker.Item label="Istri" value="istri" />
+            <Picker.Item label="Anak" value="anak" />
+              </Picker>
+          </View>
+
+          {/* Alamat */}
+          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Alamat</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputs}
+              placeholder="Ketik disini"
+              underlineColorAndroid='transparent'
+              onChangeText={(text) => this.setState({alamat: text})}
             />
           </View>
 
           {/* No.Telepon */}
-          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>No.Telepon</Text>
+          {/* <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>No.Telepon</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputs}
@@ -157,10 +225,10 @@ class TambahKeluarga extends Component {
               underlineColorAndroid='transparent'
               onChangeText={(email) => this.setState({ email })}
             />
-          </View>
+          </View> */}
 
           {/* Email */}
-          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Email</Text>
+          {/* <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Email</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputs}
@@ -169,7 +237,7 @@ class TambahKeluarga extends Component {
               underlineColorAndroid='transparent'
               onChangeText={(email) => this.setState({ email })}
             />
-          </View>
+          </View> */}
         </View>
 
 
