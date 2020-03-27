@@ -66,8 +66,9 @@ class TambahKeluarga extends Component {
     return (
       <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20 }}>
         <Modal
-          isVisible={this.state.modalTambahKeluarga}
+          transparent={true}
           onBackdropPress={() => this.setState({ modalTambahKeluarga: false })}
+          isVisible={this.state.modalTambahKeluarga}
           style={{
             margin: 0,
             justifyContent: 'center',
