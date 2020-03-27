@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { Text, StatusBar, View } from 'native-base';
-import { ScrollView, Image, StyleSheet, Picker } from 'react-native';
+import { ScrollView, Image, StyleSheet, Picker, Button } from 'react-native';
 import Images from '../Library/Images';
 import LinearGradient from 'react-native-linear-gradient';
 import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
@@ -100,29 +100,21 @@ class TambahKeluarga extends Component {
     return (
       <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20 }}>
         <Modal
-          isVisible={this.state.modalTambahKeluarga}
+          transparent={true}
           onBackdropPress={() => this.setState({ modalTambahKeluarga: false })}
+          isVisible={this.state.modalTambahKeluarga}
           style={{
             margin: 0,
             justifyContent: 'center',
             alignItems: 'center'
           }}
         >
-          <View 
-            style={{ 
-              height: 300, 
-              width: '100%', 
-              backgroundColor: 'white', 
-              alignItems: 'center',
-              justifyContent: 'center'}}>
-
-          <Image source={Images.keluarga} style={{width: 180, height: 180, alignSelf: 'center'}}></Image>
-          <Text style={{ alignSelf: 'center', marginTop: 10, marginBottom: 20 }}>Anda berhasil menambahkan anggota keluarga</Text>
-              <TouchableOpacity style={{alignSelf: 'center', height: 50, width: 180, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.props.navigation.navigate('ProfilDummy')}>
-                  <View style={{ flex: 1, justifyContent: 'center' }}>
-                      <Text style={{ alignSelf: 'center', color: 'white' }}>Lihat Keluarga Anda</Text>
-                  </View>
-              </TouchableOpacity>
+          <View style={{ backgroundColor: '#grey'}}>
+          <View style={{ backgroundColor: 'white', margin: 10, padding: 30, borderRadius: 10, flex: 1}}>
+              <Image source={Images.keluarga} style={{width: 180, height: 180, alignSelf: 'center'}}></Image>
+              <Text style={{ alignSelf: 'center', marginTop: 10, marginBottom: 20 }}>Anda berhasil menambahkan anggota keluarga</Text>
+              <Button title='Lihat Keluarga Anda' style={{alignSelf: 'center', height: 190, width: 180, borderRadius: 20, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.props.navigation.navigate('ProfilDummy')}/>
+          </View>
           </View>
       </Modal>
 
