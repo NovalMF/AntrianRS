@@ -39,7 +39,7 @@ const create = () => {
     const register = (value) => POST('register', value)
     const getProfil = () => GET('user/data')
     const updateProfil = (value) => POST('update/88abc6f3-133e-49ec-b095-e63e62679272', value)
-    const tambahkeluarga = () => POST('tambah', value)
+    const tambahkeluarga = (value) => POST('tambah', value)
 
 
     return {

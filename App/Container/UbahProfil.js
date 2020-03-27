@@ -54,10 +54,10 @@ class UbahProfil extends Component {
   }
 
   getupdateProfil = () => {
-    const ApiUrl = 'http://api-antrian.aviatapps.id/api/member';
+    const ApiUrl = 'http://api-antrian.aviatapps.id/api/user/update';
     axios.post(ApiUrl)
       .then(response => {
-        this.setState({ tambahkeluarga: response.data.data })
+        this.setState({ updateProfil: response.data.data })
       })
 
   }

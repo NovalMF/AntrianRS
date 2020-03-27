@@ -9,15 +9,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Fonts } from '../Themes';
 import Modal from 'react-native-modal';
+import M from 'moment';
 import DatePicker from 'react-native-datepicker';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import axios from 'axios';
 import Api from '../Services/Api';
-
-var radio_props = [
-  { label: 'Laki-laki', value: 0 },
-  { label: 'Perempuan', value: 1 }
-];
 
 class TambahKeluarga extends Component {
   constructor(props) {
@@ -32,13 +28,29 @@ class TambahKeluarga extends Component {
       nik: '',
       relasi: '',
       alamat: '',
-
+      gender: [
+        { label: 'Laki-laki', value: 'L' },
+        { label: 'Perempuan', value: 'P' }
+      ],
+      id_user: ''
     };
   }
 
     componentDidMount(){
-      this.gettambahkeluarga();
-    
+      // alert(JSON.stringify(this.props.navigation.state.params.data))
+    // if (this.props.navigation.state.params.isFrom == 'profil') {
+    //   let data = this.props.navigation.state.params.data
+    //   this.setState({
+    //     nama_lengkap: data.detail.nama_lengkap,
+    //     jenis_kelamin: data.detail.jenis_kelamin,
+    //     tanggal_lahir: data.detail.tanggal_lahir,
+    //     tempat_lahir: data.detail.tempat_lahir,
+    //     nik: data.detail.nik,
+    //     relasi: data.detail.relasi,
+    //     alamat: data.detail.alamat,
+    //     id_user: data.id
+    //   })
+    // }
     }
 
     gettambahkeluarga = () => {
@@ -50,28 +62,30 @@ class TambahKeluarga extends Component {
 
   }
 
-    handletambahkeluarga = () => {
-      Api.create().tambahkeluarga({
-          name: this.state.name,
-          jenis_kelamin: this.state.jenis_kelamin,
-          tempat_lahir: this.state.tempat_lahir,
-          tanggal_lahir: this.state.tanggal_lahir,
-          nik: this.state.nik,
-          alamat: this.state.alamat
-      }).then((response) => {
-          alert(JSON.stringify(response))
-          if (response.data.success == true) {
-              this.getDataUser(
-                  response.data.success,
-                  response.data.message,
-              )
-              this.navigateToProfil()
-          } else {
-              this.setState({ errorMsg: response.data.message }) 
-          }
-      })
-    }
-
+  handletambahkeluarga = async() => {
+    const ApiUrl = 'http://api-antrian.aviatapps.id/api/member/data/' + this.state.id_user;
+    axios.post(ApiUrl, {
+      nama_lengkap: this.state.nama_lengkap,
+      jenis_kelamin: this.state.jenis_kelamin,
+      tempat_lahir: this.state.tempat_lahir,
+      tanggal_lahir: M(this.state.tanggal_lahir).format('YYYY-MM-DD'),
+      nik: this.state.nik,
+      relasi: this.state.relasi,
+      alamat: this.state.alamat
+    }, {
+      headers: {
+        'accept': 'application/json',
+        'Authorization': 'Bearer '  + await AsyncStorage.getItem(Constant.TOKEN)
+      }
+    }).then(response => {
+      // alert(JSON.stringify(response.data))
+      if (response.data.success == true) {
+        this.props.navigation.goBack(this.props.navigation.state.params.getData())
+      } else {
+        this.setState({ errorMsg: response.data.message })
+      }
+    })
+  }
     navigateToProfil() { 
       const navigation = this.props.navigation;
       const resetAction = StackActions.reset({
@@ -81,23 +95,34 @@ class TambahKeluarga extends Component {
       navigation.dispatch(resetAction) 
   }
 
+
   render() {
     return (
       <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20 }}>
         <Modal
-          onBackdropPress={() => this.setState({ modalTambahKeluarga: false })}
           isVisible={this.state.modalTambahKeluarga}
-      >
-          <View style={{ height: 300, width: '100%', backgroundColor: 'white', paddingVertical: 15, paddingHorizontal: 20 }}>
-              <Image source={Images.keluarga} style={{width: 180, height: 180, alignSelf: 'center'}}></Image>
-              <Text style={{ alignSelf: 'center', marginTop: 10, marginBottom: 20 }}>Anda berhasil menambahkan anggota keluarga</Text>
-              <View style={{ flex: 1, paddingHorizontal: 40 }}>
-                  <TouchableOpacity style={{alignSelf: 'center', height: 50, width: 180, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.handletambahkeluarga() }>
-                      <View style={{ flex: 1, justifyContent: 'center' }}>
-                          <Text style={{ alignSelf: 'center', color: 'white' }}>Lihat Keluarga Anda</Text>
-                      </View>
-                  </TouchableOpacity>
-              </View>
+          onBackdropPress={() => this.setState({ modalTambahKeluarga: false })}
+          style={{
+            margin: 0,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <View 
+            style={{ 
+              height: 300, 
+              width: '100%', 
+              backgroundColor: 'white', 
+              alignItems: 'center',
+              justifyContent: 'center'}}>
+
+          <Image source={Images.keluarga} style={{width: 180, height: 180, alignSelf: 'center'}}></Image>
+          <Text style={{ alignSelf: 'center', marginTop: 10, marginBottom: 20 }}>Anda berhasil menambahkan anggota keluarga</Text>
+              <TouchableOpacity style={{alignSelf: 'center', height: 50, width: 180, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.props.navigation.navigate('ProfilDummy')}>
+                  <View style={{ flex: 1, justifyContent: 'center' }}>
+                      <Text style={{ alignSelf: 'center', color: 'white' }}>Lihat Keluarga Anda</Text>
+                  </View>
+              </TouchableOpacity>
           </View>
       </Modal>
 
@@ -117,7 +142,7 @@ class TambahKeluarga extends Component {
           <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Jenis Kelamin</Text>
           <View>
             <RadioForm
-              radio_props={radio_props}
+              radio_props={this.state.gender}
               initial={0}
               formHorizontal={true}
               labelStyle={{ marginRight: 20 }}
