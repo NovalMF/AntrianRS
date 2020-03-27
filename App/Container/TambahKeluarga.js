@@ -1,10 +1,10 @@
 
 import React, { Component } from 'react';
 import { Text, StatusBar, View } from 'native-base';
-import { ScrollView, Image, StyleSheet, Picker } from 'react-native';
+import { ScrollView, Image, StyleSheet, Picker, TouchableOpacity } from 'react-native';
 import Images from '../Library/Images';
 import LinearGradient from 'react-native-linear-gradient';
-import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
+import { TextInput } from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Fonts } from '../Themes';
@@ -19,10 +19,10 @@ class TambahKeluarga extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalTambahKeluarga: false,
+      modalTambahKeluarga: true,
       tambahkeluarga: [],
       nama_lengkap: '',
-      jenis_kelamin: '',
+      jenis_kelamin: 'L',
       tempat_lahir: '',
       tanggal_lahir: '',
       nik: '',
@@ -36,65 +36,31 @@ class TambahKeluarga extends Component {
     };
   }
 
-    componentDidMount(){
-      // alert(JSON.stringify(this.props.navigation.state.params.data))
-    // if (this.props.navigation.state.params.isFrom == 'profil') {
-    //   let data = this.props.navigation.state.params.data
-    //   this.setState({
-    //     nama_lengkap: data.detail.nama_lengkap,
-    //     jenis_kelamin: data.detail.jenis_kelamin,
-    //     tanggal_lahir: data.detail.tanggal_lahir,
-    //     tempat_lahir: data.detail.tempat_lahir,
-    //     nik: data.detail.nik,
-    //     relasi: data.detail.relasi,
-    //     alamat: data.detail.alamat,
-    //     id_user: data.id
-    //   })
-    // }
-    }
-
-    gettambahkeluarga = () => {
-      const ApiUrl = 'http://api-antrian.aviatapps.id/api/member';
-      axios.post(ApiUrl)
-          .then(response => {
-              this.setState({ tambahkeluarga: response.data.data })
-          })
-
+  componentDidMount() {
   }
 
-  handletambahkeluarga = async() => {
-    const ApiUrl = 'http://api-antrian.aviatapps.id/api/member/data/' + this.state.id_user;
-    axios.post(ApiUrl, {
+  handletambahkeluarga() {
+    var date1 = this.state.tanggal_lahir.split('-')
+    var newDate = date1[2] + '-' + date1[1] + '-' + date1[0];
+    var date = new Date(newDate);
+    var fixDate = M(date).format('YYYY-MM-DD')
+    Api.create().tambahkeluarga({
       nama_lengkap: this.state.nama_lengkap,
       jenis_kelamin: this.state.jenis_kelamin,
       tempat_lahir: this.state.tempat_lahir,
-      tanggal_lahir: M(this.state.tanggal_lahir).format('YYYY-MM-DD'),
+      tanggal_lahir: fixDate,
       nik: this.state.nik,
       relasi: this.state.relasi,
       alamat: this.state.alamat
-    }, {
-      headers: {
-        'accept': 'application/json',
-        'Authorization': 'Bearer '  + await AsyncStorage.getItem(Constant.TOKEN)
-      }
     }).then(response => {
       // alert(JSON.stringify(response.data))
       if (response.data.success == true) {
-        this.props.navigation.goBack(this.props.navigation.state.params.getData())
+        this.setState({ modalTambahKeluarga: true })
       } else {
         this.setState({ errorMsg: response.data.message })
       }
     })
   }
-    navigateToProfil() { 
-      const navigation = this.props.navigation;
-      const resetAction = StackActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({ routeName: 'ProfilUser' })],
-      });
-      navigation.dispatch(resetAction) 
-  }
-
 
   render() {
     return (
@@ -108,38 +74,39 @@ class TambahKeluarga extends Component {
             alignItems: 'center'
           }}
         >
-          <View 
-            style={{ 
-              height: 300, 
-              width: '100%', 
-              backgroundColor: 'white', 
+          <View
+            style={{
+              height: 300,
+              width: '100%',
+              backgroundColor: 'white',
               alignItems: 'center',
-              justifyContent: 'center'}}>
+              justifyContent: 'center'
+            }}>
 
-          <Image source={Images.keluarga} style={{width: 180, height: 180, alignSelf: 'center'}}></Image>
-          <Text style={{ alignSelf: 'center', marginTop: 10, marginBottom: 20 }}>Anda berhasil menambahkan anggota keluarga</Text>
-              <TouchableOpacity style={{alignSelf: 'center', height: 50, width: 180, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.props.navigation.navigate('ProfilDummy')}>
-                  <View style={{ flex: 1, justifyContent: 'center' }}>
-                      <Text style={{ alignSelf: 'center', color: 'white' }}>Lihat Keluarga Anda</Text>
-                  </View>
-              </TouchableOpacity>
+            <Image source={Images.keluarga} style={{ width: 180, height: 180, alignSelf: 'center' }}></Image>
+            <Text style={{ alignSelf: 'center', marginTop: 10, marginBottom: 20 }}>Anda berhasil menambahkan anggota keluarga</Text>
+            <TouchableOpacity style={{ alignSelf: 'center', height: 50, width: 180, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1 }} onPress={() => this.props.navigation.goBack(this.props.navigation.state.params.getData())}>
+              <View style={{ flex: 1, justifyContent: 'center' }}>
+                <Text style={{ alignSelf: 'center', color: 'white' }}>Lihat Keluarga Anda</Text>
+              </View>
+            </TouchableOpacity>
           </View>
-      </Modal>
+        </Modal>
 
         {/* Nama Lengkap */}
         <View>
-          <Text style={{ paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Nama Lengkap</Text>
+          <Text style={{ paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Nama Lengkap</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputs}
               placeholder="Ketik disini"
               underlineColorAndroid='transparent'
-              onChangeText={(text) => this.setState({nama_lengkap: text})}
+              onChangeText={(text) => this.setState({ nama_lengkap: text })}
             />
           </View>
 
           {/* Jenis Kelamin */}
-          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Jenis Kelamin</Text>
+          <Text style={{ marginTop: 10, paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Jenis Kelamin</Text>
           <View>
             <RadioForm
               radio_props={this.state.gender}
@@ -152,21 +119,21 @@ class TambahKeluarga extends Component {
           </View>
 
           {/* Tempat Lahir */}
-          <Text style={{ paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Tempat Lahir</Text>
+          <Text style={{ paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Tempat Lahir</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputs}
               placeholder="Ketik disini"
               underlineColorAndroid='transparent'
-              onChangeText={(text) => this.setState({tempat_lahir: text})}
+              onChangeText={(text) => this.setState({ tempat_lahir: text })}
             />
           </View>
 
           {/* Tanggal Lahir */}
-          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Tanggal Lahir</Text>
+          <Text style={{ marginTop: 10, paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Tanggal Lahir</Text>
           <DatePicker
             style={{ width: '100%' }}
-            date={this.state.date}
+            date={this.state.tanggal_lahir}
             mode="date"
             placeholder="Pilih Tanggal"
             format="DD-MM-YYYY"
@@ -197,46 +164,46 @@ class TambahKeluarga extends Component {
           />
 
           {/* NIK */}
-          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>NIK</Text>
+          <Text style={{ marginTop: 10, paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>NIK</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputs}
               placeholder="Ketik disini"
               keyboardType={'numeric'}
               underlineColorAndroid='transparent'
-              onChangeText={(text) => this.setState({nik: text})}
+              onChangeText={(text) => this.setState({ nik: text })}
             />
           </View>
 
-        {/* Hubungan Keluarga / Relasi */}
-        <Text style={{marginTop:10, paddingBottom:5, fontFamily: Fonts.type.regular, color: 'black'}}>Hubungan Keluarga</Text>
-          <View style={styles.inputContainer}> 
+          {/* Hubungan Keluarga / Relasi */}
+          <Text style={{ marginTop: 10, paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Hubungan Keluarga</Text>
+          <View style={styles.inputContainer}>
 
-          <Picker 
-            placeholder={{label: 'Pilih salah satu', value: null}}
-            selectedValue={this.state.relasi}
-            style={{ width: '90%'}}
-            onValueChange={(itemValue, itemIndex) =>
-                this.setState({relasi: itemValue})
+            <Picker
+              placeholder={{ label: 'Pilih salah satu', value: null }}
+              selectedValue={this.state.relasi}
+              style={{ width: '90%' }}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({ relasi: itemValue })
               }
-        
-        >
-            <Picker.Item label="Ayah" value="ayah" />
-            <Picker.Item label="Ibu" value="ibu" />
-            <Picker.Item label="Suami" value="suami" />
-            <Picker.Item label="Istri" value="istri" />
-            <Picker.Item label="Anak" value="anak" />
-              </Picker>
+
+            >
+              <Picker.Item label="Ayah" value="ayah" />
+              <Picker.Item label="Ibu" value="ibu" />
+              <Picker.Item label="Suami" value="suami" />
+              <Picker.Item label="Istri" value="istri" />
+              <Picker.Item label="Anak" value="anak" />
+            </Picker>
           </View>
 
           {/* Alamat */}
-          <Text style={{ marginTop: 10, paddingBottom: 5,  fontFamily: Fonts.type.regular, color: 'black' }}>Alamat</Text>
+          <Text style={{ marginTop: 10, paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Alamat</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputs}
               placeholder="Ketik disini"
               underlineColorAndroid='transparent'
-              onChangeText={(text) => this.setState({alamat: text})}
+              onChangeText={(text) => this.setState({ alamat: text })}
             />
           </View>
 
@@ -267,9 +234,9 @@ class TambahKeluarga extends Component {
 
 
         {/* Button Simpan */}
-        <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center'}}>
+        <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center' }}>
           <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 0.5 }} colors={['#0079EB', '#0079EB']} style={{ elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.setState({ modalTambahKeluarga: true })}>
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.handletambahkeluarga()}>
               <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Simpan</Text>
             </TouchableOpacity>
           </LinearGradient>
