@@ -83,22 +83,22 @@ export default class HomePage extends Component {
 
               <View style={{ width: '30%', alignItems: 'center' }}>
                 <TouchableOpacity style={{ backgroundColor: 'white', width: '100%', height: 100, justifyContent: 'center', alignItems: 'center', borderRadius: 10, elevation: 2 }} onPress={() => this.props.navigation.navigate('Poli')}>
-                  <Image source={Images.iconDokter} style={{ width: 55, height: 55, resizeMode: 'contain', alignSelf: 'center' }} />
-                  <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, textAlign: 'center' }} onPress={() => this.props.navigation.navigate('Poli')}>Dokter</Text>
+                  <Image source={Images.iconDokter} style={{ width: 45, height: 45, resizeMode: 'contain', alignSelf: 'center' }} />
+                  <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, textAlign: 'center', marginTop: 10 }} onPress={() => this.props.navigation.navigate('Poli')}>Dokter</Text>
                 </TouchableOpacity>
               </View>
 
               <View style={{ width: '30%', alignItems: 'center' }}>
                 <TouchableOpacity style={{ backgroundColor: 'white', width: '100%', height: 100, justifyContent: 'center', alignItems: 'center', borderRadius: 10, elevation: 2 }} onPress={() => this.props.navigation.navigate('AntrianSaya')}>
-                  <Image source={Images.iconAntrian} style={{ width: 55, height: 55, resizeMode: 'contain', alignSelf: 'center' }} />
-                  <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, textAlign: 'center' }} onPress={() => this.props.navigation.navigate('AntrianSaya')}>Antrian Saya</Text>
+                  <Image source={Images.iconAntrian} style={{ width: 45, height: 45, resizeMode: 'contain', alignSelf: 'center' }} />
+                  <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, textAlign: 'center', marginTop: 10 }} onPress={() => this.props.navigation.navigate('AntrianSaya')}>Antrian Saya</Text>
                 </TouchableOpacity>
               </View>
 
               <View style={{ width: '30%', alignItems: 'center' }}>
                 <TouchableOpacity style={{ backgroundColor: 'white', width: '100%', height: 100, justifyContent: 'center', alignItems: 'center', borderRadius: 10, elevation: 2 }} onPress={() => this.props.navigation.navigate('HubungiKami')}>
-                  <Image source={Images.iconHubungiKami} style={{ width: 55, height: 55, resizeMode: 'contain', alignSelf: 'center' }} />
-                  <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, textAlign: 'center' }} onPress={() => this.props.navigation.navigate('HubungiKami')}>Hubungi Kami</Text>
+                  <Image source={Images.iconHubungiKami} style={{ width: 40, height: 40, resizeMode: 'contain', alignSelf: 'center' }} />
+                  <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, textAlign: 'center', marginTop: 10 }} onPress={() => this.props.navigation.navigate('HubungiKami')}>Hubungi Kami</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -106,8 +106,8 @@ export default class HomePage extends Component {
             <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '100%', marginBottom: 19 }}>
               <View style={{ width: '30%', alignItems: 'center' }}>
                 <TouchableOpacity style={{ backgroundColor: 'white', width: '100%', height: 100, justifyContent: 'center', alignItems: 'center', borderRadius: 10, elevation: 2 }} onPress={() => this.props.navigation.navigate('ProfilUser')}>
-                  <Image source={Images.iconProfil} style={{ width: 55, height: 55, resizeMode: 'contain', alignSelf: 'center' }} />
-                  <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, textAlign: 'center' }} onPress={() => this.props.navigation.navigate('ProfilUser')}>Profil</Text>
+                  <Image source={Images.iconProfil} style={{ width: 45, height: 45, resizeMode: 'contain', alignSelf: 'center' }} />
+                  <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, textAlign: 'center', marginTop: 10 }} onPress={() => this.props.navigation.navigate('ProfilUser')}>Profil</Text>
                 </TouchableOpacity>
               </View>
             </View>
