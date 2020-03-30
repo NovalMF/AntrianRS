@@ -106,7 +106,7 @@ export default class HomePage extends Component {
             <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '100%', marginBottom: 19 }}>
               <View style={{ width: '30%', alignItems: 'center' }}>
                 <TouchableOpacity style={{ backgroundColor: 'white', width: '100%', height: 100, justifyContent: 'center', alignItems: 'center', borderRadius: 10, elevation: 2 }} onPress={() => this.props.navigation.navigate('ProfilUser')}>
-                  <Image source={Images.iconProfil} style={{ width: 45, height: 45, resizeMode: 'contain', alignSelf: 'center' }} />
+                  <Image source={Images.iconProfil} style={{ width: 40, height: 40, resizeMode: 'contain', alignSelf: 'center' }} />
                   <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, textAlign: 'center', marginTop: 10 }} onPress={() => this.props.navigation.navigate('ProfilUser')}>Profil</Text>
                 </TouchableOpacity>
               </View>
