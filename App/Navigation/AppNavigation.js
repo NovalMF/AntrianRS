@@ -53,7 +53,7 @@ const MainNavigator = createStackNavigator({
         headerTitleStyle, 
         headerTintColor: 'white',
         headerBackImage: ( 
-            <IconBack name='ios-arrow-back' size={30} color={'#0079eb'} style={{paddingLeft:12}} />
+            <IconBack name='ios-arrow-back' size={30} color={'#0079eb'} style={{paddingLeft:10}} />
         )
     }
 });

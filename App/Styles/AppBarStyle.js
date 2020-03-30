@@ -12,6 +12,7 @@ export const headerStyle = {
 export const headerTitleStyle = {
     flex: 1,
     fontSize: 20,
+    marginLeft: -10,
     color: 'black',
     fontWeight: '600',
 }

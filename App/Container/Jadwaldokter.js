@@ -49,7 +49,8 @@ class Jadwaldokter extends Component {
   render() {
     return (
         <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
-          <ScrollView horizontal={true} style={{ flexDirection: 'row', paddingLeft: 16, top: -170 }} showsHorizontalScrollIndicator={false} >
+          <View>
+          <ScrollView horizontal={true} style={{ flexDirection: 'row', paddingLeft: 16, paddingTop: 10 }} showsHorizontalScrollIndicator={false} >
               {this.state.infoHari.map((item, index) => {
                 return (
                   <View style={{ marginRight: 16, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
@@ -60,8 +61,9 @@ class Jadwaldokter extends Component {
                 )
               })}
             </ScrollView>
+            </View>
 
-          <ScrollView style={{marginTop: -350}} >
+          <ScrollView style={{paddingTop: 5}} >
             {
                 this.state.dokter_PoliList.map((data, index)=>(
                   <TouchableOpacity key={index} onPress={() => this.props.navigation.navigate('ProfilDokter', {dokter_id: data.dokter_id })}
