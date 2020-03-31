@@ -58,7 +58,8 @@ class ProfilDokter extends Component {
                       <Text style={{fontSize: 18, marginTop:30, alignSelf:'center'}}>Biografi</Text>
                       <View style={{ backgroundColor: 'white', width: 330, height: 120, marginTop: 10, borderRadius: 10, elevation: 5, marginBottom: 20 }} > 
                         <Text style={{paddingLeft: 10, width: 320, marginTop: 5}}>{data.pendidikan}</Text>
-                        <Text style={{paddingLeft: 10, width: 320, marginTop: 5}}>{data.email}</Text>  
+                        <Text style={{paddingLeft: 10, width: 320, marginTop: 5}}>{data.email}</Text>
+                        <Text style={{paddingLeft: 10, width: 320, marginTop: 5}}>{data.mobile}</Text>  
                       </View>
                        {/* Jadwal Praktik */}
                         <Text style={{fontSize: 18, alignSelf:'center'}}>Jadwal Praktik</Text>
