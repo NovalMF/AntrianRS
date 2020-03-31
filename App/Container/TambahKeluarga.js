@@ -19,7 +19,7 @@ class TambahKeluarga extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalTambahKeluarga: true,
+      modalTambahKeluarga: false,
       tambahkeluarga: [],
       nama_lengkap: '',
       jenis_kelamin: 'L',

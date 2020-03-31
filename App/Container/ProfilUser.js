@@ -151,9 +151,8 @@ class ProfilUser extends Component {
                 </View>
 
 
-                <View>
-
                     {/* Logout */}
+                     <View>
                     <TouchableOpacity style={{ backgroundColor: 'white', width: '100%', height: 60, borderRadius: 5, marginTop: 10, paddingVertical: 5, flexDirection: 'row', paddingHorizontal: 20, elevation: 5 }} onPress={() => this.setState({ modalLogout: true })}>
                         <Fontisto name='power' size={20} style={{ alignSelf: 'center' }} color={'#0079eb'} />
                         <Text style={{ alignSelf: 'center', marginLeft: 20, fontFamily: Fonts.type.medium, fontSize: 18 }}>Logout</Text>

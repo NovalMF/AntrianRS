@@ -42,7 +42,7 @@ class BookingAntrian extends Component {
 
 render() {
     return (
-        <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
+      <View style={{backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingTop: 20}}>
           <View style={{marginTop: 5}} >
             {
                 this.state.booking_antrian.map((data, index)=>(
@@ -156,13 +156,13 @@ render() {
                 </View>
 
                  {/* Button Lanjut */}
-                 <View style={{ width: 360, bottom: 10, marginTop:10}}>
-                    <LinearGradient start={{x: 0, y: 0}} end={{x: 0.9, y: 0.5}} colors={['#0079EB', '#0079EB']} style={{elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
-                        <TouchableOpacity style={{ alignItems:'center', justifyContent:'center', height:55}} onPress={()=> this.props.navigation.navigate('History')} >
-                            <Text style={{color: 'white', fontFamily: Fonts.type.regular, fontSize: 20}}> Lanjut </Text>
-                        </TouchableOpacity>
-                    </LinearGradient>
-                </View>
+                 <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center'}}>
+                  <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 0.5 }} colors={['#0079EB', '#0079EB']} style={{ elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
+                    <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.props.navigation.navigate('History')} >
+                      <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Lanjut </Text>
+                    </TouchableOpacity>
+                  </LinearGradient>
+                </View> 
 
           </View>
           </View>
