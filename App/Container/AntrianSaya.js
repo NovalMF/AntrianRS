@@ -19,7 +19,8 @@ class AntrianSaya extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-        expanded : false,
+        expanded1: false,
+        expanded2: false,
         email   : '',
         history_booking: [],
     
@@ -47,9 +48,14 @@ class AntrianSaya extends Component {
         
 //   }
 
-changeLayout = () => {
+changeLayout1 = () => {
   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-  this.setState({ expanded: !this.state.expanded });
+  this.setState({ expanded1: !this.state.expanded1 });
+}
+
+changeLayout2 = () => {
+  LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  this.setState({ expanded2: !this.state.expanded2 });
 }
 
 render() {
@@ -57,13 +63,13 @@ render() {
         <ScrollView style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
           <View style={styles.container}>
               <View style={styles.btnTextHolder}>
-                <TouchableOpacity activeOpacity={0.8} onPress={this.changeLayout} style={styles.Btn}>
+                <TouchableOpacity activeOpacity={0.8} onPress={this.changeLayout1} style={styles.Btn}>
                     <Text style={styles.btnText}>Dr. Anastasia Lintang Maharani, Sp.OG</Text>
                     <Text style={{ marginTop: 3, fontSize:16, marginLeft: 5, color:'grey'}}>Poli Kebidanan dan Kandungan</Text>
                     <Text style={{ marginTop: 3, fontSize:16, marginLeft: 5}}>30 Maret 2020, 09:00 - 11:00</Text>
                 </TouchableOpacity>
 
-        <View style={{ height: this.state.expanded ? null : 0, overflow: 'hidden' }}>
+        <View style={{ height: this.state.expanded1 ? null : 0, overflow: 'hidden' }}>
           <View style={{justifyContent: 'center', flexDirection:'row'}}>
           <Text style={{left: 35, paddingTop: 10,}}>QR Code</Text>
             <Image source ={Images.qrcode} style={{width: 120, height: 120, marginTop: 30, left: -50, }}></Image>
@@ -75,6 +81,35 @@ render() {
             <Image source={Images.iconKalender} style={{width:65, height: 65, left: -35, top: -10}}></Image>
             <Text style={{left:-40, top:5}}> Senin, 30 Maret 2020 </Text>
             <Text style={{left:-165, top:25}}>09:00 - 11:00</Text>
+            </View>
+          <Button style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <Text> Batalkan Janji </Text>
+          </Button>
+            
+        </View>
+        </View>
+      </View>
+
+      <View style={styles.container}>
+              <View style={styles.btnTextHolder}>
+                <TouchableOpacity activeOpacity={0.8} onPress={this.changeLayout2} style={styles.Btn}>
+                    <Text style={styles.btnText}>Dr. John Doe, Sp.A</Text>
+                    <Text style={{ marginTop: 3, fontSize:16, marginLeft: 5, color:'grey'}}>Poli Anak</Text>
+                    <Text style={{ marginTop: 3, fontSize:16, marginLeft: 5}}>01 April 2020, 12:00 - 14:00</Text>
+                </TouchableOpacity>
+
+        <View style={{ height: this.state.expanded2 ? null : 0, overflow: 'hidden' }}>
+          <View style={{justifyContent: 'center', flexDirection:'row'}}>
+          <Text style={{left: 35, paddingTop: 10,}}>QR Code</Text>
+            <Image source ={Images.qrcode} style={{width: 120, height: 120, marginTop: 30, left: -50, }}></Image>
+            <Text style={{left: 15, paddingTop: 10,}}>No. Antrian</Text>
+            <Text style={{color:'#0079eb', left:-40, marginTop: 50, fontSize: 50}}>08</Text>
+          </View>
+          <View style={{borderBottomColor: '#E8E9ED', borderBottomWidth: 1, marginTop: 10, marginBottom: 20, marginHorizontal: 0 }}></View>
+            <View style={{justifyContent: 'center', flexDirection:'row'}}>
+            <Image source={Images.iconKalender} style={{width:65, height: 65, left: -35, top: -10}}></Image>
+            <Text style={{left:-40, top:5}}> Rabu, 01 April 2020 </Text>
+            <Text style={{left:-165, top:25}}>12:00 - 14:00</Text>
             </View>
           <Button style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Text> Batalkan Janji </Text>

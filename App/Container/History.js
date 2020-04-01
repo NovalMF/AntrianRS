@@ -42,7 +42,7 @@ class History extends Component {
 
 render() {
     return (
-        <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
+        <View style={{backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingTop: 20}}>
           <View style={{marginTop: 5}} >
                   <View  
                     style={{ backgroundColor: 'white', width: 330, height: 250, marginLeft: 16, marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 20}}>
@@ -65,7 +65,7 @@ render() {
              {/* Button Lihat Antrian */}
         <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center'}}>
           <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 0.5 }} colors={['#0079EB', '#0079EB']} style={{ elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.props.navigation.navigate('History')} >
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.props.navigation.navigate('AntrianSaya')} >
               <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Lihat Antrian </Text>
             </TouchableOpacity>
           </LinearGradient>
