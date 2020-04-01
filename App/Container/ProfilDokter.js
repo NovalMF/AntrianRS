@@ -64,7 +64,7 @@ class ProfilDokter extends Component {
                        {/* Jadwal Praktik */}
                         <Text style={{fontSize: 18, alignSelf:'center'}}>Jadwal Praktik</Text>
                         <View style={{ backgroundColor: 'white', width: 330, height: 90, marginTop: 10, borderRadius: 10, elevation: 5, marginBottom: 20 }} > 
-                        <Text style={{}}>{data.jadwal}</Text>
+                        <Text style={{}}>{data.jadwal_id}</Text>
                         <Text style={{}}>{data.mulai}</Text>
                         <Text style={{}}>{data.selesai}</Text>
                         </View>

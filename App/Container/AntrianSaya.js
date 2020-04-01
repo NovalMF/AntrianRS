@@ -1,17 +1,11 @@
 
 
 import React, { Component } from 'react';
-import { Text, StatusBar, View, Button } from 'native-base';
-import {  ScrollView, Image, StyleSheet, Picker, TouchableHighlight, Animated, LayoutAnimation, Platform, UIManager } from 'react-native';
+import { Text, View, Button } from 'native-base';
+import {  ScrollView, Image, StyleSheet, LayoutAnimation, Platform, UIManager } from 'react-native';
 import Images from '../Library/Images';
-import LinearGradient from 'react-native-linear-gradient';
-import { TouchableOpacity, TextInput, BorderlessButton } from 'react-native-gesture-handler';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Fonts } from '../Themes';
-import DatePicker from 'react-native-datepicker';
-import CollapsibleList from 'react-native-collapsible-list'
-import axios from 'axios';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Modal from 'react-native-modal';
 
 
 
@@ -21,6 +15,7 @@ class AntrianSaya extends Component {
     this.state = { 
         expanded1: false,
         expanded2: false,
+        modalBatal: false,
         email   : '',
         history_booking: [],
     
@@ -60,7 +55,28 @@ changeLayout2 = () => {
 
 render() {
     return (
-        <ScrollView style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
+        <ScrollView style={{backgroundColor: 'white', flex: 1 }}>
+          <Modal
+            onBackdropPress={() => this.setState({ modalBatal: false })}
+            isVisible={this.state.modalBatal}
+        >
+            <View style={{ height: 200, width: '100%', backgroundColor: 'white', paddingVertical: 15, paddingHorizontal: 20 }}>
+            <Text style={{ alignSelf: 'center', fontSize: 24 }}>Batalkan Janji</Text>
+                <Text style={{ alignSelf: 'center', flexWrap: 'wrap', marginTop: 20, paddingBottom: 30 }}>Apakah kamu yakin akan membatalkan janji?</Text>
+                <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1, paddingHorizontal: 40, paddingBottom: 30 }}>
+                    <TouchableOpacity style={{ height: 50, width: 90, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} >
+                        <View style={{ flex: 1, justifyContent: 'center' }}>
+                            <Text style={{ alignSelf: 'center', color: 'white' }}>Ya</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ height: 50, width: 90, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.setState({ modalBatal: false })}>
+                        <View style={{ flex: 1, justifyContent: 'center' }}>
+                            <Text style={{ alignSelf: 'center', color: 'white' }}>Tidak</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </Modal>
           <View style={styles.container}>
               <View style={styles.btnTextHolder}>
                 <TouchableOpacity activeOpacity={0.8} onPress={this.changeLayout1} style={styles.Btn}>
@@ -82,7 +98,7 @@ render() {
             <Text style={{left:-40, top:5}}> Senin, 30 Maret 2020 </Text>
             <Text style={{left:-165, top:25}}>09:00 - 11:00</Text>
             </View>
-          <Button style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Button style={{ justifyContent: 'center', alignItems: 'center' }} onPress={() => this.setState({ modalBatal: true })}>
             <Text> Batalkan Janji </Text>
           </Button>
             
@@ -111,7 +127,7 @@ render() {
             <Text style={{left:-40, top:5}}> Rabu, 01 April 2020 </Text>
             <Text style={{left:-165, top:25}}>12:00 - 14:00</Text>
             </View>
-          <Button style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <Button style={{ justifyContent: 'center', alignItems: 'center' }} onPress={() => this.setState({ modalBatal: true })}>
             <Text> Batalkan Janji </Text>
           </Button>
             
