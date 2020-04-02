@@ -8,6 +8,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Fonts } from '../Themes';
 import DatePicker from 'react-native-datepicker';
 import axios from 'axios';
+import Api from '../Services/Api';
+
 
 
 
@@ -17,12 +19,51 @@ class ProfilDokter extends Component {
     // [date, setDate] = useState(new Date())
     this.state = {
     profil_dokter: [],
+    dokter_nama: '',
+    spesialis: '',
+    avatar: '',
+    biografi: '',
+    pendidikan:'',
+    email: '',
+    mobile:'',
+    jadwal_id: '',
+    mulai: '',
+    selesai: '',
     },
     {
         date:'01-03-2020'
     };
   }
 
+//   componentDidMount() {
+//     this.getprofil_dokter(this.props.navigation.getParam('dokter_id'));
+//     this._subscribe = this.props.navigation.addListener('didFocus', () => {
+//           //do you update if need
+//           this.getprofil_dokter(this.props.navigation.getParam('dokter_id')); 
+//         });
+//       }
+
+
+// getprofil_dokter(dokter_id) {
+//     Api.create().getDokter(dokter_id).then((response) => {
+//         // alert(JSON.stringify(response.data))
+//         if (response.data.success == true) {
+//             this.setState({
+//                 avatar: response.data.data.avatar,
+//                 dokter_nama: response.data.data.dokter_nama,
+//                 spesialis: response.data.data.spesialis,
+//                 biografi: response.data.data.biografi,
+//                 pendidikan: response.data.data.pendidikan,
+//                 email: response.data.data.email,
+//                 mobile: response.data.data.mobile,
+//                 jadwal_id: response.data.data.jadwal_id,
+//                 mulai: response.data.data.mulai,
+//                 selesai: response.data.data.selesai,
+//                 profil_dokter: response.data.data
+//             })
+//         }
+//     })
+// }
   componentDidMount(){
     this.getprofil_dokter();
     this._subscribe = this.props.navigation.addListener('didFocus', () => {
@@ -33,7 +74,7 @@ class ProfilDokter extends Component {
     
   getprofil_dokter= (dokter_id) => {
     const ApiUrl = `http://api-antrian.aviatapps.id/api/dokter/${dokter_id}`;
-    axios.post(ApiUrl)
+    axios.get(ApiUrl)
     .then(response => {
       this.setState({ profil_dokter:response.data.data })      
     })
@@ -47,10 +88,10 @@ class ProfilDokter extends Component {
           
           <View style={{top: -10}} >
           {
-                this.state.profil_dokter.map((data, index)=>(
-                <View  key={index}
+              this.state.profil_dokter.map((data, index) => (
+                <View key={index}
                     style={{ backgroundColor: 'white', width: 330, height: 180, marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 20 }}>
-                      <Image source={{uri:data.avatar}} style={{width: 70, height: 70, marginLeft:10, marginTop: 15}}></Image>
+                      <Image source={{uri:this.state.avatar}} style={{width: 70, height: 70, marginLeft:10, marginTop: 15}}></Image>
                       <Text style={{paddingLeft: 90, marginTop: -70, fontSize:16}}>{data.dokter_nama}</Text>
                       <Text style={{paddingLeft: 90, color: '#848484', marginTop: 5, width: 250}}>{data.spesialis}</Text>
                       <Text style={{paddingLeft: 90, width: 320, marginTop: 5}}>{data.biografi}</Text>
@@ -64,13 +105,13 @@ class ProfilDokter extends Component {
                        {/* Jadwal Praktik */}
                         <Text style={{fontSize: 18, alignSelf:'center'}}>Jadwal Praktik</Text>
                         <View style={{ backgroundColor: 'white', width: 330, height: 90, marginTop: 10, borderRadius: 10, elevation: 5, marginBottom: 20 }} > 
-                        <Text style={{}}>{data.jadwal_id}</Text>
-                        <Text style={{}}>{data.mulai}</Text>
-                        <Text style={{}}>{data.selesai}</Text>
+                        <Text style={{}}>{this.state.jadwal_id}</Text>
+                        <Text style={{}}>{this.state.mulai}</Text>
+                        <Text style={{}}>{this.state.selesai}</Text>
                         </View>
                   </View> 
-                  ))
-                }
+                ))
+              }
               </View> 
 
                         {/* Pilih Tanggal */}

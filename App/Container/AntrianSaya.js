@@ -63,7 +63,6 @@ render() {
             <View style={{ height: 200, width: '100%', backgroundColor: 'white', paddingVertical: 15, paddingHorizontal: 20 }}>
             <Text style={{ alignSelf: 'center', fontSize: 24 }}>Batalkan Janji</Text>
                 <Text style={{ alignSelf: 'center', flexWrap: 'wrap', marginTop: 20, paddingBottom: 30 }}>Apakah kamu yakin akan membatalkan janji?</Text>
-                <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1, paddingHorizontal: 40, paddingBottom: 30 }}>
                     <TouchableOpacity style={{ height: 50, width: 90, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} >
                         <View style={{ flex: 1, justifyContent: 'center' }}>
                             <Text style={{ alignSelf: 'center', color: 'white' }}>Ya</Text>
@@ -74,7 +73,7 @@ render() {
                             <Text style={{ alignSelf: 'center', color: 'white' }}>Tidak</Text>
                         </View>
                     </TouchableOpacity>
-                </View>
+                
             </View>
         </Modal>
           <View style={styles.container}>
