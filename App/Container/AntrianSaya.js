@@ -2,9 +2,9 @@
 
 import React, { Component } from 'react';
 import { Text, View, Button } from 'native-base';
-import {  ScrollView, Image, StyleSheet, LayoutAnimation, Platform, UIManager } from 'react-native';
+import {  ScrollView, Image, StyleSheet, LayoutAnimation, Platform, UIManager, TouchableOpacity } from 'react-native';
 import Images from '../Library/Images';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TextInput } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
 
 
@@ -61,9 +61,9 @@ render() {
             isVisible={this.state.modalBatal}
         >
             <View style={{ height: 200, width: '100%', backgroundColor: 'white', paddingVertical: 15, paddingHorizontal: 20 }}>
-            <Text style={{ alignSelf: 'center', fontSize: 24 }}>Batalkan Janji</Text>
-                <Text style={{ alignSelf: 'center', flexWrap: 'wrap', marginTop: 20, paddingBottom: 30 }}>Apakah kamu yakin akan membatalkan janji?</Text>
-                    <TouchableOpacity style={{ height: 50, width: 90, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }} >
+                <Text style={{ alignSelf: 'center', flexWrap: 'wrap', marginTop: 10 }}>Apakah kamu yakin akan membatalkan janji?</Text>
+                <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1, paddingHorizontal: 40, paddingBottom: 30 }}>
+                    <TouchableOpacity style={{ height: 50, width: 90, borderRadius: 10, backgroundColor: '#0079eb', opacity: 1, alignSelf: 'flex-end' }}>
                         <View style={{ flex: 1, justifyContent: 'center' }}>
                             <Text style={{ alignSelf: 'center', color: 'white' }}>Ya</Text>
                         </View>
@@ -73,7 +73,7 @@ render() {
                             <Text style={{ alignSelf: 'center', color: 'white' }}>Tidak</Text>
                         </View>
                     </TouchableOpacity>
-                
+                </View>
             </View>
         </Modal>
           <View style={styles.container}>
@@ -97,8 +97,8 @@ render() {
             <Text style={{left:-40, top:5}}> Senin, 30 Maret 2020 </Text>
             <Text style={{left:-165, top:25}}>09:00 - 11:00</Text>
             </View>
-          <Button style={{ justifyContent: 'center', alignItems: 'center' }} onPress={() => this.setState({ modalBatal: true })}>
-            <Text> Batalkan Janji </Text>
+          <Button style={{ backgroundColor:'white', justifyContent: 'center', alignItems: 'center' }} onPress={() => this.setState({ modalBatal: true })}>
+            <Text style={{color:'black'}}> Batalkan Janji </Text>
           </Button>
             
         </View>
@@ -126,8 +126,8 @@ render() {
             <Text style={{left:-40, top:5}}> Rabu, 01 April 2020 </Text>
             <Text style={{left:-165, top:25}}>12:00 - 14:00</Text>
             </View>
-          <Button style={{ justifyContent: 'center', alignItems: 'center' }} onPress={() => this.setState({ modalBatal: true })}>
-            <Text> Batalkan Janji </Text>
+          <Button style={{ backgroundColor:'white', justifyContent: 'center', alignItems: 'center' }} onPress={() => this.setState({ modalBatal: true })}>
+            <Text style={{color:'black'}}> Batalkan Janji </Text>
           </Button>
             
         </View>
