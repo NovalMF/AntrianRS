@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, StatusBar, View } from 'native-base';
-import {  ScrollView, Image, StyleSheet } from 'react-native';
+import { ScrollView, Image, StyleSheet } from 'react-native';
 import Images from '../Library/Images';
 import LinearGradient from 'react-native-linear-gradient';
 import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
@@ -21,58 +21,65 @@ class Poli extends Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getListPoli();
     this._subscribe = this.props.navigation.addListener('didFocus', () => {
       //do you update if need
-      this.getListPoli(); 
+      this.getListPoli();
     });
   }
-    
+
   getListPoli = () => {
     const ApiUrl = 'http://api-antrian.aviatapps.id/api/poli';
     axios.get(ApiUrl)
-    .then(response => {
-      this.setState({ poli_list:response.data.data })      
-    })
-        
+      .then(response => {
+        // alert(JSON.stringify(response.data.data))
+        this.setState({ poli_list: response.data.data })
+      })
+
   }
 
 
   render() {
     return (
-        <View style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
-          <View style={{paddingLeft:16}}>
-            <Text style={{ paddingTop:5, fontFamily: Fonts.type.regular, fontSize: 16, color: '#848484'}}>Silahkan pilih poli yang tersedia</Text>
-          </View>
-          
-          <View style={styles.inputContainer}>
-          <TextInput style={styles.inputs}
-                        placeholder="Cari Poliklinik"
-                        keyboardType="default"
-                        underlineColorAndroid='transparent'
-                        onChangeText={(search) => this.setState({ search })}
-                    />
-                    <AntDesign name='search1' size={25} style={{ marginRight: 20 }} color={'#848484'}/>
-          </View>
-          <ScrollView style={{marginTop: 30}} >
-            {
-                this.state.poli_list.map((data, index)=>(
-                  <TouchableOpacity key={index} onPress={() => this.props.navigation.navigate('Jadwaldokter', {poli_id: data.poli_id })}
-                    style={this.state.poli_list.length - 1 === index ? {  backgroundColor: 'white', width: 330, height: 80, marginLeft: 16, marginTop: 10, borderRadius: 10, elevation: 5, marginBottom: 50 } : {  backgroundColor: 'white', width: 330, height: 80, marginLeft: 16, marginTop: 10, borderRadius: 10, elevation: 5 }}>
-                      <Image source={{uri:data.icon_image}} style={{width: 60, height: 60, marginLeft:5, marginTop: 8}}></Image>
-                      <Text style={{paddingLeft: 80, marginTop: -50, fontSize:18}}>{data.poli_nama}</Text>
-                      <Text style={{paddingLeft: 80, color: '#848484'}}>{data.jml_dokter}</Text>
-                      <AntDesign name='right' size={25} color={'#0079eb'} style={{alignSelf:'flex-end', top: -33, right: 20}}></AntDesign>
-                  </TouchableOpacity>
-                  
-                ))
-              }
-          </ScrollView>
-
+      <View style={{ backgroundColor: 'white', height: '100%', width: '100%', paddingHorizontal: 20 }}>
+        <View style={{}}>
+          <Text style={{ paddingTop: 5, fontFamily: Fonts.type.regular, fontSize: 16, color: '#848484' }}>Silahkan pilih poli yang tersedia</Text>
         </View>
 
-  
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.inputs}
+            placeholder="Cari Poliklinik"
+            keyboardType="default"
+            underlineColorAndroid='transparent'
+            onChangeText={(search) => this.setState({ search })}
+          />
+          <AntDesign name='search1' size={25} style={{ marginRight: 20 }} color={'#848484'} />
+        </View>
+        <ScrollView style={{ marginTop: 30}} >
+          {
+            this.state.poli_list.map((data, index) => (
+              <TouchableOpacity key={index} onPress={() => this.props.navigation.navigate('Jadwaldokter', { poli_id: data.poli_id, data: data })}
+                style={{ backgroundColor: 'white', width: '95%', height: 80, margin: 10, marginBottom: 10, borderRadius: 10, elevation: 5, justifyContent: 'space-between', flexDirection: 'row' }}>
+                <View style={{ width: '20%', justifyContent: 'center', height: '100%' }}>
+                  <Image source={{ uri: data.icon_image }} style={{ width: 60, height: 60 }}></Image>
+                </View>
+                <View style={{ width: '60%', justifyContent: 'center', height: '100%', }}>
+                  <Text style={{ color: 'black' }}>{data.poli_nama}</Text>
+                  <Text style={{ color: '#848484' }}>{data.jml_dokter}</Text>
+                </View>
+                <View style={{ width: '20%', justifyContent: 'center', alignSelf: 'center' }}>
+                  <AntDesign name='right' size={25} color={'#0079eb'} style={{ alignSelf: 'center' }}></AntDesign>
+                </View>
+              </TouchableOpacity>
+
+            ))
+          }
+        </ScrollView>
+
+      </View>
+
+
     )
   }
 }
@@ -83,21 +90,20 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     elevation: 5,
     backgroundColor: '#FFFFFF',
-    borderRadius:30,
-    marginLeft: 16,
-    width:330,
+    borderRadius: 30,
+    width: 330,
     top: 20,
-    height:50,
+    height: 50,
     flexDirection: 'row',
-    alignItems:'center', 
-},
-inputs:{
-  fontSize: 16,
-  marginLeft:10,
-  fontFamily: Fonts.type.regular,
-  borderBottomColor: '#FFFFFF',
-  flex:1,
-},
+    alignItems: 'center',
+  },
+  inputs: {
+    fontSize: 16,
+    marginLeft: 10,
+    fontFamily: Fonts.type.regular,
+    borderBottomColor: '#FFFFFF',
+    flex: 1,
+  },
 
 })
 

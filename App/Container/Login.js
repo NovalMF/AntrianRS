@@ -125,12 +125,12 @@ class Login extends Component {
                              />
                         </View>
 
-                        <View style={{ height: 60, marginTop: 20, marginLeft: 180 }}>
+                        <View style={{ height: 60, alignSelf: 'flex-end', justifyContent: 'center' }}>
                             <Text style={{ color: '#FFFFFF', fontFamily: Fonts.type.regular, fontSize: 18 }} onPress={() => this.props.navigation.navigate('')} >Lupa Password ? </Text>
                         </View>
 
                         <TouchableOpacity
-                            style={{ marginTop: -20, elevation: 1, borderRadius: 20, height: 55, width: 250, alignSelf: 'center', backgroundColor: '#0079eb', justifyContent: 'center', alignItems: 'center' }}
+                            style={{ elevation: 1, borderRadius: 20, height: 55, width: 250, alignSelf: 'center', backgroundColor: '#0079eb', justifyContent: 'center', alignItems: 'center' }}
                             onPress={() => this.handleLogin()}
                         >
                             <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}>
