@@ -10,6 +10,7 @@ import axios from 'axios';
 import Api from '../../Services/Api';
 import AsyncStorage from '@react-native-community/async-storage';
 import Constant from '../../Library/constants';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
 
 export default class HomePage extends Component {
@@ -78,7 +79,41 @@ export default class HomePage extends Component {
           />
 
           {/* Tombol Menu */}
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: 16, marginTop: 30 }}>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: 16, marginTop: 30, marginBottom: 5 }}>
+            <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '100%', marginBottom: 19 }}>
+            
+            <View>
+              <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation:3, backgroundColor: 'white', justifyContent:'center', alignItems: 'center'}} onPress={() => this.props.navigation.navigate('Poli')}>
+                <Image source={Images.iconDokter} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
+            </TouchableOpacity>
+            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center', marginTop: 8 }} >Dokter</Text>
+            </View>
+            
+            <View>
+              <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation:3, backgroundColor: 'white', justifyContent:'center', alignItems: 'center'}} onPress={() => this.props.navigation.navigate('AntrianSaya')}>
+                <Image source={Images.iconAntrian} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
+            </TouchableOpacity>
+            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center', marginTop: 8 }} >Antrian Saya</Text>
+            </View>
+            
+            <View>
+              <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation:3, backgroundColor: 'white', justifyContent:'center', alignItems: 'center'}} onPress={() => this.props.navigation.navigate('HubungiKami')}>
+                <Image source={Images.iconHubungiKami} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
+            </TouchableOpacity>
+            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center', marginTop: 8 }} >Hubungi Kami</Text>
+            </View>
+
+            <View>
+              <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation:3, backgroundColor: 'white', justifyContent:'center', alignItems: 'center'}} onPress={() => this.props.navigation.navigate('ProfilUser')}>
+                <Image source={Images.iconProfil} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
+            </TouchableOpacity>
+            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center', marginTop: 8 }} >Profil</Text>
+            </View>
+          </View> 
+          </View>
+
+          {/* Tombol Menu */}
+          {/* <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: 16, marginTop: 30 }}>
             <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '100%', marginBottom: 19 }}>
 
               <View style={{ width: '30%', alignItems: 'center' }}>
@@ -111,7 +146,7 @@ export default class HomePage extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-          </View>
+          </View> */}
 
           {/* garis <View style={{borderBottomColor: '#E8E9ED', borderBottomWidth: 1, marginTop: 10, marginBottom: 20, marginHorizontal: 16 }}></View> */}
 
@@ -124,21 +159,21 @@ export default class HomePage extends Component {
 
             <ScrollView horizontal={true} style={{ flexDirection: 'row', paddingLeft: 16 }} showsHorizontalScrollIndicator={false}>
               <TouchableOpacity style={{ marginRight: 16 }}>
-                <View style={{ width: 170, height: 150, borderRadius: 10, marginBottom: 18, elevation: 0 }}>
+                <View style={{ width: 170, height: 130, borderRadius: 10, marginBottom: 18, elevation: 0 }}>
                   <Image source={Images.promo1} style={{ width: undefined, height: undefined, resizeMode: 'cover', flex: 1, borderRadius: 10 }}></Image>
                 </View>
                 <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16 }}>Promo Medical Check Up</Text>
               </TouchableOpacity>
 
               <TouchableOpacity style={{ marginRight: 16 }}>
-                <View style={{ width: 170, height: 150, borderRadius: 10, marginBottom: 18, elevation: 0 }}>
+                <View style={{ width: 170, height: 130, borderRadius: 10, marginBottom: 18, elevation: 0 }}>
                   <Image source={Images.promo2} style={{ width: undefined, height: undefined, resizeMode: 'cover', flex: 1, borderRadius: 10 }}></Image>
                 </View>
                 <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16 }}> Paket Promo MCU Paru Sehat</Text>
               </TouchableOpacity>
 
               <TouchableOpacity style={{ marginRight: 16 }}>
-                <View style={{ width: 170, height: 150, borderRadius: 10, marginBottom: 18, elevation: 0 }}>
+                <View style={{ width: 170, height: 130, borderRadius: 10, marginBottom: 18, elevation: 0 }}>
                   <Image source={Images.promo3} style={{ width: undefined, height: undefined, resizeMode: 'cover', flex: 1, borderRadius: 10 }}></Image>
                 </View>
                 <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16 }}>Promo Bulan Ini</Text>
