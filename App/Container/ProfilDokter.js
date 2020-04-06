@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, StatusBar, View } from 'native-base';
-import { ScrollView, Image, StyleSheet, impo, TouchableOpacity } from 'react-native';
+import { ScrollView, Image, StyleSheet, impo, TouchableOpacity, TouchableHighlight } from 'react-native';
 import Images from '../Library/Images';
 import LinearGradient from 'react-native-linear-gradient';
 import { TextInput } from 'react-native-gesture-handler';
@@ -32,7 +32,8 @@ class ProfilDokter extends Component {
       hari: '',
       mulai: '',
       selesai: '',
-      jadwal: []
+      jadwal: [],
+      colorId: 0
     },
     {
       date: '01-03-2020'
@@ -68,6 +69,9 @@ class ProfilDokter extends Component {
 
   }
 
+  onPress = (id) => {
+    this.setState({colorId: id});
+  };
 
   render() {
     return (
@@ -100,12 +104,16 @@ class ProfilDokter extends Component {
                   return (
                     <View style={{ width: '100%', marginTop: 5, marginHorizontal: 5, borderRadius: 10, elevation: 5, marginBottom: 10, padding: 10, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between' }}>
                       <View style={{ width: '30%', justifyContent: 'center', alignSelf: 'center' }}>
-                        <Text style={{ textAlign: 'center' }}>{value.hari_praktek == "1" ? "Senin" : value.hari_praktek == "2" ? "Selasa" : value.hari_praktek == "3" ? "Rabu" :
+                        <Text style={{ textAlign: 'center', color: '#0079eb' }}>{value.hari_praktek == "1" ? "Senin" : value.hari_praktek == "2" ? "Selasa" : value.hari_praktek == "3" ? "Rabu" :
                           value.hari_praktek == "4" ? "Kamis" : value.hari_praktek == "5" ? "Jumat" : value.hari_praktek == "6" ? "Sabtu" : "Minggu"}</Text>
                       </View>
-                      <View style={{ flexDirection: 'row', width: '60%', justifyContent: 'flex-start' }}>
+                      <View style={{ flexDirection: 'row', width: '60%', justifyContent: 'flex-start', left: -20 }}>
+                        <TouchableOpacity
+                          style={this.state.colorId === 1? styles.blue : styles.button}
+                          onPress={()=>this.onPress(1)}>
                         <Text style={{}}>{value.mulai}</Text>
-                        <Text style={{ marginLeft: '20%' }}>{value.selesai}</Text>
+                        <Text style={{marginLeft: '5%'}}>{value.selesai}</Text>
+                        </TouchableOpacity>
                       </View>
                     </View>
                   )
@@ -189,7 +197,28 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FFFFFF',
     flex: 1,
   },
-
+  blue: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: '#0079eb',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#0079eb',
+    borderRadius: 10,
+    width: '50%',
+    height: '100%'
+  },
+  button: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#848484',
+    borderRadius: 5,
+    width: '50%',
+    height: '100%'
+  },
 })
 
 export default ProfilDokter;
