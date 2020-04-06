@@ -79,35 +79,35 @@ export default class HomePage extends Component {
           />
 
           {/* Tombol Menu */}
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: 16, marginTop: 30, marginBottom: 5 }}>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 30, marginBottom: 5 }}>
             <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '100%', marginBottom: 19 }}>
             
-            <View>
+            <View style={{ width: '25%', alignItems: 'center'}}>
               <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation:3, backgroundColor: 'white', justifyContent:'center', alignItems: 'center'}} onPress={() => this.props.navigation.navigate('Poli')}>
                 <Image source={Images.iconDokter} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
             </TouchableOpacity>
-            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center', marginTop: 8 }} >Dokter</Text>
+            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, alignSelf: 'center', marginTop: 8 }} >Dokter</Text>
             </View>
             
-            <View>
+            <View style={{width: '25%', alignItems: 'center'}}>
               <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation:3, backgroundColor: 'white', justifyContent:'center', alignItems: 'center'}} onPress={() => this.props.navigation.navigate('AntrianSaya')}>
                 <Image source={Images.iconAntrian} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
             </TouchableOpacity>
-            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center', marginTop: 8 }} >Antrian Saya</Text>
+            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, alignSelf: 'center', marginTop: 8 }} >Antrian Saya</Text>
             </View>
             
-            <View>
+            <View style={{width: '25%', alignItems: 'center'}}>
               <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation:3, backgroundColor: 'white', justifyContent:'center', alignItems: 'center'}} onPress={() => this.props.navigation.navigate('HubungiKami')}>
                 <Image source={Images.iconHubungiKami} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
             </TouchableOpacity>
-            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center', marginTop: 8 }} >Hubungi Kami</Text>
+            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, alignSelf: 'center', marginTop: 8 }} >Hubungi Kami</Text>
             </View>
 
-            <View>
+            <View style={{width: '25%', alignItems: 'center'}}>
               <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation:3, backgroundColor: 'white', justifyContent:'center', alignItems: 'center'}} onPress={() => this.props.navigation.navigate('ProfilUser')}>
                 <Image source={Images.iconProfil} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
             </TouchableOpacity>
-            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center', marginTop: 8 }} >Profil</Text>
+            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, alignSelf: 'center', marginTop: 8 }} >Profil</Text>
             </View>
           </View> 
           </View>

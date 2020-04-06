@@ -9,7 +9,7 @@ const Images = {
     iconEmail: require ('../Assets/Icon/email.png'),
     iconTelepon: require ('../Assets/Icon/telephone.png'),
     iconDokter: require ('../Assets/Icon/Dokter1.png'),
-    iconAntrian: require ('../Assets/Icon/antrian1.png'),
+    iconAntrian: require ('../Assets/Icon/antrian2.png'),
     iconHubungiKami: require ('../Assets/Icon/hubungikami1.png'),
     iconProfil: require ('../Assets/Icon/Profil3.png'), 
     iconNext: require ('../Assets/Icon/arrowrightputih.png'),
