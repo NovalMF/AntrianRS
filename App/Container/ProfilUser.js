@@ -129,7 +129,7 @@ class ProfilUser extends Component {
                                 } else {
                                     return (
                                         <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
-                                            <TouchableOpacity style={{ marginTop: 15, margin: 5, backgroundColor: 'white', height: 60, flexDirection: 'row', borderRadius: 30, justifyContent: 'space-between', elevation: 5, borderWidth: 1, borderColor: 'white', paddingHorizontal: 10 }} >
+                                            <TouchableOpacity style={{ marginTop: 15, margin: 5, backgroundColor: 'white', height: 60, flexDirection: 'row', borderRadius: 30, justifyContent: 'space-between', elevation: 5, borderWidth: 1, borderColor: 'white', paddingHorizontal: 10 }} onPress={() => this.props.navigation.navigate('UbahMember')} >
                                                 <View style={{ color: '#0079eb', alignSelf: 'center', width: 30, height: 30, borderRadius: 15, borderColor: 'black', borderWidth: 1 }}></View>
                                                 <View style={{ justifyContent: 'center', marginHorizontal: 10 }}>
                                                     <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center' }}>{item.nama}</Text>

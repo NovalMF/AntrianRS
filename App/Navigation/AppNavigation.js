@@ -23,7 +23,7 @@ import TambahKeluarga from '../Container/TambahKeluarga'
 import AntrianSaya from '../Container/AntrianSaya'
 import SplashScreen from '../Container/SplashScreen'
 import Artikel from '../Container/Artikel'
-import ProfilDummy from '../Container/ProfilDummy'
+import UbahMember from '../Container/UbahMember'
 
 const MainNavigator = createStackNavigator({
     Login: { screen: Login, navigationOptions: { headerShown: false } },
@@ -42,7 +42,7 @@ const MainNavigator = createStackNavigator({
     AntrianSaya: { screen: AntrianSaya, navigationOptions: {title: 'Antrian Saya'} },
     SplashScreen: { screen: SplashScreen, navigationOptions: {headerShown: false} },
     Artikel: { screen: Artikel, navigationOptions: {title: 'Artikel'} },
-    ProfilDummy: { screen: ProfilDummy, navigationOptions: {title: 'Profil User'} },
+    UbahMember: { screen: UbahMember, navigationOptions: {headerShown: false} },
 
 }, {
     headerMode: 'screen',
