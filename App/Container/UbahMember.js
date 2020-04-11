@@ -8,7 +8,8 @@ import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
 import { Fonts } from '../Themes';
 import DatePicker from 'react-native-datepicker';
 import RadioForm, {  } from 'react-native-simple-radio-button';
-import IconBack from 'react-native-vector-icons/Ionicons'
+import Modal from 'react-native-modal';
+import IconBack from 'react-native-vector-icons/Ionicons';
 
 
 class UbahMember extends Component {
