@@ -23,6 +23,7 @@ class UbahMember extends Component {
       nik: '',
       relasi: '',
       alamat: '',
+      modalClear: false,
       gender: [
         { label: 'Laki-laki', value: 'L' },
         { label: 'Perempuan', value: 'P' }
@@ -94,6 +95,28 @@ class UbahMember extends Component {
   render() {
     return (
       <View style={{ backgroundColor: 'white', flex: 1 }}>
+        <Modal
+            onBackdropPress={() => this.setState({ modalClear: false })}
+            isVisible={this.state.modalClear}
+        >
+            <View style={{ height: 200, width: '100%', backgroundColor: 'white', paddingVertical: 15, paddingHorizontal: 20 }}>
+                <Text style={{ alignSelf: 'center', fontSize: 24 }}>Hapus Member</Text>
+                <Text style={{ alignSelf: 'center', flexWrap: 'wrap', marginTop: 10 }}>Apakah kamu yakin akan menghapus member ?</Text>
+                <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1, paddingHorizontal: 40, paddingBottom: 30 }}>
+                    <TouchableOpacity style={{ height: 40, width: 70, borderRadius: 10, backgroundColor: '#f2f2f2', opacity: 1, alignSelf: 'flex-end' }} >
+                        <View style={{ flex: 1, justifyContent: 'center' }}>
+                            <Text style={{ alignSelf: 'center' }}>Ya</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ height: 40, width: 70, borderRadius: 10, backgroundColor: '#f2f2f2', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.setState({ modalClear: false })}>
+                        <View style={{ flex: 1, justifyContent: 'center' }}>
+                            <Text style={{ alignSelf: 'center' }}>Tidak</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </Modal>
+
         <Header noShadow style={{backgroundColor: 'white', marginTop: 30}}>
           <Left>
             <Button transparent>
