@@ -127,7 +127,7 @@ class UbahMember extends Component {
             <Text style={{fontSize: 20}}> Ubah Member </Text>
           </Body>
           <Right>
-            <Button transparent>
+            <Button transparent onPress={() => this.setState({ modalClear: true })}>
               <Text style={{fontSize: 14, color: '#0079eb'}}>Hapus</Text>
             </Button>
           </Right>
