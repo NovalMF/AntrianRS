@@ -21,11 +21,13 @@ class ProfilUser extends Component {
         super(props);
         this.state = {
             detailUser: [],
+            detailMember: [],
             logout: [],
             modalLogout: false,
             name: '',
             email: '',
-            noTelepon: '',
+            nama_lengkap: '',
+            relasi: '',
             famDummy: [
                 { nama: 'Eka', relasi: 'istri' },
                 { nama: 'Ihsan', relasi: 'Anak' },
@@ -33,7 +35,9 @@ class ProfilUser extends Component {
         };
     }
     componentDidMount() {
+        // alert(JSON.stringify)
         this.getdetailUser()
+        this.getdetailMember();
     }
 
     getdetailUser() {
@@ -44,6 +48,19 @@ class ProfilUser extends Component {
                     name: response.data.data.detail.nama_lengkap,
                     email: response.data.data.email,
                     detailUser: response.data.data
+                })
+            }
+        })
+    }
+
+    getdetailMember() {
+        Api.create().getMember().then((response) => {
+            alert(JSON.stringify(response.data))
+            if (response.data.success == true) {
+                this.setState({
+                    nama_lengkap: response.data.data.nama_lengkap,
+                    relasi: response.data.data.relasi,
+                    detailMember: response.data.data
                 })
             }
         })
@@ -116,36 +133,26 @@ class ProfilUser extends Component {
                         </View>
 
                         <ScrollView horizontal={true} style={{ paddingLeft: 10 }} showsHorizontalScrollIndicator={false}>
-                            {/* {this.state.famDummy.map((item, index) => {
-                                if (this.state.famDummy.length == 0) {
-                                    return (
-                                        <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
-                                            <TouchableOpacity style={{ marginTop: 15, margin: 5, backgroundColor: 'white', height: 60, flexDirection: 'row', borderRadius: 30, justifyContent: 'space-between', elevation: 5, borderWidth: 1, borderColor: 'white', paddingHorizontal: 10 }} onPress={() => this.props.navigation.navigate('TambahKeluarga', { getData: this.getdetailUser.bind(this) })} >
-                                                <Feather name='plus-circle' size={35} style={{ color: '#0079eb', alignSelf: 'center' }}></Feather>
-                                                <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center' }}>Tambah Keluarga</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                    )
-                                } else {
-                                    return (
-                                        <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
-                                            <TouchableOpacity style={{ marginTop: 15, margin: 5, backgroundColor: 'white', height: 60, flexDirection: 'row', borderRadius: 30, justifyContent: 'space-between', elevation: 5, borderWidth: 1, borderColor: 'white', paddingHorizontal: 10 }} onPress={() => this.props.navigation.navigate('UbahMember')} >
-                                                <View style={{ color: '#0079eb', alignSelf: 'center', width: 30, height: 30, borderRadius: 15, borderColor: 'black', borderWidth: 1 }}></View>
-                                                <View style={{ justifyContent: 'center', marginHorizontal: 10 }}>
-                                                    <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center' }}>{item.nama}</Text>
-                                                    <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center' }}>{item.relasi}</Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                        </View>
-                                    )
-                                }
-                            })} */}
+                        {
+                            this.state.detailMember.map((data, index) => (
+                            <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
+                                <TouchableOpacity key={index} style={{ marginTop: 15, margin: 5, backgroundColor: 'white', height: 60, flexDirection: 'row', borderRadius: 30, justifyContent: 'space-between', elevation: 5, borderWidth: 1, borderColor: 'white', paddingHorizontal: 10 }} onPress={() => this.props.navigation.navigate('UbahMember')} >
+                                    <View style={{ color: '#0079eb', alignSelf: 'center', width: 30, height: 30, borderRadius: 15, borderColor: 'black', borderWidth: 1 }}></View>
+                                    <View style={{ justifyContent: 'center', marginHorizontal: 10 }}>
+                                        <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center' }}>{data.nama_lengkap}</Text>
+                                        <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center' }}>{data.relasi}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                         ))
+                        }
                             <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
                                 <TouchableOpacity style={{ marginTop: 15, margin: 5, backgroundColor: 'white', height: 60, flexDirection: 'row', borderRadius: 30, justifyContent: 'space-between', elevation: 5, borderWidth: 1, borderColor: 'white', paddingHorizontal: 10, marginRight: 20 }} onPress={() => this.props.navigation.navigate('TambahKeluarga', { getData: this.getdetailUser.bind(this) })} >
                                     <Feather name='plus-circle' size={35} style={{ color: '#0079eb', alignSelf: 'center' }}></Feather>
                                     <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center',  marginHorizontal: 10  }}>Tambah Keluarga</Text>
                                 </TouchableOpacity>
                             </View>
+                           
                         </ScrollView>
                     </View>
                 </View>

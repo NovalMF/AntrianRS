@@ -34,29 +34,45 @@ class UbahMember extends Component {
     };
   }
 
-  componentDidMount() {
-    this.getupdateMember(this.props.navigation.getParam('member_id'));
-  }
+//   componentDidMount() {
+//    // alert(JSON.stringify(this.props.navigation.state.params.data))
+//    if (this.props.navigation.state.params.isFrom == 'member') {
+//     let data = this.props.navigation.state.params.data
+//     this.setState({
+//       nama_lengkap: data.data.nama_lengkap,
+//       jenis_kelamin: data.data.jenis_kelamin,
+//       tanggal_lahir: data.data.tanggal_lahir,
+//       tempat_lahir: data.data.tempat_lahir,
+//       nik: data.data.nik,
+//       alamat: data.data.alamat,
+//       member_id: data.data.id
+//     })
+//   }
 
-  updateMember() {
-    const data = {
+// }
+
+  handleupdateMember = async() => {
+    const ApiUrl = 'http://api-antrian.aviatapps.id/api/member/' + this.state.member_id;
+    axios.put(ApiUrl, {
       nama: this.state.nama_lengkap,
       jenis_kelamin: this.state.jenis_kelamin,
       tempat_lahir: this.state.tempat_lahir,
-      tanggal_lahir: this.state.tanggal_lahir,
+      tanggal_lahir: M(this.state.tanggal_lahir).format('YYYY-MM-DD'),
       nik: this.state.nik,
-      relasi: this.state.relasi,
       alamat: this.state.alamat
-    }
-  
-    axios.put(`http://api-antrian.aviatapps.id/api/member/${member_id}`, data)
-      .then((data) => {
-          console.log(data);
-      })
-      .catch((err) => {
-          console.log(err);
-      })
-  
+    }, {
+      headers: {
+        'accept': 'application/json',
+        'Authorization': 'Bearer '  + await AsyncStorage.getItem(Constant.TOKEN)
+      }
+    }).then(response => {
+      // alert(JSON.stringify(response.data))
+      if (response.data.success == true) {
+        this.props.navigation.goBack(this.props.navigation.state.params.getData())
+      } else {
+        this.setState({ errorMsg: response.data.message })
+      }
+    })
   }
 
   deleteMember() {
@@ -241,7 +257,7 @@ class UbahMember extends Component {
         {/* Button Simpan */}
         <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center', paddingHorizontal: 20 }}>
           <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 0.5 }} colors={['#0079EB', '#0079EB']} style={{ elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.props.navigation.navigate('ProfilUser') }>
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.handleupdateMember()}>
               <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Simpan</Text>
             </TouchableOpacity>
           </LinearGradient>

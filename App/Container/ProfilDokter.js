@@ -73,6 +73,10 @@ class ProfilDokter extends Component {
     this.setState({colorId: id});
   };
 
+  validite(id, data){
+    this.props.navigation.navigate('BookingAntrian', { member_id: id, data: data })
+  }
+
   render() {
     return (
       <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20 }}>
@@ -163,7 +167,7 @@ class ProfilDokter extends Component {
         {/* Button Booking */}
         <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center' }}>
           <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 0.5 }} colors={['#0079EB', '#0079EB']} style={{ elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.props.navigation.navigate('BookingAntrian')} >
+            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.validite(data.member_id, data)} >
               <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Booking</Text>
             </TouchableOpacity>
           </LinearGradient>
@@ -215,7 +219,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: '#848484',
-    borderRadius: 5,
+    borderRadius: 10,
     width: '50%',
     height: '100%'
   },

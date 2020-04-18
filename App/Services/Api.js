@@ -38,6 +38,7 @@ const create = () => {
     const getAritkel = (value) => POST('artikel/list', value)
     const register = (value) => POST('register', value)
     const getProfil = () => GET('user/data')
+    const getMember = () => GET( 'member/data/9047c234-9b9e-43ea-af5a-df91a37e90fd')
     const getDokter = () => POST(`dokter/${dokter_id}`)
     const updateProfil = (value) => POST('update/88abc6f3-133e-49ec-b095-e63e62679272', value)
     const tambahkeluarga = (value) => POST('member', value)
@@ -48,6 +49,7 @@ const create = () => {
         getAritkel,
         register,
         getProfil,
+        getMember,
         getDokter,
         updateProfil,
         tambahkeluarga
