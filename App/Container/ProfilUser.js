@@ -16,6 +16,7 @@ import axios from 'axios';
 import Constant from '../Library/constants';
 import Api from '../Services/Api';
 
+
 class ProfilUser extends Component {
     constructor(props) {
         super(props);
@@ -28,6 +29,7 @@ class ProfilUser extends Component {
             email: '',
             nama_lengkap: '',
             relasi: '',
+            member_id: '',
             famDummy: [
                 { nama: 'Eka', relasi: 'istri' },
                 { nama: 'Ihsan', relasi: 'Anak' },
@@ -37,34 +39,37 @@ class ProfilUser extends Component {
     componentDidMount() {
         // alert(JSON.stringify)
         this.getdetailUser()
-        this.getdetailMember();
     }
 
     getdetailUser() {
         Api.create().getProfil().then((response) => {
+            // console.log(response.data.data)
             // alert(JSON.stringify(response.data))
             if (response.data.success == true) {
                 this.setState({
                     name: response.data.data.detail.nama_lengkap,
                     email: response.data.data.email,
-                    detailUser: response.data.data
-                })
+                    detailUser: response.data.data,
+                    member_id: response.data.data.detail.member_id
+                }, ()=> this.getdetailMember(this.state.member_id))
             }
         })
     }
 
-    getdetailMember() {
-        Api.create().getMember().then((response) => {
-            alert(JSON.stringify(response.data))
-            if (response.data.success == true) {
-                this.setState({
-                    nama_lengkap: response.data.data.nama_lengkap,
-                    relasi: response.data.data.relasi,
-                    detailMember: response.data.data
-                })
-            }
-        })
-    }
+    getdetailMember= async (member) => {
+    const ApiUrl = 'http://api-antrian.aviatapps.id/api/member/list/' + member;
+    // console.log(ApiUrl)
+    axios.get(ApiUrl, {
+        headers: {
+          'accept': 'application/json',
+          'Authorization': 'Bearer '  + await AsyncStorage.getItem(Constant.TOKEN)
+        }
+    }).then(response => {
+        // console.log(JSON.stringify(response.data))
+        this.setState({ detailMember: response.data.data.member })
+      })
+  }  
+
 
     getlogout = () => {
         const ApiUrl = 'http://api-antrian.aviatapps.id/api/logout';
