@@ -17,6 +17,7 @@ class UbahMember extends Component {
     super(props);
     this.state = {
       updateMember: [],
+      deleteMember: [],
       nama_lengkap: '',
       jenis_kelamin: '',
       tempat_lahir: '',
@@ -33,65 +34,52 @@ class UbahMember extends Component {
     };
   }
 
-//   componentDidMount() {
-//     // alert(JSON.stringify(this.props.navigation.state.params.data))
-//     if (this.props.navigation.state.params.isFrom == 'profil') {
-//       let data = this.props.navigation.state.params.data
-//       this.setState({
-//         nama_lengkap: data.detail.nama_lengkap,
-//         jenis_kelamin: data.detail.jenis_kelamin,
-//         tanggal_lahir: data.detail.tanggal_lahir,
-//         tempat_lahir: data.detail.tempat_lahir,
-//         nik: data.detail.nik,
-//         alamat: data.detail.alamat,
-//         id_user: data.id
-//       })
-//     }
+  componentDidMount() {
+    this.getupdateMember(this.props.navigation.getParam('member_id'));
+  }
 
-//   }
+  updateMember() {
+    const data = {
+      nama: this.state.nama_lengkap,
+      jenis_kelamin: this.state.jenis_kelamin,
+      tempat_lahir: this.state.tempat_lahir,
+      tanggal_lahir: this.state.tanggal_lahir,
+      nik: this.state.nik,
+      relasi: this.state.relasi,
+      alamat: this.state.alamat
+    }
+  
+    axios.put(`http://api-antrian.aviatapps.id/api/member/${member_id}`, data)
+      .then((data) => {
+          console.log(data);
+      })
+      .catch((err) => {
+          console.log(err);
+      })
+  
+  }
 
-//   getupdateMember = () => {
-//     const ApiUrl = 'http://api-antrian.aviatapps.id/api/member';
-//     axios.put(ApiUrl)
-//       .then(response => {
-//         this.setState({ updateMember: response.data.data })
-//       })
-
-//   }
-
-//   handleupdateProfil = async() => {
-//     const ApiUrl = 'http://api-antrian.aviatapps.id/api/member/' + this.state.member_id;
-//     axios.put(ApiUrl, {
-//       nama: this.state.nama_lengkap,
-//       jenis_kelamin: this.state.jenis_kelamin,
-//       tempat_lahir: this.state.tempat_lahir,
-//       tanggal_lahir: M(this.state.tanggal_lahir).format('YYYY-MM-DD'),
-//       nik: this.state.nik,
-//       alamat: this.state.alamat
-//     }, {
-//       headers: {
-//         'accept': 'application/json',
-//         'Authorization': 'Bearer '  + await AsyncStorage.getItem(Constant.TOKEN)
-//       }
-//     }).then(response => {
-//       // alert(JSON.stringify(response.data))
-//       if (response.data.success == true) {
-//         this.props.navigation.goBack(this.props.navigation.state.params.getData())
-//       } else {
-//         this.setState({ errorMsg: response.data.message })
-//       }
-//     })
-
-//   }
-
-//   navigateToProfil() {
-//     const navigation = this.props.navigation;
-//     const resetAction = StackActions.reset({
-//       index: 0,
-//       actions: [NavigationActions.navigate({ routeName: 'ProfilUser' })],
-//     });
-//     navigation.dispatch(resetAction)
-//   }
+  deleteMember() {
+    const data = {
+      nama: this.state.nama_lengkap,
+      jenis_kelamin: this.state.jenis_kelamin,
+      tempat_lahir: this.state.tempat_lahir,
+      tanggal_lahir: this.state.tanggal_lahir,
+      nik: this.state.nik,
+      relasi: this.state.relasi,
+      alamat: this.state.alamat
+    }
+  
+    axios.delete(`http://api-antrian.aviatapps.id/api/member/${member_id}`, data)
+      .then((data) => {
+          alert(JSON.stringify(data))
+          console.log(data);
+      })
+      .catch((err) => {
+          console.log(err);
+      })
+  
+  }
 
   render() {
     return (

@@ -116,7 +116,7 @@ class ProfilUser extends Component {
                         </View>
 
                         <ScrollView horizontal={true} style={{ paddingLeft: 10 }} showsHorizontalScrollIndicator={false}>
-                            {this.state.famDummy.map((item, index) => {
+                            {/* {this.state.famDummy.map((item, index) => {
                                 if (this.state.famDummy.length == 0) {
                                     return (
                                         <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
@@ -139,7 +139,7 @@ class ProfilUser extends Component {
                                         </View>
                                     )
                                 }
-                            })}
+                            })} */}
                             <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
                                 <TouchableOpacity style={{ marginTop: 15, margin: 5, backgroundColor: 'white', height: 60, flexDirection: 'row', borderRadius: 30, justifyContent: 'space-between', elevation: 5, borderWidth: 1, borderColor: 'white', paddingHorizontal: 10, marginRight: 20 }} onPress={() => this.props.navigation.navigate('TambahKeluarga', { getData: this.getdetailUser.bind(this) })} >
                                     <Feather name='plus-circle' size={35} style={{ color: '#0079eb', alignSelf: 'center' }}></Feather>
