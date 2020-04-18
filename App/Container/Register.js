@@ -44,14 +44,14 @@ class Register extends Component {
     //     }
     //   }
 
-    //   getregister = () => {
-    //     const ApiUrl = 'http://api-antrian.aviatapps.id/api/register';
-    //     axios.post(ApiUrl)
-    //         .then(response => {
-    //             this.setState({ register: response.data.data })
-    //         })
+      getregister = () => {
+        const ApiUrl = 'http://api-antrian.aviatapps.id/api/register';
+        axios.post(ApiUrl)
+            .then(response => {
+                this.setState({ register: response.data.data })
+            })
 
-    // }
+    }
 
       handleregister = () => {
         Api.create().register({
