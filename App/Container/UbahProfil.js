@@ -68,7 +68,7 @@ class UbahProfil extends Component {
       nama: this.state.nama_lengkap,
       jenis_kelamin: this.state.jenis_kelamin,
       tempat_lahir: this.state.tempat_lahir,
-      tanggal_lahir: M(this.state.tanggal_lahir).format('YYYY-MM-DD'),
+      tanggal_lahir: this.state.tanggal_lahir,
       nik: this.state.nik,
       alamat: this.state.alamat
     }, {
@@ -77,7 +77,7 @@ class UbahProfil extends Component {
         'Authorization': 'Bearer '  + await AsyncStorage.getItem(Constant.TOKEN)
       }
     }).then(response => {
-      // alert(JSON.stringify(response.data))
+      alert(JSON.stringify(response.data))
       if (response.data.success == true) {
         this.props.navigation.goBack(this.props.navigation.state.params.getData())
       } else {

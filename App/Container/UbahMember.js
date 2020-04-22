@@ -1,15 +1,18 @@
 
 import React, { Component } from 'react';
 import { Text, View, Header, Left, Body, Right, Button, Title } from 'native-base';
-import { StyleSheet, Picker } from 'react-native';
+import { StyleSheet, Picker, TouchableOpacity } from 'react-native';
 import Images from '../Library/Images';
 import LinearGradient from 'react-native-linear-gradient';
-import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
+import { TextInput } from 'react-native-gesture-handler';
 import { Fonts } from '../Themes';
 import DatePicker from 'react-native-datepicker';
-import RadioForm, {  } from 'react-native-simple-radio-button';
+import axios from 'axios';
+import RadioForm, { } from 'react-native-simple-radio-button';
 import Modal from 'react-native-modal';
 import IconBack from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-community/async-storage';
+import Constant from '../Library/constants';
 
 
 class UbahMember extends Component {
@@ -34,24 +37,25 @@ class UbahMember extends Component {
     };
   }
 
-//   componentDidMount() {
-//    // alert(JSON.stringify(this.props.navigation.state.params.data))
-//    if (this.props.navigation.state.params.isFrom == 'member') {
-//     let data = this.props.navigation.state.params.data
-//     this.setState({
-//       nama_lengkap: data.data.nama_lengkap,
-//       jenis_kelamin: data.data.jenis_kelamin,
-//       tanggal_lahir: data.data.tanggal_lahir,
-//       tempat_lahir: data.data.tempat_lahir,
-//       nik: data.data.nik,
-//       alamat: data.data.alamat,
-//       member_id: data.data.id
-//     })
-//   }
+  componentDidMount() {
+    alert(JSON.stringify(this.props.navigation.state.params.data))
+    //    if (this.props.navigation.state.params.isFrom == 'member') {
+    let data = this.props.navigation.state.params.data
+    this.setState({
+      nama_lengkap: data.nama_lengkap,
+      jenis_kelamin: data.jenis_kelamin,
+      tanggal_lahir: data.tanggal_lahir,
+      tempat_lahir: data.tempat_lahir,
+      nik: data.nik,
+      alamat: data.alamat,
+      member_id: data.member_id,
+      relasi: data.relasi
+    })
+  }
 
-// }
+  // }
 
-  handleupdateMember = async() => {
+  handleupdateMember = async () => {
     const ApiUrl = 'http://api-antrian.aviatapps.id/api/member/' + this.state.member_id;
     axios.put(ApiUrl, {
       nama: this.state.nama_lengkap,
@@ -63,7 +67,7 @@ class UbahMember extends Component {
     }, {
       headers: {
         'accept': 'application/json',
-        'Authorization': 'Bearer '  + await AsyncStorage.getItem(Constant.TOKEN)
+        'Authorization': 'Bearer ' + await AsyncStorage.getItem(Constant.TOKEN)
       }
     }).then(response => {
       // alert(JSON.stringify(response.data))
@@ -75,71 +79,71 @@ class UbahMember extends Component {
     })
   }
 
-  deleteMember() {
-    const data = {
-      nama: this.state.nama_lengkap,
-      jenis_kelamin: this.state.jenis_kelamin,
-      tempat_lahir: this.state.tempat_lahir,
-      tanggal_lahir: this.state.tanggal_lahir,
-      nik: this.state.nik,
-      relasi: this.state.relasi,
-      alamat: this.state.alamat
-    }
-  
-    axios.delete(`http://api-antrian.aviatapps.id/api/member/${member_id}`, data)
-      .then((data) => {
-          alert(JSON.stringify(data))
-          console.log(data);
+  async deleteMember() {
+    const apiUrl = 'http://api-antrian.aviatapps.id/api/member/' + this.state.member_id
+    // alert(apiUrl)
+    axios.delete(apiUrl, {
+      headers: {
+        'accept': 'application/json',
+        'Authorization': 'Bearer ' + await AsyncStorage.getItem(Constant.TOKEN)
+      }
+    }).then((response) => {
+      this.setState({ modalClear: false }, () => {
+        alert(JSON.stringify(response.data.message))
+        this.props.navigation.goBack()
       })
-      .catch((err) => {
-          console.log(err);
-      })
-  
+
+    }).catch((err) => {
+      console.log(err);
+    })
+    // this.setState({
+    //   modalClear: false
+    // })
   }
 
   render() {
     return (
       <View style={{ backgroundColor: 'white', flex: 1 }}>
         <Modal
-            onBackdropPress={() => this.setState({ modalClear: false })}
-            isVisible={this.state.modalClear}
+          onBackdropPress={() => this.setState({ modalClear: false })}
+          isVisible={this.state.modalClear}
         >
-            <View style={{ height: 200, width: '100%', backgroundColor: 'white', paddingVertical: 15, paddingHorizontal: 20 }}>
-                <Text style={{ alignSelf: 'center', fontSize: 24 }}>Hapus Member</Text>
-                <Text style={{ alignSelf: 'center', flexWrap: 'wrap', marginTop: 10 }}>Apakah kamu yakin akan menghapus member ?</Text>
-                <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1, paddingHorizontal: 40, paddingBottom: 30 }}>
-                    <TouchableOpacity style={{ height: 40, width: 70, borderRadius: 10, backgroundColor: '#f2f2f2', opacity: 1, alignSelf: 'flex-end' }} >
-                        <View style={{ flex: 1, justifyContent: 'center' }}>
-                            <Text style={{ alignSelf: 'center' }}>Ya</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ height: 40, width: 70, borderRadius: 10, backgroundColor: '#f2f2f2', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.setState({ modalClear: false })}>
-                        <View style={{ flex: 1, justifyContent: 'center' }}>
-                            <Text style={{ alignSelf: 'center' }}>Tidak</Text>
-                        </View>
-                    </TouchableOpacity>
+          <View style={{ height: 200, width: '100%', backgroundColor: 'white', paddingVertical: 15, paddingHorizontal: 20 }}>
+            <Text style={{ alignSelf: 'center', fontSize: 24 }}>Hapus Member</Text>
+            <Text style={{ alignSelf: 'center', flexWrap: 'wrap', marginTop: 10 }}>Apakah kamu yakin akan menghapus member ?</Text>
+            <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1, paddingHorizontal: 40, paddingBottom: 30 }}>
+              <TouchableOpacity style={{ height: 40, width: 70, borderRadius: 10, backgroundColor: '#f2f2f2', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.deleteMember()}>
+                <View style={{ flex: 1, justifyContent: 'center' }}>
+                  <Text style={{ alignSelf: 'center' }}>Ya</Text>
                 </View>
+              </TouchableOpacity>
+              <TouchableOpacity style={{ height: 40, width: 70, borderRadius: 10, backgroundColor: '#f2f2f2', opacity: 1, alignSelf: 'flex-end' }} onPress={() => this.setState({ modalClear: false })}>
+                <View style={{ flex: 1, justifyContent: 'center' }}>
+                  <Text style={{ alignSelf: 'center' }}>Tidak</Text>
+                </View>
+              </TouchableOpacity>
             </View>
+          </View>
         </Modal>
 
-        <Header noShadow style={{backgroundColor: 'white', marginTop: 30}}>
+        <Header noShadow style={{ backgroundColor: 'white', marginTop: 30 }}>
           <Left>
             <Button transparent>
-              <IconBack name='ios-arrow-back' size={30} color={'#0079eb'} style={{paddingLeft:10}} onPress={() => this.props.navigation.navigate('ProfilUser')} />
+              <IconBack name='ios-arrow-back' size={30} color={'#0079eb'} style={{ paddingLeft: 10 }} onPress={() => this.props.navigation.navigate('ProfilUser')} />
             </Button>
           </Left>
           <Body>
-            <Text style={{fontSize: 20}}> Ubah Member </Text>
+            <Text style={{ fontSize: 20 }}> Ubah Member </Text>
           </Body>
           <Right>
             <Button transparent onPress={() => this.setState({ modalClear: true })}>
-              <Text style={{fontSize: 14, color: '#0079eb'}}>Hapus</Text>
+              <Text style={{ fontSize: 14, color: '#0079eb' }}>Hapus</Text>
             </Button>
           </Right>
         </Header>
-               
+
         {/* Nama Lengkap */}
-        <View style={{paddingHorizontal: 20, marginTop: 20}}>
+        <View style={{ paddingHorizontal: 20, marginTop: 20 }}>
           <Text style={{ paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Nama Lengkap</Text>
           <View style={styles.inputContainer}>
             <TextInput
@@ -218,8 +222,8 @@ class UbahMember extends Component {
               onChangeText={(text) => this.setState({ nik: text })}
             />
           </View>
-            
-            {/* Hubungan Keluarga / Relasi */}
+
+          {/* Hubungan Keluarga / Relasi */}
           <Text style={{ marginTop: 10, paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Hubungan Keluarga</Text>
           <View style={styles.inputContainer}>
 

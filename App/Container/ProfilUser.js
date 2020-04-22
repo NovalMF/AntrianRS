@@ -37,14 +37,13 @@ class ProfilUser extends Component {
         };
     }
     componentDidMount() {
-        // alert(JSON.stringify)
         this.getdetailUser()
     }
 
     getdetailUser() {
         Api.create().getProfil().then((response) => {
             // console.log(response.data.data)
-            // alert(JSON.stringify(response.data))
+            // alert(JSON.stringify(response.data.data))
             if (response.data.success == true) {
                 this.setState({
                     name: response.data.data.detail.nama_lengkap,
@@ -58,14 +57,14 @@ class ProfilUser extends Component {
 
     getdetailMember= async (member) => {
     const ApiUrl = 'http://api-antrian.aviatapps.id/api/member/list/' + member;
-    // console.log(ApiUrl)
+    // alert(ApiUrl)
     axios.get(ApiUrl, {
         headers: {
           'accept': 'application/json',
           'Authorization': 'Bearer '  + await AsyncStorage.getItem(Constant.TOKEN)
         }
     }).then(response => {
-        // console.log(JSON.stringify(response.data))
+        console.log(JSON.stringify(response.data))
         this.setState({ detailMember: response.data.data.member })
       })
   }  
@@ -141,7 +140,7 @@ class ProfilUser extends Component {
                         {
                             this.state.detailMember.map((data, index) => (
                             <View style={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
-                                <TouchableOpacity key={index} style={{ marginTop: 15, margin: 5, backgroundColor: 'white', height: 60, flexDirection: 'row', borderRadius: 30, justifyContent: 'space-between', elevation: 5, borderWidth: 1, borderColor: 'white', paddingHorizontal: 10 }} onPress={() => this.props.navigation.navigate('UbahMember')} >
+                                <TouchableOpacity key={index} style={{ marginTop: 15, margin: 5, backgroundColor: 'white', height: 60, flexDirection: 'row', borderRadius: 30, justifyContent: 'space-between', elevation: 5, borderWidth: 1, borderColor: 'white', paddingHorizontal: 10 }} onPress={() => this.props.navigation.navigate('UbahMember', { data: data})} >
                                     <View style={{ color: '#0079eb', alignSelf: 'center', width: 30, height: 30, borderRadius: 15, borderColor: 'black', borderWidth: 1 }}></View>
                                     <View style={{ justifyContent: 'center', marginHorizontal: 10 }}>
                                         <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, alignSelf: 'center' }}>{data.nama_lengkap}</Text>
