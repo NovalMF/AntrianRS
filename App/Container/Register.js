@@ -77,7 +77,7 @@ class Register extends Component {
         const navigation = this.props.navigation;
         const resetAction = StackActions.reset({
             index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'HomePage' })],
+            actions: [NavigationActions.navigate({ routeName: 'Login' })],
         });
         navigation.dispatch(resetAction) 
     }
