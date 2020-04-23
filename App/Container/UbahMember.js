@@ -8,6 +8,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { Fonts } from '../Themes';
 import DatePicker from 'react-native-datepicker';
 import axios from 'axios';
+import M from 'moment';
 import RadioForm, { } from 'react-native-simple-radio-button';
 import Modal from 'react-native-modal';
 import IconBack from 'react-native-vector-icons/Ionicons';
@@ -39,7 +40,7 @@ class UbahMember extends Component {
 
   componentDidMount() {
     alert(JSON.stringify(this.props.navigation.state.params.data))
-    //    if (this.props.navigation.state.params.isFrom == 'member') {
+    // if (this.props.navigation.state.params.isFrom == 'member') {
     let data = this.props.navigation.state.params.data
     this.setState({
       nama_lengkap: data.nama_lengkap,
@@ -47,13 +48,21 @@ class UbahMember extends Component {
       tanggal_lahir: data.tanggal_lahir,
       tempat_lahir: data.tempat_lahir,
       nik: data.nik,
+      relasi: data.relasi,
       alamat: data.alamat,
       member_id: data.member_id,
-      relasi: data.relasi
     })
   }
+// }
 
-  // }
+  getupdateMember = () => {
+    const ApiUrl = 'http://api-antrian.aviatapps.id/api/member';
+    axios.put(ApiUrl)
+      .then(response => {
+        this.setState({ updateMember: response.data.data })
+      })
+
+  }
 
   handleupdateMember = async () => {
     const ApiUrl = 'http://api-antrian.aviatapps.id/api/member/' + this.state.member_id;
@@ -61,8 +70,9 @@ class UbahMember extends Component {
       nama: this.state.nama_lengkap,
       jenis_kelamin: this.state.jenis_kelamin,
       tempat_lahir: this.state.tempat_lahir,
-      tanggal_lahir: M(this.state.tanggal_lahir).format('YYYY-MM-DD'),
+      tanggal_lahir: this.state.tanggal_lahir,
       nik: this.state.nik,
+      relasi: this.state.relasi,
       alamat: this.state.alamat
     }, {
       headers: {
@@ -79,6 +89,15 @@ class UbahMember extends Component {
     })
   }
 
+  navigateToProfil() {
+    const navigation = this.props.navigation;
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'ProfilUser' })],
+    });
+    navigation.dispatch(resetAction)
+  }
+  
   async deleteMember() {
     const apiUrl = 'http://api-antrian.aviatapps.id/api/member/' + this.state.member_id
     // alert(apiUrl)
@@ -187,7 +206,7 @@ class UbahMember extends Component {
             date={this.state.tanggal_lahir}
             mode="date"
             placeholder="Pilih Tanggal"
-            format="DD-MM-YYYY"
+            format="YYYY-MM-DD"
             minDate="01-01-1950"
             maxDate="01-01-2030"
             confirmBtnText="OK"

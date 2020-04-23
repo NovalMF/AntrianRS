@@ -26,7 +26,6 @@ class UbahProfil extends Component {
       tempat_lahir: '',
       tanggal_lahir: '',
       nik: '',
-      relasi: '',
       alamat: '',
       gender: [
         { label: 'Laki-laki', value: 'L' },
@@ -160,7 +159,7 @@ class UbahProfil extends Component {
             date={this.state.tanggal_lahir}
             mode="date"
             placeholder="Pilih Tanggal"
-            format="DD-MM-YYYY"
+            format="YYYY-DD-MM"
             minDate="01-01-1950"
             maxDate="01-01-2030"
             confirmBtnText="OK"
