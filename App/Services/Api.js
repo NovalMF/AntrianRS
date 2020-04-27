@@ -42,7 +42,7 @@ const create = () => {
     const getDokter = () => POST(`dokter/${dokter_id}`)
     const updateProfil = (value) => POST('update/88abc6f3-133e-49ec-b095-e63e62679272', value)
     const tambahkeluarga = (value) => POST('member', value)
-
+    const getListHistory = () => GET('reservasi/list') 
 
     return {
         login,
@@ -52,7 +52,8 @@ const create = () => {
         getMember,
         getDokter,
         updateProfil,
-        tambahkeluarga
+        tambahkeluarga,
+        getListHistory
     }
 }
 

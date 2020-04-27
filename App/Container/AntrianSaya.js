@@ -6,6 +6,9 @@ import {  ScrollView, Image, StyleSheet, LayoutAnimation, Platform, UIManager, T
 import Images from '../Library/Images';
 import { TextInput } from 'react-native-gesture-handler';
 import Modal from 'react-native-modal';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+import Api from '../Services/Api';
 
 
 
@@ -16,7 +19,15 @@ class AntrianSaya extends Component {
         expanded1: false,
         expanded2: false,
         modalBatal: false,
-        email   : '',
+        nama_lengkap: '',
+        poli_nama: '',
+        dokter_nama: '',
+        tgl_periksa: '',
+        tgl_reservasi: '',
+        hari_periksa: '',
+        no_urut: '',
+        jam_periksa_mulai: '',
+        jam_periksa_selesai: '',
         history_booking: [],
     
     }
@@ -26,23 +37,31 @@ class AntrianSaya extends Component {
     };
   }
 
-//   componentDidMount(){
-//     this.getbooking_antrian();
-//     this._subscribe = this.props.navigation.addListener('didFocus', () => {
-//       //do you update if need
-//       this.getbooking_antrian(); 
-//     });
-//   }
+  componentDidMount(){
+    this.gethistory_booking();
+  }
     
-//   getbooking_antrian= () => {
-//     const ApiUrl = 'http://api-antrian.aviatapps.id/api/dokter/DOK0004-1582';
-//     axios.post(ApiUrl)
-//     .then(response => {
-//       this.setState({ booking_antrian:response.data.data })      
-//     })
-        
-//   }
-
+  gethistory_booking() {
+    Api.create().getListHistory().then((response) => {
+        // console.log(response.data.data)
+        alert(JSON.stringify(response.data.data))
+        if (response.data.success == true) {
+            this.setState({
+                nama_lengkap: response.data.data.nama_lengkap,
+                poli_nama: response.data.data.poli_nama,
+                dokter_nama: response.data.data.dokter_nama,
+                tgl_reservasi: response.data.data.tgl_reservasi,
+                hari_periksa: response.data.data.hari_periksa,
+                tgl_periksa: response.data.data.tgl_periksa,
+                no_urut: response.data.data.no_urut,
+                jam_periksa_mulai: response.data.data.jam_periksa_mulai,
+                jam_periksa_selesai: response.data.data.jam_periksa_selesai
+              })
+            }
+        })
+    }  
+            
+    
 changeLayout1 = () => {
   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   this.setState({ expanded1: !this.state.expanded1 });
@@ -79,7 +98,7 @@ render() {
           <View style={styles.container}>
               <View style={styles.btnTextHolder}>
                 <TouchableOpacity activeOpacity={0.8} onPress={this.changeLayout1} style={styles.Btn}>
-                    <Text style={styles.btnText}>Dr. Anastasia Lintang Maharani, Sp.OG</Text>
+                    <Text style={styles.btnText}>Dr. Anastasia</Text>
                     <Text style={{ marginTop: 3, fontSize:16, marginLeft: 5, color:'grey'}}>Poli Kebidanan dan Kandungan</Text>
                     <Text style={{ marginTop: 3, fontSize:16, marginLeft: 5}}>30 Maret 2020, 09:00 - 11:00</Text>
                 </TouchableOpacity>
