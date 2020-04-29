@@ -57,13 +57,13 @@ class ProfilUser extends Component {
 
     getdetailMember= async (member) => {
     const ApiUrl = 'http://api-antrian.aviatapps.id/api/member/list/' + member;
-    // alert(ApiUrl)
     axios.get(ApiUrl, {
         headers: {
           'accept': 'application/json',
           'Authorization': 'Bearer '  + await AsyncStorage.getItem(Constant.TOKEN)
         }
     }).then(response => {
+        // alert(JSON.stringify(response.data.data))
         console.log(JSON.stringify(response.data))
         this.setState({ detailMember: response.data.data.member })
       })
