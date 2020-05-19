@@ -33,11 +33,10 @@ class ProfilDokter extends Component {
       mulai: '',
       selesai: '',
       jadwal: [],
-      colorId: 0
-    },
-    {
-      date: '01-03-2020'
-    };
+      colorId: 0,
+      date: "",
+      selectedSchedule: {}
+    }
   }
 
   componentDidMount() {
@@ -48,7 +47,7 @@ class ProfilDokter extends Component {
 
   getJadwal(data) {
     // alert(JSON.stringify(data.avatar))
-    this.setState({ jadwal: data.jadwal, avatar: data.avatar})
+    this.setState({ jadwal: data.jadwal, avatar: data.avatar })
     data.jadwal.map((item, index) => {
       this.setState({
         hari: item.hari_praktek == "1" ? "Senin" : item.hari_praktek == "2" ? "Selasa" : item.hari_praktek == "3" ? "Rabu" :
@@ -69,15 +68,23 @@ class ProfilDokter extends Component {
 
   }
 
-  onPress = (id) => {
-    this.setState({colorId: id});
-  };
+  handleBooking = () => {
+    this.props.navigation.navigate(
+      'BookingAntrian',
+      {
+        schedule: this.state.selectedSchedule,
+        date: this.state.date,
+      }
+    )
+  }
 
   // validite(id, data){
   //   this.props.navigation.navigate('BookingAntrian', { member_id: id, data: data })
   // }
 
   render() {
+    const bookingDisabled = this.state.date.length === 0 || !this.state.selectedSchedule.jadwal_id
+
     return (
       <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20 }}>
 
@@ -113,10 +120,10 @@ class ProfilDokter extends Component {
                       </View>
                       <View style={{ flexDirection: 'row', width: '60%', justifyContent: 'flex-start', left: -20 }}>
                         <TouchableOpacity
-                          style={this.state.colorId === 1? styles.blue : styles.button}
-                          onPress={()=>this.onPress(1)}>
-                        <Text style={{}}>{value.mulai}</Text>
-                        <Text style={{marginLeft: '5%'}}>{value.selesai}</Text>
+                          style={this.state.selectedSchedule.jadwal_id === value.jadwal_id ? styles.blue : styles.button}
+                          onPress={() => this.setState({ selectedSchedule: value })}>
+                          <Text style={{}}>{value.mulai}</Text>
+                          <Text style={{ marginLeft: '5%' }}>{value.selesai}</Text>
                         </TouchableOpacity>
                       </View>
                     </View>
@@ -160,14 +167,18 @@ class ProfilDokter extends Component {
                 }
                 // ... You can check the source to find the other keys.
               }}
-              onDateChange={(date) => { this.setState({ date: date }) }}
+              onDateChange={(date) => { this.setState({ date }) }}
             />
           </View>
         </ScrollView>
         {/* Button Booking */}
         <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center' }}>
           <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 0.5 }} colors={['#0079EB', '#0079EB']} style={{ elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
-            <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.props.navigation.navigate('BookingAntrian') }>
+            <TouchableOpacity
+              style={[{ alignItems: 'center', justifyContent: 'center', height: 55 }, bookingDisabled && styles.btnDisable]}
+              onPress={this.handleBooking}
+              disabled={bookingDisabled}
+            >
               <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Booking</Text>
             </TouchableOpacity>
           </LinearGradient>
@@ -223,6 +234,9 @@ const styles = StyleSheet.create({
     width: '50%',
     height: '100%'
   },
+  btnDisable: {
+    backgroundColor: "#aaa"
+  }
 })
 
 export default ProfilDokter;

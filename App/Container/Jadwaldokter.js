@@ -40,7 +40,7 @@ class Jadwaldokter extends Component {
       })
   }
 
-  validite(id, data){
+  validite(id, data) {
     this.props.navigation.navigate('ProfilDokter', { dokter_id: id, data: data })
   }
 
@@ -68,9 +68,9 @@ class Jadwaldokter extends Component {
               <TouchableOpacity key={index} onPress={() => this.validite(data.dokter_id, data)}
                 style={{ backgroundColor: 'white', width: '95%', marginLeft: 16, marginTop: 10, marginBottom: 10, borderRadius: 10, elevation: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={{ width: '30%', padding: 10 }}>
-                  <Image source={{ uri: data.avatar }} style={{ width: 70, height: 70}}></Image>
+                  <Image source={{ uri: data.avatar }} style={{ width: 70, height: 70 }}></Image>
                 </View>
-                <View style={{ width: '70%', justifyContent: 'flex-start', paddingVertical: 5}}>
+                <View style={{ width: '70%', justifyContent: 'flex-start', paddingVertical: 5 }}>
                   <Text style={{ fontSize: 16 }}>{data.dokter_nama}</Text>
                   <Text style={{ color: '#848484' }}>{data.spesialis}</Text>
                 </View>
