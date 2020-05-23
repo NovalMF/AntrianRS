@@ -31,7 +31,8 @@ class UbahProfil extends Component {
         { label: 'Laki-laki', value: 'L' },
         { label: 'Perempuan', value: 'P' }
       ],
-      id_user: ''
+      id_user: '',
+      dateNow: M(new Date).format("YYYY-MM-DD")
     };
   }
 
@@ -41,8 +42,8 @@ class UbahProfil extends Component {
       let data = this.props.navigation.state.params.data
       this.setState({
         nama_lengkap: data.detail.nama_lengkap,
-        jenis_kelamin: data.detail.jenis_kelamin,
-        tanggal_lahir: data.detail.tanggal_lahir,
+        jenis_kelamin: data.detail.jenis_kelamin == undefined ? "L" : data.jenis_kelamin,
+        tanggal_lahir: data.detail.tanggal_lahir == undefined ? this.state.dateNow : data.tanggal_lahir,
         tempat_lahir: data.detail.tempat_lahir,
         nik: data.detail.nik,
         alamat: data.detail.alamat,
@@ -65,8 +66,8 @@ class UbahProfil extends Component {
     const ApiUrl = 'http://api-antrian.aviatapps.id/api/user/update/' + this.state.id_user;
     axios.post(ApiUrl, {
       nama: this.state.nama_lengkap,
-      jenis_kelamin: this.state.jenis_kelamin,
-      tempat_lahir: this.state.tempat_lahir,
+      jenis_kelamin: this.state.jenis_kelamin, 
+      tempat_lahir: this.state.tempat_lahir, 
       tanggal_lahir: this.state.tanggal_lahir,
       nik: this.state.nik,
       alamat: this.state.alamat
@@ -159,15 +160,14 @@ class UbahProfil extends Component {
             date={this.state.tanggal_lahir}
             mode="date"
             placeholder="Pilih Tanggal"
-            format="YYYY-DD-MM"
-            minDate="01-01-1950"
-            maxDate="01-01-2030"
+            format="YYYY-MM-DD"
+            // minDate="01-01-1950"
+            // maxDate="01-01-2030"
             confirmBtnText="OK"
             cancelBtnText="Cancel"
             iconSource={Images.iconKalender}
             customStyles={{
               dateIcon: {
-                position: 'relative',
                 top: 5,
                 height: 50,
               },
