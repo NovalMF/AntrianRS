@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { Text, StatusBar, View } from 'native-base';
 import { ScrollView, Image, StyleSheet, Picker } from 'react-native';
@@ -31,21 +30,22 @@ class UbahProfil extends Component {
         { label: 'Laki-laki', value: 'L' },
         { label: 'Perempuan', value: 'P' }
       ],
-      id_user: ''
+      id_user: '',
+      dateNow: M(new Date).format("YYYY-MM-DD")
     };
   }
 
   componentDidMount() {
-    // alert(JSON.stringify(this.props.navigation.state.params.data))
+    console.log(JSON.stringify(this.props.navigation.state.params.data))
     if (this.props.navigation.state.params.isFrom == 'profil') {
       let data = this.props.navigation.state.params.data
       this.setState({
-        nama_lengkap: data.detail.nama_lengkap,
-        jenis_kelamin: data.detail.jenis_kelamin,
-        tanggal_lahir: data.detail.tanggal_lahir,
-        tempat_lahir: data.detail.tempat_lahir,
-        nik: data.detail.nik,
-        alamat: data.detail.alamat,
+        nama_lengkap: data.name,
+        jenis_kelamin: data.jenis_kelamin == undefined ? "L" : data.jenis_kelamin,
+        tanggal_lahir: data.tanggal_lahir == undefined ? this.state.dateNow : data.tanggal_lahir,
+        tempat_lahir: data.tempat_lahir,
+        nik: data.nik,
+        alamat: data.alamat,
         id_user: data.id
       })
     }
@@ -61,44 +61,54 @@ class UbahProfil extends Component {
 
   }
 
-  handleupdateProfil = async() => {
-    const ApiUrl = 'http://api-antrian.aviatapps.id/api/user/update/' + this.state.id_user;
-    axios.post(ApiUrl, {
+  handleupdateProfil() {
+    // let body = {
+    //   nama: this.state.nama_lengkap,
+    //   jenis_kelamin: this.state.jenis_kelamin,
+    //   tempat_lahir: this.state.tempat_lahir,
+    //   tanggal_lahir: this.state.tanggal_lahir,
+    //   nik: this.state.nik,
+    //   alamat: this.state.alamat,
+    //   no_medrec: "-",
+    //   tipe_penjamin: "Umum",
+    //   no_penjamin: "-",
+    //   nama_penjamin: "Umum"
+    // }
+    // const ApiUrl = 'http://api-antrian.aviatapps.id/api/user/update/' + this.state.id_user;
+    // axios.post(ApiUrl, body, {
+    //   headers: {
+    //     'accept': 'application/json',
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //     'Authorization': 'Bearer ' + await AsyncStorage.getItem(Constant.TOKEN)
+    //   }
+    // }).then(response => {
+    //   alert(JSON.stringify(response))
+    //   if (response.data.success == true) {
+    //     this.props.navigation.goBack(this.props.navigation.state.params.getData())
+    //   } else {
+    //     this.setState({ errorMsg: response.data.message })
+    //   }
+    // }) 
+
+    Api.create().updateProfil(this.state.id_user, {
       nama: this.state.nama_lengkap,
       jenis_kelamin: this.state.jenis_kelamin,
       tempat_lahir: this.state.tempat_lahir,
       tanggal_lahir: this.state.tanggal_lahir,
       nik: this.state.nik,
-      alamat: this.state.alamat
-    }, {
-      headers: {
-        'accept': 'application/json',
-        'Authorization': 'Bearer '  + await AsyncStorage.getItem(Constant.TOKEN)
-      }
-    }).then(response => {
-      alert(JSON.stringify(response.data))
+      alamat: this.state.alamat,
+      no_medrec: "-",
+      tipe_penjamin: "Umum",
+      no_penjamin: "-",
+      nama_penjamin: "Umum"
+    }).then((response) => {
+      console.log(response.data)
       if (response.data.success == true) {
-        this.props.navigation.goBack(this.props.navigation.state.params.getData())
+        this.props.navigation.goBack(this.props.getData())
       } else {
         this.setState({ errorMsg: response.data.message })
       }
     })
-
-    // Api.create().updateProfil({
-    //   nama: this.state.nama_lengkap,
-    //   jenis_kelamin: this.state.jenis_kelamin,
-    //   tempat_lahir: this.state.tempat_lahir,
-    //   tanggal_lahir: M(this.state.tanggal_lahir).format('YYYY-MM-DD'),
-    //   nik: this.state.nik,
-    //   alamat: this.state.alamat
-    // }).then((response) => {
-    //   console.log(JSON.stringify(response))
-    //   if (response.data.success == true) {
-    //     this.props.navigation.goBack(this.props.getData())
-    //   } else {
-    //     this.setState({ errorMsg: response.data.message })
-    //   }
-    // })
   }
 
   navigateToProfil() {
@@ -112,113 +122,112 @@ class UbahProfil extends Component {
 
   render() {
     return (
-      <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20 }}>
+      <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20 }} >
+        <ScrollView keyboardShouldPersistTaps='handled' showsVerticalScrollIndicator={false}>
+          {/* Nama Lengkap */}
+          < View >
+            <Text style={{ paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Nama Lengkap</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                value={this.state.nama_lengkap}
+                style={styles.inputs}
+                placeholder="Ketik disini"
+                underlineColorAndroid='transparent'
+                onChangeText={(text) => this.setState({ nama_lengkap: text })}
+              />
+            </View>
 
-        {/* Nama Lengkap */}
-        <View>
-          <Text style={{ paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Nama Lengkap</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              value={this.state.nama_lengkap}
-              style={styles.inputs}
-              placeholder="Ketik disini"
-              underlineColorAndroid='transparent'
-              onChangeText={(text) => this.setState({ nama_lengkap: text })}
+            {/* Jenis Kelamin */}
+            < Text style={{ marginTop: 10, paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}> Jenis Kelamin</Text >
+            <View>
+              <RadioForm
+                radio_props={this.state.gender}
+                initial={0}
+                formHorizontal={true}
+                labelStyle={{ marginRight: 20 }}
+                animation={true}
+                onPress={(value) => { this.setState({ jenis_kelamin: value }) }}
+              />
+            </View>
+
+            {/* Tempat Lahir */}
+            <Text style={{ paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Tempat Lahir</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                value={this.state.tempat_lahir}
+                style={styles.inputs}
+                placeholder="Ketik disini"
+                underlineColorAndroid='transparent'
+                onChangeText={(text) => this.setState({ tempat_lahir: text })}
+              />
+            </View>
+
+            {/* Tanggal Lahir */}
+            <Text style={{ marginTop: 10, paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Tanggal Lahir</Text>
+            <DatePicker
+              style={{ width: '100%' }}
+              date={this.state.tanggal_lahir}
+              mode="date"
+              placeholder="Pilih Tanggal"
+              format="YYYY-MM-DD"
+              // minDate="01-01-1950"
+              // maxDate="01-01-2030"
+              confirmBtnText="OK"
+              cancelBtnText="Cancel"
+              iconSource={Images.iconKalender}
+              customStyles={{
+                dateIcon: {
+                  top: 5,
+                  height: 50,
+                },
+                dateInput: {
+                  borderBottomWidth: 1,
+                  borderWidth: 0,
+                  borderBottomColor: '#eaeaea',
+                  marginLeft: 1,
+                }
+              }}
+              onDateChange={(date) => { this.setState({ tanggal_lahir: date }) }}
             />
-          </View>
 
-          {/* Jenis Kelamin */}
-          <Text style={{ marginTop: 10, paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Jenis Kelamin</Text>
-          <View>
-            <RadioForm
-              radio_props={this.state.gender}
-              initial={0}
-              formHorizontal={true}
-              labelStyle={{ marginRight: 20 }}
-              animation={true}
-              onPress={(value) => { this.setState({ jenis_kelamin: value }) }}
-            />
-          </View>
-
-          {/* Tempat Lahir */}
-          <Text style={{ paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Tempat Lahir</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              value={this.state.tempat_lahir}
-              style={styles.inputs}
-              placeholder="Ketik disini"
-              underlineColorAndroid='transparent'
-              onChangeText={(text) => this.setState({ tempat_lahir: text })}
-            />
-          </View>
-
-          {/* Tanggal Lahir */}
-          <Text style={{ marginTop: 10, paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Tanggal Lahir</Text>
-          <DatePicker
-            style={{ width: '100%' }}
-            date={this.state.tanggal_lahir}
-            mode="date"
-            placeholder="Pilih Tanggal"
-            format="YYYY-DD-MM"
-            minDate="01-01-1950"
-            maxDate="01-01-2030"
-            confirmBtnText="OK"
-            cancelBtnText="Cancel"
-            iconSource={Images.iconKalender}
-            customStyles={{
-              dateIcon: {
-                position: 'relative',
-                top: 5,
-                height: 50,
-              },
-              dateInput: {
-                borderBottomWidth: 1,
-                borderWidth: 0,
-                borderBottomColor: '#eaeaea',
-                alignItems: "flex-start",
-                marginLeft: 1,
-              }
-            }}
-            onDateChange={(date) => { this.setState({ tanggal_lahir: date }) }}
-          />
-
-          {/* NIK */}
-          <Text style={{ marginTop: 10, paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>NIK</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              value={this.state.nik}
-              style={styles.inputs}
-              placeholder="Ketik disini"
-              keyboardType={'numeric'}
-              underlineColorAndroid='transparent'
-              onChangeText={(text) => this.setState({ nik: text })}
-            />
-          </View>
+            {/* NIK */}
+            <Text style={{ marginTop: 10, paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>NIK</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                value={this.state.nik}
+                style={styles.inputs}
+                placeholder="Ketik disini"
+                keyboardType={'numeric'}
+                underlineColorAndroid='transparent'
+                onChangeText={(text) => this.setState({ nik: text })}
+              />
+            </View>
 
 
-          {/* Alamat */}
-          <Text style={{ marginTop: 10, paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Alamat</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              value={this.state.alamat}
-              style={styles.inputs}
-              placeholder="Ketik disini"
-              underlineColorAndroid='transparent'
-              onChangeText={(text) => this.setState({ alamat: text })}
-            />
-          </View>
-        </View>
+            {/* Alamat */}
+            <Text style={{ marginTop: 10, paddingBottom: 5, fontFamily: Fonts.type.regular, color: 'black' }}>Alamat</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                value={this.state.alamat}
+                style={styles.inputs}
+                placeholder="Ketik disini"
+                underlineColorAndroid='transparent'
+                onChangeText={(text) => this.setState({ alamat: text })}
+              />
+            </View>
+          </View >
+        </ScrollView>
 
 
         {/* Button Simpan */}
-        <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center' }}>
+        < View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center' }}>
           <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 0.5 }} colors={['#0079EB', '#0079EB']} style={{ elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
             <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 55 }} onPress={() => this.handleupdateProfil()}>
               <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Simpan</Text>
             </TouchableOpacity>
           </LinearGradient>
-        </View>
-      </View>
+        </View >
+      </View >
     )
   }
 }

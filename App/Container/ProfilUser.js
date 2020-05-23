@@ -43,10 +43,10 @@ class ProfilUser extends Component {
     getdetailUser() {
         Api.create().getProfil().then((response) => {
             // console.log(response.data.data)
-            // alert(JSON.stringify(response.data.data))
+            alert(JSON.stringify(response.data.data))
             if (response.data.success == true) {
                 this.setState({
-                    name: response.data.data.detail.nama_lengkap,
+                    name: response.data.data.name,
                     email: response.data.data.email,
                     detailUser: response.data.data,
                     member_id: response.data.data.detail.member_id
