@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import { Text, StatusBar, View } from 'native-base';
-import { ScrollView, Image, StyleSheet, impo, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { Modal, ScrollView, Image, StyleSheet, impo, TouchableOpacity, TextInput } from 'react-native';
 import Images from '../Library/Images';
+import moment from 'moment/min/moment-with-locales'
 import LinearGradient from 'react-native-linear-gradient';
-import { TextInput } from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { Fonts } from '../Themes';
-import DatePicker from 'react-native-datepicker';
 import axios from 'axios';
 import Api from '../Services/Api';
 
+moment.locale('id')
+LocaleConfig.locales['id'] = {
+  monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+  monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Dec'],
+  dayNames: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+  dayNamesShort: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+  today: 'Hari ini'
+};
 
-
+LocaleConfig.defaultLocale = 'id';
 
 class ProfilDokter extends Component {
   constructor(props) {
@@ -35,7 +43,8 @@ class ProfilDokter extends Component {
       jadwal: [],
       colorId: 0,
       date: "",
-      selectedSchedule: {}
+      selectedSchedule: {},
+      showCalendar: false
     }
   }
 
@@ -65,7 +74,10 @@ class ProfilDokter extends Component {
         // alert(JSON.stringify(response.data.data))
         this.setState({ profil_dokter: response.data.data })
       })
+  }
 
+  handleSelectedDate = date => {
+    this.setState({ date, showCalendar: !this.state.showCalendar })
   }
 
   handleBooking = () => {
@@ -83,17 +95,46 @@ class ProfilDokter extends Component {
   // }
 
   render() {
+    const { showCalendar, date } = this.state
     const bookingDisabled = this.state.date.length === 0 || !this.state.selectedSchedule.jadwal_id
 
     return (
-      <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20 }}>
+      <View style={styles.container}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={showCalendar}>
+          <View style={styles.modalCalendar}>
+            <Calendar
+              style={styles.calendar}
+              current={date}
+              onDayPress={day => this.handleSelectedDate(day.dateString)}
+              monthFormat={'dd MMMM yyyy'}
+              minDate={new Date()}
+              firstDay={1}
+              onPressArrowRight={addMonth => addMonth()}
+              disableArrowLeft={true}
+              markedDates={{
+                [date]: { selected: true },
+                '2020-05-24': { disabled: true }
+              }}
+            />
+            <TouchableOpacity
+              style={styles.btnCalendarClose}
+              onPress={() => this.setState({ showCalendar: !showCalendar })}>
+              <Text style={{ color: 'white' }}>Tutup</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
 
-        <ScrollView showsVerticalScrollIndicator={false} >
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollViewContainer}>
           {
             this.state.profil_dokter.map((data, index) => (
-              <View style={{ width: '97%' }}>
-                <View style={{ width: '100%', marginTop: 5, marginHorizontal: 5, borderRadius: 10, elevation: 5, marginBottom: 10, justifyContent: 'space-between', flexDirection: 'row', padding: 10, backgroundColor: 'white' }}>
-                  <View style={{ width: '30%', justifyContent: 'center', alignSelf: 'center' }}>
+              <View style={{ width: '100%' }}>
+                <View style={{ width: '100%', marginTop: 5, borderRadius: 10, elevation: 5, marginBottom: 10, justifyContent: 'space-between', flexDirection: 'row', padding: 10, backgroundColor: 'white' }}>
+                  <View style={{ width: '30%' }}>
                     <Image source={{ uri: this.state.avatar }} style={{ width: 80, height: 80 }}></Image>
                   </View>
                   <View style={{ width: '70%', justifyContent: 'space-evenly' }}>
@@ -103,8 +144,8 @@ class ProfilDokter extends Component {
                   </View>
                 </View>
                 {/* Biografi */}
-                <Text style={{ fontSize: 18, marginVertical: 10, alignSelf: 'center' }}>Biografi</Text>
-                <View style={{ width: '100%', marginTop: 5, marginHorizontal: 5, borderRadius: 10, elevation: 5, marginBottom: 10, justifyContent: 'space-between', padding: 10, backgroundColor: 'white' }}>
+                < Text style={{ fontSize: 18, marginVertical: 10, alignSelf: 'center' }}>Biografi</Text>
+                <View style={{ width: '100%', marginTop: 5, borderRadius: 5, elevation: 3, marginBottom: 10, justifyContent: 'space-between', padding: 10, backgroundColor: 'white' }}>
                   <Text>{data.pendidikan}</Text>
                   <Text>{data.email}</Text>
                   <Text>{data.mobile}</Text>
@@ -113,17 +154,17 @@ class ProfilDokter extends Component {
                 <Text style={{ fontSize: 18, alignSelf: 'center', marginVertical: 10 }}>Jadwal Praktik</Text>
                 {this.state.jadwal.map((value, indexs) => {
                   return (
-                    <View style={{ width: '100%', marginTop: 5, marginHorizontal: 5, borderRadius: 10, elevation: 5, marginBottom: 10, padding: 10, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between' }}>
-                      <View style={{ width: '30%', justifyContent: 'center', alignSelf: 'center' }}>
-                        <Text style={{ textAlign: 'center', color: '#0079eb' }}>{value.hari_praktek == "1" ? "Senin" : value.hari_praktek == "2" ? "Selasa" : value.hari_praktek == "3" ? "Rabu" :
+                    <View style={{ width: '100%', marginTop: 5, borderRadius: 5, elevation: 3, marginBottom: 10, padding: 10, backgroundColor: 'white', flexDirection: 'row' }}>
+                      <View style={{ width: '30%', width: 70, marginLeft: 20 }}>
+                        <Text style={{ color: '#0079eb' }}>{value.hari_praktek == "1" ? "Senin" : value.hari_praktek == "2" ? "Selasa" : value.hari_praktek == "3" ? "Rabu" :
                           value.hari_praktek == "4" ? "Kamis" : value.hari_praktek == "5" ? "Jumat" : value.hari_praktek == "6" ? "Sabtu" : "Minggu"}</Text>
                       </View>
-                      <View style={{ flexDirection: 'row', width: '60%', justifyContent: 'flex-start', left: -20 }}>
+                      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', }}>
                         <TouchableOpacity
-                          style={this.state.selectedSchedule.jadwal_id === value.jadwal_id ? styles.blue : styles.button}
+                          style={[styles.button, this.state.selectedSchedule.jadwal_id === value.jadwal_id && styles.blue]}
                           onPress={() => this.setState({ selectedSchedule: value })}>
-                          <Text style={{}}>{value.mulai}</Text>
-                          <Text style={{ marginLeft: '5%' }}>{value.selesai}</Text>
+                          <Text style={[this.state.selectedSchedule.jadwal_id === value.jadwal_id && { color: 'white' }]}>{value.mulai} - </Text>
+                          <Text style={[this.state.selectedSchedule.jadwal_id === value.jadwal_id && { color: 'white' }]}>{value.selesai}</Text>
                         </TouchableOpacity>
                       </View>
                     </View>
@@ -134,64 +175,45 @@ class ProfilDokter extends Component {
           }
 
           {/* Pilih Tanggal */}
-          <Text style={{ fontSize: 18, alignSelf: 'center', marginTop: 20 }}>Pilih Tanggal</Text>
-          <View style={{ width: '100%', height: 40, marginTop: 10, paddingLeft: 20 }}>
-            <DatePicker
-              style={{ width: '100%' }}
-              date={this.state.date}
-              mode="date"
-              placeholder="Silahkan Pilih Tanggal"
-              format="DD-MM-YYYY"
-              minDate="01-01-2017"
-              maxDate="01-01-2023"
-              confirmBtnText="OK"
-              cancelBtnText="Cancel"
-              iconSource={Images.iconKalender}
-              customStyles={{
-                dateIcon: {
-                  position: 'relative',
-                  top: -5,
-                  marginLeft: 0,
-                  width: 50,
-                  height: 50,
-                },
-                dateInput: {
-                  borderWidth: 0,
-                  borderBottomWidth: 1,
-                  borderBottomColor: '#eaeaea',
-                  alignItems: "flex-start",
-                  marginLeft: -10,
-                  marginRight: 20,
-                  top: -5,
-                  left: 10
-                }
-                // ... You can check the source to find the other keys.
-              }}
-              onDateChange={(date) => { this.setState({ date }) }}
+          <Text style={styles.txtSelectDateTitle}>Pilih Tanggal</Text>
+          <TouchableOpacity
+            style={styles.btnSelectDate}
+            onPress={() => this.setState({ showCalendar: !showCalendar })}>
+            <TextInput
+              style={styles.txtInputDate}
+              placeholder="Silahkan pilih tanggal"
+              value={date.length === 0 ? "" : moment(date, 'YYYY-MM-DD').format('DD MMMM YYYY')}
+              editable={false}
             />
-          </View>
-        </ScrollView>
+            <AntDesign name="calendar" color="#0079EB" size={25} />
+          </TouchableOpacity>
+        </ScrollView >
+
         {/* Button Booking */}
-        <View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center' }}>
-          <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 0.5 }} colors={['#0079EB', '#0079EB']} style={{ elevation: 1, borderRadius: 0, marginVertical: 20, justifyContent: 'flex-end' }}>
+        < View style={{ width: '100%', marginHorizontal: 10, alignSelf: 'center' }}>
+          <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 0.9, y: 0.5 }} colors={['#0079EB', '#0079EB']} style={{ elevation: 1, borderRadius: 0, marginVertical: 10, justifyContent: 'flex-end' }}>
             <TouchableOpacity
-              style={[{ alignItems: 'center', justifyContent: 'center', height: 55 }, bookingDisabled && styles.btnDisable]}
+              style={[{ alignItems: 'center', justifyContent: 'center', height: 40 }, bookingDisabled && styles.btnDisable]}
               onPress={this.handleBooking}
               disabled={bookingDisabled}
             >
               <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Booking</Text>
             </TouchableOpacity>
           </LinearGradient>
-        </View>
-      </View>
-
-
-
+        </View >
+      </View >
     )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    flex: 1,
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingTop: 20
+  },
   inputContainer: {
     borderColor: '#808080',
     borderWidth: 0,
@@ -213,15 +235,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   blue: {
-    flexDirection: 'row',
-    justifyContent: 'center',
     backgroundColor: '#0079eb',
-    alignItems: 'center',
-    borderWidth: 1,
     borderColor: '#0079eb',
-    borderRadius: 10,
-    width: '50%',
-    height: '100%'
   },
   button: {
     flexDirection: 'row',
@@ -230,12 +245,66 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: '#848484',
-    borderRadius: 10,
-    width: '50%',
-    height: '100%'
+    borderRadius: 5,
+    height: '100%',
+    paddingHorizontal: 5,
   },
   btnDisable: {
     backgroundColor: "#aaa"
+  },
+  modalCalendar: {
+    flex: 1,
+    backgroundColor: 'white',
+    alignItems: 'center',
+  },
+  calendar: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    padding: 10,
+    flex: 1,
+    width: '100%',
+    marginBottom: 10,
+    borderWidth: 0
+  },
+  btnCalendarClose: {
+    backgroundColor: '#0079EB',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '90%',
+    height: 40,
+    marginBottom: 20,
+    borderRadius: 5,
+  },
+  scrollViewContainer: {
+    paddingHorizontal: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  txtSelectDateTitle: {
+    fontSize: 18,
+    alignSelf: 'center',
+    marginTop: 20
+  },
+  btnSelectDate: {
+    width: '100%',
+    marginTop: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    elevation: 3,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  txtInputDate: {
+    height: 40,
+    borderColor: 'gray',
+    flex: 1,
+    marginRight: 10,
+    borderWidth: 0,
+    fontSize: 16,
+    height: 50,
+    color: "#000"
   }
 })
 

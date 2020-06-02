@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, FlatList, View, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
 import Images from '../../Library/Images';
 import DeviceInfo from 'react-native-device-info'
 import { SliderBox } from 'react-native-image-slider-box';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Switch, Container } from 'native-base';
 import { Fonts } from '../../Themes';
 import axios from 'axios';
 import Api from '../../Services/Api';
 import AsyncStorage from '@react-native-community/async-storage';
 import Constant from '../../Library/constants';
-import { TouchableHighlight } from 'react-native-gesture-handler';
-
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -26,36 +23,57 @@ export default class HomePage extends Component {
         { item: 'Kecantikan' },
         { item: 'Kehamilan' },
         { item: 'Pola Asuh Anak' },
-      ]
+      ],
+      selectedArticleType: { item: 'Semua' },
+      loadingArtikel: true
     };
   }
 
   componentDidMount() {
     console.log(AsyncStorage.getItem(Constant.TOKEN))
-    this.getartikel();
+    this.fetchArtikel()
     this._subscribe = this.props.navigation.addListener('didFocus', () => {
       //do you update if need
-      this.getartikel();
+      this.fetchArtikel()
     });
     // this.getData()
   }
 
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.selectedArticleType !== this.state.selectedArticleType) {
+      this.fetchArtikel()
+    }
+  }
+
+  fetchArtikel = async () => {
+    let res
+    const artikel = this.state.selectedArticleType.item.toLowerCase()
+
+    if (artikel !== "semua") {
+      res = await axios.get(`http://api-antrian.aviatapps.id/api/artikel/kategori/${artikel}`)
+    } else {
+      res = await axios.get('http://api-antrian.aviatapps.id/api/artikel/list')
+    }
+
+    this.setState({ artikel: res.data.data, loadingArtikel: false })
+  }
+
   async getData() {
     // var nama = await AsyncStorage.getItem(Constant.NAMA)
     // this.setState({ nama })
   }
-  // CARA LAMA
-  getartikel = () => {
-    const ApiUrl = 'http://api-antrian.aviatapps.id/api/artikel/list';
-    axios.get(ApiUrl)
-      .then(response => {
-        // alert(JSON.stringify(response))
-        this.setState({ artikel: response.data.data })
-      })
+
+  handleSelectedArticleType = type => {
+    this.setState({
+      selectedArticleType: type,
+      loadingArtikel: true
+    })
   }
 
   render() {
+    const { infoArray, selectedArticleType, artikel, loadingArtikel } = this.state
+
     return (
       <Container style={{ marginTop: DeviceInfo.hasNotch() ? 25 : 25 }}>
         <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
@@ -81,35 +99,35 @@ export default class HomePage extends Component {
           {/* Tombol Menu */}
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 30, marginBottom: 5 }}>
             <View style={{ justifyContent: 'space-between', flexDirection: 'row', width: '100%', marginBottom: 19 }}>
-            
-            <View style={{ width: '25%', alignItems: 'center'}}>
-              <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation:3, backgroundColor: 'white', justifyContent:'center', alignItems: 'center'}} onPress={() => this.props.navigation.navigate('Poli')}>
-                <Image source={Images.iconDokter} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
-            </TouchableOpacity>
-            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, alignSelf: 'center', marginTop: 8 }} >Dokter</Text>
-            </View>
-            
-            <View style={{width: '25%', alignItems: 'center'}}>
-              <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation:3, backgroundColor: 'white', justifyContent:'center', alignItems: 'center'}} onPress={() => this.props.navigation.navigate('AntrianSaya')}>
-                <Image source={Images.iconAntrian} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
-            </TouchableOpacity>
-            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, alignSelf: 'center', marginTop: 8 }} >Antrian Saya</Text>
-            </View>
-            
-            <View style={{width: '25%', alignItems: 'center'}}>
-              <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation:3, backgroundColor: 'white', justifyContent:'center', alignItems: 'center'}} onPress={() => this.props.navigation.navigate('HubungiKami')}>
-                <Image source={Images.iconHubungiKami} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
-            </TouchableOpacity>
-            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, alignSelf: 'center', marginTop: 8 }} >Hubungi Kami</Text>
-            </View>
 
-            <View style={{width: '25%', alignItems: 'center'}}>
-              <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation:3, backgroundColor: 'white', justifyContent:'center', alignItems: 'center'}} onPress={() => this.props.navigation.navigate('ProfilUser')}>
-                <Image source={Images.iconProfil} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
-            </TouchableOpacity>
-            <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, alignSelf: 'center', marginTop: 8 }} >Profil</Text>
+              <View style={{ width: '25%', alignItems: 'center' }}>
+                <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation: 3, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }} onPress={() => this.props.navigation.navigate('Poli')}>
+                  <Image source={Images.iconDokter} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
+                </TouchableOpacity>
+                <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, alignSelf: 'center', marginTop: 8 }} >Dokter</Text>
+              </View>
+
+              <View style={{ width: '25%', alignItems: 'center' }}>
+                <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation: 3, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }} onPress={() => this.props.navigation.navigate('AntrianSaya')}>
+                  <Image source={Images.iconAntrian} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
+                </TouchableOpacity>
+                <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, alignSelf: 'center', marginTop: 8 }} >Antrian Saya</Text>
+              </View>
+
+              <View style={{ width: '25%', alignItems: 'center' }}>
+                <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation: 3, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }} onPress={() => this.props.navigation.navigate('HubungiKami')}>
+                  <Image source={Images.iconHubungiKami} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
+                </TouchableOpacity>
+                <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, alignSelf: 'center', marginTop: 8 }} >{`Hubungi\nKami`}</Text>
+              </View>
+
+              <View style={{ width: '25%', alignItems: 'center' }}>
+                <TouchableOpacity style={{ width: 58, height: 58, borderWidth: 1, borderColor: '#EFEFEF', borderRadius: 10, elevation: 3, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }} onPress={() => this.props.navigation.navigate('ProfilUser')}>
+                  <Image source={Images.iconProfil} style={{ width: 50, height: 50, resizeMode: 'contain', alignSelf: 'center' }} />
+                </TouchableOpacity>
+                <Text style={{ fontFamily: Fonts.type.regular, fontSize: 15, alignSelf: 'center', marginTop: 8 }} >Profil</Text>
+              </View>
             </View>
-          </View> 
           </View>
 
           {/* Tombol Menu */}
@@ -188,31 +206,59 @@ export default class HomePage extends Component {
               <Image source={Images.iconNext} style={{ width: 40, height: 40 }}></Image>
             </TouchableOpacity>
 
-            <ScrollView horizontal={true} style={{ flexDirection: 'row', paddingLeft: 16 }} showsHorizontalScrollIndicator={false} >
-              {this.state.infoArray.map((item, index) => {
-                return (
-                  <View style={{ marginRight: 16, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
-                    <TouchableOpacity style={{ backgroundColor: 'white', padding:10, height: 35, borderRadius: 20, marginBottom: 18, justifyContent: 'center', alignItems: 'center', elevation: 0, borderColor: '#0079EB', borderWidth: 1 }}>
-                      <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, textAlign: 'center', color: '#0079EB' }}>{item.item}</Text>
-                    </TouchableOpacity>
-                  </View>
-                )
-              })}
-            </ScrollView>
+            <FlatList
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ flexDirection: 'row', paddingLeft: 16 }}
+              data={infoArray}
+              renderItem={({ item }) =>
+                <View style={{ marginRight: 16, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
+                  <TouchableOpacity
+                    style={{ backgroundColor: selectedArticleType.item === item.item ? '#0079EB' : 'white', padding: 10, height: 35, borderRadius: 20, marginBottom: 18, justifyContent: 'center', alignItems: 'center', elevation: 0, borderColor: '#0079EB', borderWidth: 1 }}
+                    onPress={() => this.handleSelectedArticleType(item)}>
+                    <Text
+                      style={{ fontFamily: Fonts.type.regular, fontSize: 16, textAlign: 'center', color: selectedArticleType.item === item.item ? 'white' : '#0079EB' }}>
+                      {item.item}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              }
+              keyExtractor={(item) => item.item}
+            />
           </View>
 
           {/* Isi Berita*/}
-          <ScrollView>
-            {
-              this.state.artikel.map((data, index) => (
-                <TouchableOpacity
-                  key={index} onPress={() => this.props.navigation.navigate('Artikel', { link: data.link_url })} style={{ flexDirection: 'row', marginBottom: 12, marginLeft: 16, marginTop: 19 }}>
-                  <Image source={{ uri: data.header_img }} style={{ width: 130, height: 120 }}></Image>
-                  <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, top: 30, left: 12, width: 200, borderRadius: 10 }}>{data.judul}</Text>
-                </TouchableOpacity>
-              ))
-            }
-          </ScrollView>
+          {
+            loadingArtikel ?
+              <View
+                style={{ flex: 1, marginTop: 10, marginBottom: 50, justifyContent: 'center', alignItems: 'center' }}
+              >
+                <ActivityIndicator size="large" color="#0079EB" />
+              </View>
+              :
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                data={artikel}
+                renderItem={({ item }) =>
+                  <TouchableOpacity
+                    style={{ flexDirection: 'row', marginBottom: 12, marginLeft: 16, marginTop: 19 }}
+                    onPress={() => this.props.navigation.navigate('Artikel', { link: item.link_url })}>
+                    <Image
+                      style={{ width: 130, height: 120 }}
+                      source={{ uri: item.header_img }} />
+                    <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, top: 30, left: 12, width: 200, borderRadius: 10 }}>
+                      {item.judul}
+                    </Text>
+                  </TouchableOpacity>
+                }
+                ListEmptyComponent={(
+                  <View style={{ flex: 1, marginTop: 10, marginBottom: 50, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 18, color: '#818181' }}>Tidak ada artikel terkait</Text>
+                  </View>
+                )}
+                keyExtractor={item => item.judul}
+              />
+          }
         </ScrollView>
       </Container>
     );
