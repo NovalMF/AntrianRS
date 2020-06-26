@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, StatusBar, View } from 'native-base';
-import { Modal, ScrollView, Image, StyleSheet, impo, TouchableOpacity, TextInput } from 'react-native';
+import { ActivityIndicator, Modal, ScrollView, Image, StyleSheet, TouchableOpacity, TextInput, Dimensions } from 'react-native';
 import Images from '../Library/Images';
 import moment from 'moment/min/moment-with-locales'
 import LinearGradient from 'react-native-linear-gradient';
@@ -8,6 +8,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { Fonts } from '../Themes';
 import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+import Constant from '../Library/constants';
 import Api from '../Services/Api';
 
 moment.locale('id')
@@ -42,9 +44,12 @@ class ProfilDokter extends Component {
       selesai: '',
       jadwal: [],
       colorId: 0,
-      date: "",
+      date: '',
       selectedSchedule: {},
-      showCalendar: false
+      showCalendar: false,
+      scheduleInDay: [],
+      disabledDate: {},
+      loading: false
     }
   }
 
@@ -56,7 +61,12 @@ class ProfilDokter extends Component {
 
   getJadwal(data) {
     // alert(JSON.stringify(data.avatar))
-    this.setState({ jadwal: data.jadwal, avatar: data.avatar })
+    this.setState({
+      jadwal: data.jadwal,
+      avatar: data.avatar,
+      scheduleInDay: data.jadwal.map(v => parseInt(v.hari_praktek))
+    })
+
     data.jadwal.map((item, index) => {
       this.setState({
         hari: item.hari_praktek == "1" ? "Senin" : item.hari_praktek == "2" ? "Selasa" : item.hari_praktek == "3" ? "Rabu" :
@@ -65,6 +75,41 @@ class ProfilDokter extends Component {
         selesai: item.selesai
       })
     })
+  }
+
+  disabledDate = (date = this.state.date) => {
+    let dayInSet = new Set()
+    this.state.scheduleInDay.forEach(v => dayInSet.add(v))
+
+    let currentFullDate = moment()
+    let currentDay = moment()
+
+    if (typeof date === "string") {
+      let formatedDate = moment(date, 'YYYY-MM-DD')
+      currentFullDate = moment(`${formatedDate.year()}-${formatedDate.month() + 1}-01`, 'YYYY-MM-DD')
+      currentDay = moment(`${formatedDate.year()}-${formatedDate.month() + 1}-01`, 'YYYY-MM-DD')
+    } else {
+      if (date.month > moment().month() + 1 || date.year > moment().year()) {
+        currentFullDate = moment(`${date.year}-${date.month}-01`, 'YYYY-MM-DD')
+        currentDay = moment(`${date.year}-${date.month}-01`, 'YYYY-MM-DD')
+      }
+    }
+
+    let lastDateInMonth = parseInt(currentFullDate.endOf('month').format('DD'))
+    let currentDate = currentDay.date()
+    let disabledDate = {}
+
+    while (currentDate <= lastDateInMonth) {
+      let day = currentDay.day()
+      if (!dayInSet.has(day)) {
+        disabledDate[currentDay.format('YYYY-MM-DD')] = { disabled: true }
+      }
+
+      currentDate++
+      currentDay.date(currentDate)
+    }
+
+    this.setState({ disabledDate })
   }
 
   getprofil_dokter = (dokter_id) => {
@@ -80,14 +125,45 @@ class ProfilDokter extends Component {
     this.setState({ date, showCalendar: !this.state.showCalendar })
   }
 
-  handleBooking = () => {
-    this.props.navigation.navigate(
-      'BookingAntrian',
-      {
-        schedule: this.state.selectedSchedule,
-        date: this.state.date,
-      }
-    )
+  handleBooking = async () => {
+    let day = moment(this.state.date, 'YYYY-MM-DD').day()
+    let date = this.state.jadwal.find(v => parseInt(v.hari_praktek) === day)
+
+    this.setState({ loading: !this.state.loading })
+    try {
+      const ApiUrl = `http://api-antrian.aviatapps.id/api/jadwal/tanggal/${date.jadwal_id}`;
+      let res = await axios.get(ApiUrl, {
+        headers: {
+          'accept': 'application/json',
+          'Authorization': 'Bearer ' + await AsyncStorage.getItem(Constant.TOKEN)
+        }
+      })
+
+      this.setState({ loading: !this.state.loading })
+
+      this.props.navigation.navigate(
+        'BookingAntrian',
+        {
+          schedule: this.state.selectedSchedule,
+          date: this.state.date,
+        }
+      )
+    } catch (ex) {
+      this.setState({ loading: !this.state.loading })
+      console.log(ex)
+    }
+  }
+
+  handleShowCalendar = () => {
+    if (!this.state.showCalendar) {
+      this.disabledDate(this.state.date.length ? this.state.date : moment().format('YYYY-MM-DD'))
+    }
+
+    this.setState({ showCalendar: !this.state.showCalendar })
+  }
+
+  handleMonthChange = (month) => {
+    this.disabledDate(month)
   }
 
   // validite(id, data){
@@ -95,7 +171,7 @@ class ProfilDokter extends Component {
   // }
 
   render() {
-    const { showCalendar, date } = this.state
+    const { showCalendar, date, disabledDate, loading } = this.state
     const bookingDisabled = this.state.date.length === 0 || !this.state.selectedSchedule.jadwal_id
 
     return (
@@ -113,15 +189,13 @@ class ProfilDokter extends Component {
               minDate={new Date()}
               firstDay={1}
               onPressArrowRight={addMonth => addMonth()}
-              disableArrowLeft={true}
-              markedDates={{
-                [date]: { selected: true },
-                '2020-05-24': { disabled: true }
-              }}
+              onMonthChange={this.handleMonthChange}
+              disableAllTouchEventsForDisabledDays={true}
+              markedDates={disabledDate}
             />
             <TouchableOpacity
               style={styles.btnCalendarClose}
-              onPress={() => this.setState({ showCalendar: !showCalendar })}>
+              onPress={this.handleShowCalendar}>
               <Text style={{ color: 'white' }}>Tutup</Text>
             </TouchableOpacity>
           </View>
@@ -178,7 +252,7 @@ class ProfilDokter extends Component {
           <Text style={styles.txtSelectDateTitle}>Pilih Tanggal</Text>
           <TouchableOpacity
             style={styles.btnSelectDate}
-            onPress={() => this.setState({ showCalendar: !showCalendar })}>
+            onPress={this.handleShowCalendar}>
             <TextInput
               style={styles.txtInputDate}
               placeholder="Silahkan pilih tanggal"
@@ -197,7 +271,11 @@ class ProfilDokter extends Component {
               onPress={this.handleBooking}
               disabled={bookingDisabled}
             >
-              <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Booking</Text>
+              {loading ?
+                <ActivityIndicator size="large" color="#fff" />
+                :
+                <Text style={{ color: 'white', fontFamily: Fonts.type.regular, fontSize: 20 }}> Booking</Text>
+              }
             </TouchableOpacity>
           </LinearGradient>
         </View >
@@ -261,10 +339,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     padding: 10,
-    flex: 1,
-    width: '100%',
+    width: Dimensions.get('window').width,
+    height: '90%',
     marginBottom: 10,
-    borderWidth: 0
+    borderWidth: 0,
   },
   btnCalendarClose: {
     backgroundColor: '#0079EB',

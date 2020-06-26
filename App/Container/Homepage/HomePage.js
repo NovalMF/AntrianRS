@@ -25,13 +25,15 @@ export default class HomePage extends Component {
         { item: 'Pola Asuh Anak' },
       ],
       selectedArticleType: { item: 'Semua' },
-      loadingArtikel: true
+      loadingArtikel: true,
+      promoList: []
     };
   }
 
   componentDidMount() {
     console.log(AsyncStorage.getItem(Constant.TOKEN))
     this.fetchArtikel()
+    this.fetchPromo()
     this._subscribe = this.props.navigation.addListener('didFocus', () => {
       //do you update if need
       this.fetchArtikel()
@@ -59,6 +61,15 @@ export default class HomePage extends Component {
     this.setState({ artikel: res.data.data, loadingArtikel: false })
   }
 
+  fetchPromo = async () => {
+    try {
+      const res = await axios.get('http://api-antrian.aviatapps.id/api/promo/list')
+      this.setState({ promoList: res.data.data })
+    } catch (ex) {
+      console.log(ex)
+    }
+  }
+
   async getData() {
     // var nama = await AsyncStorage.getItem(Constant.NAMA)
     // this.setState({ nama })
@@ -72,7 +83,7 @@ export default class HomePage extends Component {
   }
 
   render() {
-    const { infoArray, selectedArticleType, artikel, loadingArtikel } = this.state
+    const { infoArray, selectedArticleType, artikel, promoList, loadingArtikel } = this.state
 
     return (
       <Container style={{ marginTop: DeviceInfo.hasNotch() ? 25 : 25 }}>
@@ -175,28 +186,25 @@ export default class HomePage extends Component {
               <Image source={Images.iconNext} style={{ width: 40, height: 40 }}></Image>
             </TouchableOpacity>
 
-            <ScrollView horizontal={true} style={{ flexDirection: 'row', paddingLeft: 16 }} showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity style={{ marginRight: 16 }}>
-                <View style={{ width: 170, height: 130, borderRadius: 10, marginBottom: 18, elevation: 0 }}>
-                  <Image source={Images.promo1} style={{ width: undefined, height: undefined, resizeMode: 'cover', flex: 1, borderRadius: 10 }}></Image>
+            <FlatList
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ flexDirection: 'row' }}
+              data={promoList}
+              renderItem={({ item }) =>
+                <View style={{ flexDirection: 'row', paddingLeft: 16 }}>
+                  <TouchableOpacity
+                    style={{ marginRight: 16, width: 170 }}
+                    onPress={() => this.props.navigation.navigate('Promo', { link: item.link_url })}>
+                    <View style={{ width: 170, height: 130, borderRadius: 10, marginBottom: 18, elevation: 0 }}>
+                      <Image source={{ uri: item.header_img }} style={{ width: undefined, height: undefined, resizeMode: 'cover', flex: 1, borderRadius: 10 }} />
+                    </View>
+                    <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16, textAlign: 'center' }}>{item.judul}</Text>
+                  </TouchableOpacity>
                 </View>
-                <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16 }}>Promo Medical Check Up</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={{ marginRight: 16 }}>
-                <View style={{ width: 170, height: 130, borderRadius: 10, marginBottom: 18, elevation: 0 }}>
-                  <Image source={Images.promo2} style={{ width: undefined, height: undefined, resizeMode: 'cover', flex: 1, borderRadius: 10 }}></Image>
-                </View>
-                <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16 }}> Paket Promo MCU Paru Sehat</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={{ marginRight: 16 }}>
-                <View style={{ width: 170, height: 130, borderRadius: 10, marginBottom: 18, elevation: 0 }}>
-                  <Image source={Images.promo3} style={{ width: undefined, height: undefined, resizeMode: 'cover', flex: 1, borderRadius: 10 }}></Image>
-                </View>
-                <Text style={{ fontFamily: Fonts.type.regular, fontSize: 16 }}>Promo Bulan Ini</Text>
-              </TouchableOpacity>
-            </ScrollView>
+              }
+              keyExtractor={(item) => item.promo_id}
+            />
           </View>
 
           {/* Info Kesehatan*/}
